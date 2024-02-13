@@ -106,7 +106,7 @@
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s $(ProjectDir) -c "D:/Project/Unreal Project/Multiplay/Source/Multiplay/"
+python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/Source/Mapia/Network/"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -134,7 +134,7 @@ python execute.py -s $(ProjectDir) -c "D:/Project/Unreal Project/Multiplay/Sourc
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s $(ProjectDir) -c "D:/Project/Unreal Project/Multiplay/Source/Multiplay/"
+python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/Source/Mapia/Network/"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -158,7 +158,7 @@ python execute.py -s $(ProjectDir) -c "D:/Project/Unreal Project/Multiplay/Sourc
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s $(ProjectDir) -c "D:/Project/Unreal Project/Multiplay/Source/Multiplay/"
+python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/Source/Mapia/Network/"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -186,7 +186,7 @@ python execute.py -s $(ProjectDir) -c "D:/Project/Unreal Project/Multiplay/Sourc
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s $(ProjectDir) -c "D:/Project/Unreal Project/Multiplay/Source/Multiplay/"
+python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/Source/Mapia/Network/"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
