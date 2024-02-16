@@ -1,18 +1,28 @@
 #include "pch.h"
 #include "GameSession.hpp"
+#include "Network/Server.hpp"
 
 using namespace std;
 
 int main()
 {
-	auto ep = Endpoint(IpAddress::Any, 9999);
 	try {
-		auto server = Server::open<GameSession>();
-		server->run(ep);
+		auto server = Server::Open<GameSession>();
+		server->Run(Endpoint(IpAddress::Any, 9999));
 
-		Console::Log("Server is running on " + ep.toString());
+		for (int i = 0; i < 4; ++i)
+		{
+			GEngine->GetThreadManager()->Launch([]()
+			{
+				GEngine->ExecuteIocpLogic();
+			});
+		}
 
-		while (true) { Sleep(100); }
+		Console::Log("Server is running");
+
+		GEngine->ExecuteIocpLogic();
+
+		GEngine->GetThreadManager()->Join();
 	}
 	catch (exception& e) {
 		Console::Log(e.what());
