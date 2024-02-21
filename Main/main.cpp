@@ -11,11 +11,11 @@ int main()
 		auto server = Server::Open<GameSession>();
 		server->Run(endpoint);
 
-		Console::Log(LogServer, Log, L"Server is running on " + endpoint.toString());
+		Console::Log(LogServer, Log, L"Server is running on " + action::ToUnicodeString(endpoint.toString()));
 
-		GEngine->ExecuteIocpLogic(4, true);
+		GEngine->ExecuteIocpLogic(std::thread::hardware_concurrency(), true);
 	}
 	catch (exception& e) {
-		Console::Log(LogServer, Error, L"ERROR");
+		Console::Log(LogServer, Error, action::ToUnicodeString(e.what()));
 	}
 }

@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);__SERVER__;__SERVER__</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(SolutionDir)lib\mysql\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -102,11 +102,11 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Configuration);$(SolutionDir)lib\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SvEngine.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SvEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/Source/Mapia/Network/"
+python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -118,7 +118,7 @@ python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/S
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);__SERVER__;__SERVER__</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(SolutionDir)lib\mysql\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -130,11 +130,11 @@ python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/S
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Configuration);$(SolutionDir)lib\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SvEngine.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SvEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/Source/Mapia/Network/"
+python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -144,7 +144,7 @@ python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/S
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);__SERVER__;__SERVER__</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(SolutionDir)lib\mysql\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -154,11 +154,11 @@ python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/S
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Configuration);$(SolutionDir)lib\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SvEngine.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SvEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/Source/Mapia/Network/"
+python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -170,7 +170,7 @@ python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/S
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);__SERVER__;__SERVER__</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(SolutionDir)lib\mysql\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -182,15 +182,16 @@ python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/S
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Configuration);$(SolutionDir)lib\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SvEngine.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SvEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/Source/Mapia/Network/"
+python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HazardServer\HazardServer.cpp" />
     <ClCompile Include="HazardServer\GameSession.cpp" />
     <ClCompile Include="Main\main.cpp" />
     <ClCompile Include="Main\PCH\pch.cpp">
@@ -199,15 +200,27 @@ python execute.py -s ../../$(ProjectName)/ -c "D:/Project/Unreal Project/Mapia/S
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="HazardServer\Room.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="common\generated\Enum.gen.hpp" />
+    <ClInclude Include="common\generated\Packet.gen.hpp" />
+    <ClInclude Include="common\generated\Protocol.gen.hpp" />
+    <ClInclude Include="common\generated\ServerPacketHandler.gen.hpp" />
+    <ClInclude Include="common\generated\Struct.gen.hpp" />
+    <ClInclude Include="HazardServer\HazardServer.hpp" />
     <ClInclude Include="HazardServer\GameSession.hpp" />
+    <ClInclude Include="Main\main.h" />
     <ClInclude Include="Main\PCH\pch.h" />
+    <ClInclude Include="HazardServer\Room.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="define\Enum.json" />
-    <None Include="define\Protocol.json" />
-    <None Include="define\Struct.json" />
+    <None Include="common\message\Enum.json" />
+    <None Include="common\message\Protocol.json" />
+    <None Include="common\message\Struct.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="common\database\GameDB.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
