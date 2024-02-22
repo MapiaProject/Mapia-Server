@@ -22,9 +22,10 @@ using TFunction = std::function<T>;
 #define STATIC_POINTER_CAST(to, from) std::static_pointer_cast<to>(from)
 
 class Session;
+static std::mutex s_mtx;
 #endif
 
-#define BIND_HANDLER(pckname, buffer) std::bind(pckname##PacketHandler, std::placeholders::_1, STATIC_POINTER_CAST(pckname, Packet::parseFrom<pckname>(buffer)));
+#define BIND_HANDLER(pckname, buffer) std::bind(pckname##PacketHandler, std::placeholders::_1, STATIC_POINTER_CAST(pckname, Packet::ParseFrom<pckname>(buffer)));
 
 namespace gen
 {
@@ -42,7 +43,12 @@ namespace gen
             {
             case PacketId::NONE:
                 break;
-
+			case LOGIN_REQ:
+				return BIND_HANDLER(LoginReq, buffer);
+			case ENTER_GAME_REQ:
+				return BIND_HANDLER(EnterGameReq, buffer);
+			case ENTER_ROOM_REQ:
+				return BIND_HANDLER(EnterRoomReq, buffer);
             default:
                 break;
             }
@@ -55,6 +61,8 @@ namespace gen
                 return false;
             return handler(session);
         }
-
+		static bool LoginReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<LoginReq> packet);
+		static bool EnterGameReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterGameReq> packet);
+		static bool EnterRoomReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterRoomReq> packet);
 	};
 }

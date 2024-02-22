@@ -14,9 +14,6 @@ public:
 	virtual void onConnected() override
 	{
 		Console::Log(LogServer, Log, L"Connected!");
-		GRoom->Launch(1000, [] { Console::Log(LogServer, Debug, TEXT("1000")); });
-		GRoom->Launch(2000, [] { Console::Log(LogServer, Debug, TEXT("2000")); });
-		GRoom->Launch(3000, [] { Console::Log(LogServer, Debug, TEXT("3000")); });
 	}
 	virtual void onDisconnected() override
 	{
@@ -26,4 +23,7 @@ public:
 	{
 		gen::PacketHandler::handlePacket(shared_from_this(), buffer);
 	}
+private:
+	uint32 m_id;
+	std::weak_ptr<class SessionManager> m_sessionManager;
 };

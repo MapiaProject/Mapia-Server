@@ -193,6 +193,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
   <ItemGroup>
     <ClCompile Include="HazardServer\HazardServer.cpp" />
     <ClCompile Include="HazardServer\GameSession.cpp" />
+    <ClCompile Include="HazardServer\ServerPacketHandler.cpp" />
     <ClCompile Include="Main\main.cpp" />
     <ClCompile Include="Main\PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -201,6 +202,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="HazardServer\Room.cpp" />
+    <ClCompile Include="HazardServer\Managers\Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\generated\Enum.gen.hpp" />
@@ -210,9 +212,11 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
     <ClInclude Include="common\generated\Struct.gen.hpp" />
     <ClInclude Include="HazardServer\HazardServer.hpp" />
     <ClInclude Include="HazardServer\GameSession.hpp" />
+    <ClInclude Include="HazardServer\uuid.hpp" />
     <ClInclude Include="Main\main.h" />
     <ClInclude Include="Main\PCH\pch.h" />
     <ClInclude Include="HazardServer\Room.hpp" />
+    <ClInclude Include="HazardServer\Managers\Manager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="common\message\Enum.json" />
@@ -225,4 +229,9 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties common_4message_4Struct_1json__JsonSchema="..\..\..\tools\PacketGenerator\messageScheme.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

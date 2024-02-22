@@ -3,6 +3,22 @@
 		"Enum.json"
 	],
 	"struct": [
-		
+		{
+			"name": "Room",
+			"data": [
+				{
+					"type": "string",
+					"name": "id"
+				},
+				{
+					"type": "string",
+					"name": "name"
+				},
+				{
+					"type": "uint8",
+					"name": "userCount"
+				}
+			]
+		}
 	]
 }

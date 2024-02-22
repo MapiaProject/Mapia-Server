@@ -2,6 +2,58 @@
 	"include": [
 		"Struct.json"
 	],
-	"message": [
-	]
+	"message": {
+		"client": [
+			{
+				"name": "LoginReq",
+				"data": []
+			},
+			{
+				"name": "EnterGameReq",
+				"data": []
+			},
+			{
+				"name": "EnterRoomReq",
+				"data": [
+					{
+						"type": "string",
+						"name": "nickname"
+					},
+					{
+						"type": "uint32",
+						"name": "roomId"
+					}
+				]
+			}
+		],
+		"server": [
+			{
+				"name": "LoginRes",
+				"data": [
+					{
+						"type": "bool",
+						"name": "success"
+					}
+				]
+			},
+			{
+				"name": "EnterGameRes",
+				"data": [
+					{
+						"type": "list|Room",
+						"name": "roomList"
+					}
+				]
+			},
+			{
+				"name": "EnterRoomRes",
+				"data": [
+					{
+						"type": "bool",
+						"name": "success"
+					}
+				]
+			}
+		]
+	}
 }

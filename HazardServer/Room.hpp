@@ -4,11 +4,8 @@
 class Room : public JobSerializer
 {
 public:
-	Room() = default;
+	Room(String name);
 public:
-	void Enter();
-	void Leave();
-	void Behaviour();
+private:
+	String m_name;
 };
-
-extern std::shared_ptr<Room> GRoom;
