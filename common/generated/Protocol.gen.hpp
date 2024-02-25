@@ -118,6 +118,41 @@ namespace gen {
         return pk;
     }
 
+	class AddRoomEvent
+            : public Packet {
+    public:
+        AddRoomEvent() : Packet(static_cast<unsigned short>(PacketId::ADD_ROOM_EVENT)) {
+        }
+        ~AddRoomEvent() {
+    
+        }
+    protected:
+        virtual void Read() override
+        {
+            Packet::Read();
+            *this >> room >> reinterpret_cast<uint16&>(event);
+        }
+        virtual void Write() override
+        {
+            *this << room << (event);
+            Finish();
+        }
+    public:
+        Room room;
+		ERoomEvent event;
+	
+    };
+    
+    inline Packet& operator>>(Packet& pk, AddRoomEvent& addRoomEvent) {
+        pk >> addRoomEvent.room >> reinterpret_cast<uint16&>(addRoomEvent.event);
+        return pk;
+    }
+
+    inline Packet& operator<<(Packet& pk, const AddRoomEvent& addRoomEvent) {
+        pk << addRoomEvent.room << (addRoomEvent.event);
+        return pk;
+    }
+
 	class LoginRes
             : public Packet {
     public:
@@ -152,12 +187,12 @@ namespace gen {
         return pk;
     }
 
-	class EnterGameRes
+	class NotifyRoomList
             : public Packet {
     public:
-        EnterGameRes() : Packet(static_cast<unsigned short>(PacketId::ENTER_GAME_RES)) {
+        NotifyRoomList() : Packet(static_cast<unsigned short>(PacketId::NOTIFY_ROOM_LIST)) {
         }
-        ~EnterGameRes() {
+        ~NotifyRoomList() {
     
         }
     protected:
@@ -176,13 +211,13 @@ namespace gen {
 	
     };
     
-    inline Packet& operator>>(Packet& pk, EnterGameRes& enterGameRes) {
-        pk >> enterGameRes.roomList;
+    inline Packet& operator>>(Packet& pk, NotifyRoomList& notifyRoomList) {
+        pk >> notifyRoomList.roomList;
         return pk;
     }
 
-    inline Packet& operator<<(Packet& pk, const EnterGameRes& enterGameRes) {
-        pk << enterGameRes.roomList;
+    inline Packet& operator<<(Packet& pk, const NotifyRoomList& notifyRoomList) {
+        pk << notifyRoomList.roomList;
         return pk;
     }
 

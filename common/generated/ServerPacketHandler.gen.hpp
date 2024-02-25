@@ -22,7 +22,6 @@ using TFunction = std::function<T>;
 #define STATIC_POINTER_CAST(to, from) std::static_pointer_cast<to>(from)
 
 class Session;
-static std::mutex s_mtx;
 #endif
 
 #define BIND_HANDLER(pckname, buffer) std::bind(pckname##PacketHandler, std::placeholders::_1, STATIC_POINTER_CAST(pckname, Packet::ParseFrom<pckname>(buffer)));
@@ -49,6 +48,8 @@ namespace gen
 				return BIND_HANDLER(EnterGameReq, buffer);
 			case ENTER_ROOM_REQ:
 				return BIND_HANDLER(EnterRoomReq, buffer);
+			case ADD_ROOM_EVENT:
+				return BIND_HANDLER(AddRoomEvent, buffer);
             default:
                 break;
             }
@@ -64,5 +65,6 @@ namespace gen
 		static bool LoginReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<LoginReq> packet);
 		static bool EnterGameReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterGameReq> packet);
 		static bool EnterRoomReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterRoomReq> packet);
+		static bool AddRoomEventPacketHandler(TSharedPtr<Session> session, TSharedPtr<AddRoomEvent> packet);
 	};
 }

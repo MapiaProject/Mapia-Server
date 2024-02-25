@@ -8,8 +8,8 @@ namespace uuid {
     static std::uniform_int_distribution<> dis(0, 15);
     static std::uniform_int_distribution<> dis2(8, 11);
 
-    std::string generate_uuid_v4() {
-        std::stringstream ss;
+    String generate_uuid_v4() {
+        std::wstringstream ss;
         int i;
         ss << std::hex;
         for (i = 0; i < 8; i++) {

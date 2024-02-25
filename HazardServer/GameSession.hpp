@@ -23,7 +23,4 @@ public:
 	{
 		gen::PacketHandler::handlePacket(shared_from_this(), buffer);
 	}
-private:
-	uint32 m_id;
-	std::weak_ptr<class SessionManager> m_sessionManager;
 };

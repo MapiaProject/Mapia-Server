@@ -1,6 +1,7 @@
 #pragma once
 
 class Room;
+class RoomManager;
 
 class Manager
 {
@@ -8,12 +9,9 @@ public:
 	Manager();
 	~Manager();
 public:
-	void MakeRoom(String id, String name);
-	void DestroyRoom(String id);
-	__forceinline Room* GetRoom(String id) { return m_roomList[id]; }
-	Vector<String> GetRoomList();
+	__forceinline std::shared_ptr<RoomManager> GetRoom() { return m_roomManager; }
 private:
-	ConcurrencyHashMap<String, Room*> m_roomList;
+	std::shared_ptr<RoomManager> m_roomManager;
 };
 
-extern std::unique_ptr<Manager> GManager;
+extern Manager* GManager;

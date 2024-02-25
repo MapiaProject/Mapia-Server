@@ -1,32 +1,19 @@
 #include "pch.h"
 #include "Manager.hpp"
 
+#include "RoomManager.hpp"
 #include "Room.hpp"
 
-std::unique_ptr<Manager> GManager = std::make_unique<Manager>();
+Manager* GManager = new Manager;
 
 Manager::Manager()
 {
+	m_roomManager = std::make_shared<RoomManager>();
+	m_roomManager->Launch(&RoomManager::AddRoom, std::make_shared<Room>(TEXT("test1")));
+	m_roomManager->Launch(&RoomManager::AddRoom, std::make_shared<Room>(TEXT("test2")));
 }
 
 Manager::~Manager()
 {
-}
-
-void Manager::MakeRoom(String id, String name)
-{
-	if(!m_roomList[id])
-		m_roomList.insert({ id, new Room(name)});
-}
-
-void Manager::DestroyRoom(String id)
-{
-	auto* room = m_roomList[id];
-	if (room)
-		delete m_roomList[id];
-}
-
-Vector<String> Manager::GetRoomList()
-{
-	return Vector<String>();
+	m_roomManager = nullptr;
 }

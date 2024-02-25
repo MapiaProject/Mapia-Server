@@ -24,6 +24,19 @@
 						"name": "roomId"
 					}
 				]
+			},
+			{
+				"name": "AddRoomEvent",
+				"data": [
+					{
+						"type": "Room",
+						"name": "room"
+					},
+					{
+						"type": "ERoomEvent",
+						"name": "event"
+					}
+				]
 			}
 		],
 		"server": [
@@ -37,7 +50,7 @@
 				]
 			},
 			{
-				"name": "EnterGameRes",
+				"name": "NotifyRoomList",
 				"data": [
 					{
 						"type": "list|Room",
