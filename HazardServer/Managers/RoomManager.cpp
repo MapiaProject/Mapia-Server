@@ -13,11 +13,16 @@ RoomManager::~RoomManager()
 {
 }
 
-bool RoomManager::AddRoom(std::shared_ptr<Room> room)
+void RoomManager::AddRoom(String name)
 {
-	if (m_roomList[room->GetId()] == nullptr)
-		m_roomList[room->GetId()] = room;
-	else return false;
+	auto newRoom = Room::Create(m_lastId++, name);
+	m_roomList[newRoom->GetId()] = newRoom;
+}
+
+void RoomManager::DestroyRoom(uint32 id)
+{
+	if (m_roomList[id])
+		m_roomList.erase(id);
 }
 
 void RoomManager::HandleEnterGame(std::shared_ptr<Session> session)
@@ -39,20 +44,34 @@ void RoomManager::HandleEnterGame(std::shared_ptr<Session> session)
 	session->Send(&res);
 }
 
-void RoomManager::HandleRoomEvent(std::shared_ptr<Session> session, gen::AddRoomEvent pk)
+void RoomManager::HandleRoomEvent(std::shared_ptr<Session> session, gen::RoomEventReq pk)
 {
+	gen::RoomEventRes res;
+	res.success = false;
 	switch (pk.event)
 	{
-	case gen::CREATE:
-		AddRoom(std::make_shared<Room>(pk.room.name));
-		break;
-	case gen::ENTER:
-		if (auto room = m_roomList[pk.room.id])
-			room->Launch(&Room::HandleEnter, session);
-		break;
-	case gen::LEAVE:
-		if (auto room = m_roomList[pk.room.id])
-			room->Launch(&Room::HandleLeave, session);
-		break;
+		case gen::CREATE:
+		{
+			AddRoom(pk.room.name);
+			res.success = false;
+			session->Send(&res);
+			break;
+		}
+		case gen::ENTER:
+		{
+			if (auto room = m_roomList[pk.room.id])
+			{
+				room->Launch(&Room::HandleEnter, session);
+			}
+			else session->Send(&res);
+			break;
+		}
+		case gen::LEAVE:
+		{
+			if (auto room = m_roomList[pk.room.id])
+				room->Launch(&Room::HandleLeave, session);
+			else session->Send(&res);
+			break;
+		}
 	}
 }

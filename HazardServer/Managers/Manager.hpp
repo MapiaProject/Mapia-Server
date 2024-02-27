@@ -1,7 +1,6 @@
 #pragma once
 
-class Room;
-class RoomManager;
+#include "Managers/RoomManager.hpp"
 
 class Manager
 {

@@ -7,7 +7,7 @@
 			"name": "Room",
 			"data": [
 				{
-					"type": "string",
+					"type": "uint32",
 					"name": "id"
 				},
 				{

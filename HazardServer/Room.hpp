@@ -3,18 +3,28 @@
 
 class Player;
 
+enum
+{
+	MAX_PLAYER = 8
+};
+
 class Room : public JobSerializer
 {
 public:
-	Room(String name);
+	void Broadcast(class Packet* pk, uint32 exceptId = -1);
 public:
-	bool HandleEnter(std::shared_ptr<Session> session);
-	bool HandleLeave(std::shared_ptr<Session> session);
+	void HandleEnter(std::shared_ptr<Session> session);
+	void HandleLeave(std::shared_ptr<Session> session);
 public:
-	__forceinline String GetId() { return m_id; }
+	static std::shared_ptr<Room> Create(uint32 id, StringView name);
+	
+	__forceinline uint32 GetId() { return m_id; }
 	__forceinline String GetName() { return m_name; }
+	
+	void SetId(uint32 id);
+	void SetName(StringView name);
 private:
-	String m_id;
+	uint32 m_id;
 	String m_name;
-	Vector<std::shared_ptr<Player>> m_players;
+	HashMap<uint32, std::shared_ptr<Player>> m_players;
 };

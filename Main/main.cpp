@@ -4,6 +4,9 @@
 
 using namespace std;
 
+/* ingame id = uint32
+   database id = uuid(String) */
+
 int main()
 {
 	try {

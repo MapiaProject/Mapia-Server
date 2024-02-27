@@ -204,6 +204,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
     <ClCompile Include="HazardServer\Room.cpp" />
     <ClCompile Include="HazardServer\Managers\Manager.cpp" />
     <ClCompile Include="HazardServer\Managers\RoomManager.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\generated\Enum.gen.hpp" />
@@ -219,6 +220,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
     <ClInclude Include="HazardServer\Room.hpp" />
     <ClInclude Include="HazardServer\Managers\Manager.hpp" />
     <ClInclude Include="HazardServer\Managers\RoomManager.hpp" />
+    <ClInclude Include="Player.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="common\message\Enum.json" />

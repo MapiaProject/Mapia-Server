@@ -9,8 +9,8 @@ Manager* GManager = new Manager;
 Manager::Manager()
 {
 	m_roomManager = std::make_shared<RoomManager>();
-	m_roomManager->Launch(&RoomManager::AddRoom, std::make_shared<Room>(TEXT("test1")));
-	m_roomManager->Launch(&RoomManager::AddRoom, std::make_shared<Room>(TEXT("test2")));
+	m_roomManager->Launch(&RoomManager::AddRoom, String(TEXT("test1")));
+	m_roomManager->Launch(&RoomManager::AddRoom, String(TEXT("test2")));
 }
 
 Manager::~Manager()

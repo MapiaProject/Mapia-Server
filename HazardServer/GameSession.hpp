@@ -1,9 +1,10 @@
 #pragma once
 
 #include <Network/Session.hpp>
-#include <Room.hpp>
 
 #include <generated/ServerPacketHandler.gen.hpp>
+
+class Player;
 
 class GameSession : public Session
 {
@@ -23,4 +24,9 @@ public:
 	{
 		gen::PacketHandler::handlePacket(shared_from_this(), buffer);
 	}
+public:
+	__forceinline std::shared_ptr<Player> GetPlayer() { return m_player; }
+	void SetPlayer(std::shared_ptr<Player> player);
+private:
+	std::shared_ptr<Player> m_player;
 };
