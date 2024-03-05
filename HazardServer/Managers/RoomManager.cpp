@@ -15,7 +15,8 @@ RoomManager::~RoomManager()
 
 void RoomManager::AddRoom(String name)
 {
-	auto newRoom = Room::Create(m_lastId++, name);
+	auto newRoom = Room::Create(++m_lastId, name);
+	newRoom->m_manager = std::static_pointer_cast<RoomManager>(shared_from_this());
 	m_roomList[newRoom->GetId()] = newRoom;
 }
 
@@ -47,16 +48,10 @@ void RoomManager::HandleEnterGame(std::shared_ptr<Session> session)
 void RoomManager::HandleRoomEvent(std::shared_ptr<Session> session, gen::RoomEventReq pk)
 {
 	gen::RoomEventRes res;
+	res.event = pk.event;
 	res.success = false;
 	switch (pk.event)
 	{
-		case gen::CREATE:
-		{
-			AddRoom(pk.room.name);
-			res.success = false;
-			session->Send(&res);
-			break;
-		}
 		case gen::ENTER:
 		{
 			if (auto room = m_roomList[pk.room.id])
@@ -71,6 +66,13 @@ void RoomManager::HandleRoomEvent(std::shared_ptr<Session> session, gen::RoomEve
 			if (auto room = m_roomList[pk.room.id])
 				room->Launch(&Room::HandleLeave, session);
 			else session->Send(&res);
+			break;
+		}
+		case gen::CREATE:
+		{
+			AddRoom(pk.room.name);
+			res.success = false;
+			session->Send(&res);
 			break;
 		}
 	}

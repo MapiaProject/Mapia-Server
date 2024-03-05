@@ -46,8 +46,6 @@ namespace gen
 				return BIND_HANDLER(LoginReq, buffer);
 			case ENTER_GAME_REQ:
 				return BIND_HANDLER(EnterGameReq, buffer);
-			case ENTER_ROOM_REQ:
-				return BIND_HANDLER(EnterRoomReq, buffer);
 			case ROOM_EVENT_REQ:
 				return BIND_HANDLER(RoomEventReq, buffer);
             default:
@@ -64,7 +62,6 @@ namespace gen
         }
 		static bool LoginReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<LoginReq> packet);
 		static bool EnterGameReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterGameReq> packet);
-		static bool EnterRoomReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterRoomReq> packet);
 		static bool RoomEventReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<RoomEventReq> packet);
 	};
 }

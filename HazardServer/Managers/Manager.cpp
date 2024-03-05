@@ -4,8 +4,6 @@
 #include "RoomManager.hpp"
 #include "Room.hpp"
 
-Manager* GManager = new Manager;
-
 Manager::Manager()
 {
 	m_roomManager = std::make_shared<RoomManager>();

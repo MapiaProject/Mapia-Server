@@ -16,11 +16,6 @@ bool gen::PacketHandler::EnterGameReqPacketHandler(TSharedPtr<Session> session, 
     return false;
 }
 
-bool gen::PacketHandler::EnterRoomReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterRoomReq> packet)
-{
-    return false;
-}
-
 bool gen::PacketHandler::RoomEventReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<RoomEventReq> packet)
 {
     GManager->GetRoom()->Launch(&RoomManager::HandleRoomEvent, session, *packet);

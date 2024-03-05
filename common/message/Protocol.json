@@ -13,19 +13,6 @@
 				"data": []
 			},
 			{
-				"name": "EnterRoomReq",
-				"data": [
-					{
-						"type": "string",
-						"name": "nickname"
-					},
-					{
-						"type": "uint32",
-						"name": "roomId"
-					}
-				]
-			},
-			{
 				"name": "RoomEventReq",
 				"data": [
 					{
@@ -59,8 +46,12 @@
 				]
 			},
 			{
-				"name": "EnterRoomRes",
+				"name": "RoomEventRes",
 				"data": [
+					{
+						"type": "ERoomEvent",
+						"name": "event"
+					},
 					{
 						"type": "bool",
 						"name": "success"
@@ -68,11 +59,11 @@
 				]
 			},
 			{
-				"name": "RoomEventRes",
+				"name": "NotifyPlayerList",
 				"data": [
 					{
-						"type": "bool",
-						"name": "success"
+						"type": "list|PlayerInfo",
+						"name": "playerList"
 					}
 				]
 			}

@@ -1,7 +1,6 @@
 #pragma once
 #include <Thread/JobSerializer.hpp>
-
-class Player;
+#include <generated/Enum.gen.hpp>
 
 enum
 {
@@ -10,11 +9,13 @@ enum
 
 class Room : public JobSerializer
 {
+	friend class RoomManager;
 public:
 	void Broadcast(class Packet* pk, uint32 exceptId = -1);
 public:
 	void HandleEnter(std::shared_ptr<Session> session);
 	void HandleLeave(std::shared_ptr<Session> session);
+	void HandleResult(Session* session, gen::ERoomEvent event, bool success);
 public:
 	static std::shared_ptr<Room> Create(uint32 id, StringView name);
 	
@@ -26,5 +27,9 @@ public:
 private:
 	uint32 m_id;
 	String m_name;
-	HashMap<uint32, std::shared_ptr<Player>> m_players;
+	uint32 lastPlayerId = 0;
+	HashMap<uint32, std::shared_ptr<class Player>> m_players;
+	std::weak_ptr<class RoomManager> m_manager;
 };
+
+static Room Lobby;
