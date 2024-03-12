@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Network/Session.hpp>
-#include <generated/ServerPacketHandler.gen.hpp>
+#include <generated/mmo/ServerPacketHandler.gen.hpp>
 
 class Player;
 class Room;
@@ -14,15 +14,15 @@ public:
 public:
 	virtual void onConnected() override
 	{
-		Console::Log(LogServer, Log, L"Connected!");
+		Console::Log(LogMMOServer, Log, L"Connected!");
 	}
 	virtual void onDisconnected() override
 	{
-		Console::Log(LogServer, Log, L"Disonnected!");
+		Console::Log(LogMMOServer, Log, L"Disconnected!");
 	}
 	virtual void onReceive(std::span<char> buffer, int32 len) override
 	{
-		gen::PacketHandler::handlePacket(shared_from_this(), buffer);
+		gen::mmo::PacketHandler::handlePacket(shared_from_this(), buffer);
 	}
 public:
 	__forceinline std::shared_ptr<Player> GetPlayer() { return m_player.lock(); }

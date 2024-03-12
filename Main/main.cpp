@@ -1,24 +1,22 @@
 ﻿#include "pch.h"
 #include "GameSession.hpp"
 #include "Network/Server.hpp"
+#include "MMOServer.hpp"
 
 using namespace std;
-
-/* ingame id = uint32
-   database id = uuid(String) */
 
 int main()
 {
 	try {
-		auto endpoint = Endpoint(IpAddress::Any, 9999);
+		auto endpoint = Endpoint(IpAddress::Any, 1225);
 		auto server = Server::Open<GameSession>();
 		server->Run(endpoint);
 
-		Console::Log(LogServer, Log, L"Server is running on " + action::ToUnicodeString(endpoint.toString()));
+		Console::Log(LogMMOServer, Log, TEXT("MMO Server is running on ") + action::ToUnicodeString(endpoint.toString()));
 
 		GEngine->ExecuteIocpLogic(std::thread::hardware_concurrency(), true);
 	}
 	catch (exception& e) {
-		Console::Log(LogServer, Error, action::ToUnicodeString(e.what()));
+		Console::Log(LogMMOServer, Error, action::ToUnicodeString(e.what()));
 	}
 }

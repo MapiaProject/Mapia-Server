@@ -13,6 +13,7 @@ public:
 	void SetId(uint32 id);
 	void SetName(StringView name);
 	__forceinline std::shared_ptr<GameSession> GetSession() { return m_session; }
+	void SetSession(std::shared_ptr<GameSession> session);
 private:
 	uint32 m_id;
 	String m_name;

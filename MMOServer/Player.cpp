@@ -10,3 +10,8 @@ void Player::SetName(StringView name)
 {
 	m_name = name;
 }
+
+void Player::SetSession(std::shared_ptr<GameSession> session)
+{
+	m_session = session;
+}

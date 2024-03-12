@@ -1,9 +1,6 @@
 #pragma once
 #include <Thread/JobSerializer.hpp>
-
-#include <generated/Protocol.gen.hpp>
-
-class Room;
+#include <generated/mmo/Protocol.gen.hpp>
 
 class RoomManager : public JobSerializer
 {
@@ -16,10 +13,11 @@ public:
 public:
 	/* HANDLING */
 	void HandleEnterGame(std::shared_ptr<Session> session);
-	void HandleRoomEvent(std::shared_ptr<Session> session, gen::RoomEventReq pk);
+	void HandleRoomEvent(std::shared_ptr<Session> session, gen::mmo::RoomEventReq pk);
 private:
+	std::shared_ptr<class Room> m_lobby;
 	/* Key: uint32, Value: Room Ptr */
-	HashMap<uint32, std::shared_ptr<Room>> m_roomList;
+	HashMap<uint32, std::shared_ptr<class GameRoom>> m_roomList;
 	uint32 m_lastId = 0;
 };
 

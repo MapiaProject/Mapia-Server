@@ -15,42 +15,9 @@
 
 /* Additional headers. */
 #include "Struct.gen.hpp"
-
 namespace gen {
-    class LoginReq
-            : public Packet {
-    public:
-        LoginReq() : Packet(static_cast<unsigned short>(PacketId::LOGIN_REQ)) {
-        }
-        ~LoginReq() {
-    
-        }
-    protected:
-        virtual void Read() override
-        {
-            Packet::Read();
-            
-        }
-        virtual void Write() override
-        {
-            
-            Finish();
-        }
-    public:
-        
-    };
-    
-    inline Packet& operator>>(Packet& pk, LoginReq& loginReq) {
-        
-        return pk;
-    }
-
-    inline Packet& operator<<(Packet& pk, const LoginReq& loginReq) {
-        
-        return pk;
-    }
-
-	class EnterGameReq
+namespace mmo {
+    class EnterGameReq
             : public Packet {
     public:
         EnterGameReq() : Packet(static_cast<unsigned short>(PacketId::ENTER_GAME_REQ)) {
@@ -115,40 +82,6 @@ namespace gen {
 
     inline Packet& operator<<(Packet& pk, const RoomEventReq& roomEventReq) {
         pk << roomEventReq.room << (roomEventReq.event);
-        return pk;
-    }
-
-	class LoginRes
-            : public Packet {
-    public:
-        LoginRes() : Packet(static_cast<unsigned short>(PacketId::LOGIN_RES)) {
-        }
-        ~LoginRes() {
-    
-        }
-    protected:
-        virtual void Read() override
-        {
-            Packet::Read();
-            *this >> success;
-        }
-        virtual void Write() override
-        {
-            *this << success;
-            Finish();
-        }
-    public:
-        bool success;
-	
-    };
-    
-    inline Packet& operator>>(Packet& pk, LoginRes& loginRes) {
-        pk >> loginRes.success;
-        return pk;
-    }
-
-    inline Packet& operator<<(Packet& pk, const LoginRes& loginRes) {
-        pk << loginRes.success;
         return pk;
     }
 
@@ -255,5 +188,6 @@ namespace gen {
         return pk;
     }
 
+}
 }
 #pragma warning(pop)

@@ -22,7 +22,7 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{40601701-c959-4740-82e3-1c3add01e9b9}</ProjectGuid>
-    <RootNamespace>HazardServer</RootNamespace>
+    <RootNamespace>MMOServer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -106,7 +106,8 @@
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/"
+python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/" -n mmo
+
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -134,7 +135,8 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/"
+python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/" -n mmo
+
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -158,7 +160,8 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/"
+python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/" -n mmo
+
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -186,14 +189,17 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/"
+python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/" -n mmo
+
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="HazardServer\HazardServer.cpp" />
-    <ClCompile Include="HazardServer\GameSession.cpp" />
-    <ClCompile Include="HazardServer\ServerPacketHandler.cpp" />
+    <ClCompile Include="MMOServer\Managers\DatabaseManager.cpp" />
+    <ClCompile Include="MMOServer\GameRoom.cpp" />
+    <ClCompile Include="MMOServer\MMOServer.cpp" />
+    <ClCompile Include="MMOServer\GameSession.cpp" />
+    <ClCompile Include="MMOServer\ServerPacketHandler.cpp" />
     <ClCompile Include="Main\main.cpp" />
     <ClCompile Include="Main\PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -201,34 +207,27 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="HazardServer\Room.cpp" />
-    <ClCompile Include="HazardServer\Managers\Manager.cpp" />
-    <ClCompile Include="HazardServer\Managers\RoomManager.cpp" />
-    <ClCompile Include="HazardServer\Player.cpp" />
+    <ClCompile Include="MMOServer\Room.cpp" />
+    <ClCompile Include="MMOServer\Managers\Manager.cpp" />
+    <ClCompile Include="MMOServer\Managers\RoomManager.cpp" />
+    <ClCompile Include="MMOServer\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="common\generated\Enum.gen.hpp" />
-    <ClInclude Include="common\generated\Packet.gen.hpp" />
-    <ClInclude Include="common\generated\Protocol.gen.hpp" />
-    <ClInclude Include="common\generated\ServerPacketHandler.gen.hpp" />
-    <ClInclude Include="common\generated\Struct.gen.hpp" />
-    <ClInclude Include="HazardServer\HazardServer.hpp" />
-    <ClInclude Include="HazardServer\GameSession.hpp" />
-    <ClInclude Include="HazardServer\uuid.hpp" />
+    <ClInclude Include="MMOServer\Managers\DatabaseManager.hpp" />
+    <ClInclude Include="MMOServer\GameRoom.hpp" />
+    <ClInclude Include="MMOServer\MMOServer.hpp" />
+    <ClInclude Include="MMOServer\GameSession.hpp" />
     <ClInclude Include="Main\main.h" />
     <ClInclude Include="Main\PCH\pch.h" />
-    <ClInclude Include="HazardServer\Room.hpp" />
-    <ClInclude Include="HazardServer\Managers\Manager.hpp" />
-    <ClInclude Include="HazardServer\Managers\RoomManager.hpp" />
-    <ClInclude Include="HazardServer\Player.hpp" />
+    <ClInclude Include="MMOServer\Room.hpp" />
+    <ClInclude Include="MMOServer\Managers\Manager.hpp" />
+    <ClInclude Include="MMOServer\Managers\RoomManager.hpp" />
+    <ClInclude Include="MMOServer\Player.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="common\message\Enum.json" />
     <None Include="common\message\Protocol.json" />
     <None Include="common\message\Struct.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="common\database\GameDB.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

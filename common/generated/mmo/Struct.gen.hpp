@@ -15,8 +15,8 @@
 
 /* Additional headers. */
 #include "Enum.gen.hpp"
-
 namespace gen {
+namespace mmo {
     class Room
             : public Packet {
     public:
@@ -88,5 +88,6 @@ namespace gen {
         return pk;
     }
 
+}
 }
 #pragma warning(pop)

@@ -5,10 +5,6 @@
 	"message": {
 		"client": [
 			{
-				"name": "LoginReq",
-				"data": []
-			},
-			{
 				"name": "EnterGameReq",
 				"data": []
 			},
@@ -27,15 +23,6 @@
 			}
 		],
 		"server": [
-			{
-				"name": "LoginRes",
-				"data": [
-					{
-						"type": "bool",
-						"name": "success"
-					}
-				]
-			},
 			{
 				"name": "NotifyRoomList",
 				"data": [

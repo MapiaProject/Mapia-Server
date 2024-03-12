@@ -1,17 +1,17 @@
 #include "pch.h"
-#include "HazardServer.hpp"
+#include "MMOServer.hpp"
 #include "Managers/Manager.hpp"
 
 Engine* GEngine;
 Manager* GManager;
 
-HazardServer::HazardServer()
+MMOServer::MMOServer()
 {
 	GEngine = new Engine;
 	GManager = new Manager;
 }
 
-HazardServer::~HazardServer()
+MMOServer::~MMOServer()
 {
 	delete GEngine;
 	delete GManager;
