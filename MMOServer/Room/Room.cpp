@@ -2,7 +2,7 @@
 #include "Room.hpp"
 
 #include "Player.hpp"
-#include "GameSession.hpp"
+#include "Session/GameSession.hpp"
 
 #include "Network/Packet.hpp"
 #include "Managers/Manager.hpp"

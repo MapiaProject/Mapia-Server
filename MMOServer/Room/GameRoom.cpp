@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GameRoom.hpp"
-#include <GameSession.hpp>
-#include <Player.hpp>
+#include <Session/GameSession.hpp>
+#include <Room/Player.hpp>
 #include <Managers/Manager.hpp>
 #include <Managers/RoomManager.hpp>
 

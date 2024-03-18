@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "RoomManager.hpp"
 
-#include "GameRoom.hpp"
+#include "Room/GameRoom.hpp"
 #include "Network/Session.hpp"
 #include "generated/mmo/Protocol.gen.hpp"
 

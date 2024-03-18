@@ -12,18 +12,9 @@ public:
 	GameSession() = default;
 	~GameSession() = default;
 public:
-	virtual void onConnected() override
-	{
-		Console::Log(LogMMOServer, Log, L"Connected!");
-	}
-	virtual void onDisconnected() override
-	{
-		Console::Log(LogMMOServer, Log, L"Disconnected!");
-	}
-	virtual void onReceive(std::span<char> buffer, int32 len) override
-	{
-		gen::mmo::PacketHandler::handlePacket(shared_from_this(), buffer);
-	}
+	virtual void OnConnected(net::Endpoint) override;
+	virtual void OnDisconnected(net::Endpoint) override;
+	virtual void OnReceive(std::span<char>, int32) override;
 public:
 	__forceinline std::shared_ptr<Player> GetPlayer() { return m_player.lock(); }
 	__forceinline std::shared_ptr<Room> GetRoom() { return m_room.lock(); }

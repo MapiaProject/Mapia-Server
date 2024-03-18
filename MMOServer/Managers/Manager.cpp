@@ -2,7 +2,7 @@
 #include "Manager.hpp"
 
 #include "RoomManager.hpp"
-#include "Room.hpp"
+#include "Room/Room.hpp"
 #include "DatabaseManager.hpp"
 
 Manager::Manager()

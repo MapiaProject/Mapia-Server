@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "GameSession.hpp"
+#include "Session/GameSession.hpp"
 
 #include "generated/mmo/ServerPacketHandler.gen.hpp"
 

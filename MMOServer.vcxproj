@@ -106,9 +106,7 @@
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/" -n mmo
-
-</Command>
+python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/']" -n mmo</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -135,9 +133,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/" -n mmo
-
-</Command>
+python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/']" -n mmo</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -160,9 +156,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/" -n mmo
-
-</Command>
+python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/']" -n mmo</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -189,16 +183,15 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/" -n mmo
-
-</Command>
+python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/']" -n mmo</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MMOServer\Session\LogSession.cpp" />
     <ClCompile Include="MMOServer\Managers\DatabaseManager.cpp" />
-    <ClCompile Include="MMOServer\GameRoom.cpp" />
+    <ClCompile Include="MMOServer\Room\GameRoom.cpp" />
     <ClCompile Include="MMOServer\MMOServer.cpp" />
-    <ClCompile Include="MMOServer\GameSession.cpp" />
+    <ClCompile Include="MMOServer\Session\GameSession.cpp" />
     <ClCompile Include="MMOServer\ServerPacketHandler.cpp" />
     <ClCompile Include="Main\main.cpp" />
     <ClCompile Include="Main\PCH\pch.cpp">
@@ -207,22 +200,23 @@ python execute.py -s ../../$(ProjectName)/common/ -c "D:/Project/Unreal Project/
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="MMOServer\Room.cpp" />
+    <ClCompile Include="MMOServer\Room\Room.cpp" />
     <ClCompile Include="MMOServer\Managers\Manager.cpp" />
     <ClCompile Include="MMOServer\Managers\RoomManager.cpp" />
-    <ClCompile Include="MMOServer\Player.cpp" />
+    <ClCompile Include="MMOServer\Room\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MMOServer\Session\LogSession.hpp" />
     <ClInclude Include="MMOServer\Managers\DatabaseManager.hpp" />
-    <ClInclude Include="MMOServer\GameRoom.hpp" />
+    <ClInclude Include="MMOServer\Room\GameRoom.hpp" />
     <ClInclude Include="MMOServer\MMOServer.hpp" />
-    <ClInclude Include="MMOServer\GameSession.hpp" />
+    <ClInclude Include="MMOServer\Session\GameSession.hpp" />
     <ClInclude Include="Main\main.h" />
     <ClInclude Include="Main\PCH\pch.h" />
-    <ClInclude Include="MMOServer\Room.hpp" />
+    <ClInclude Include="MMOServer\Room\Room.hpp" />
     <ClInclude Include="MMOServer\Managers\Manager.hpp" />
     <ClInclude Include="MMOServer\Managers\RoomManager.hpp" />
-    <ClInclude Include="MMOServer\Player.hpp" />
+    <ClInclude Include="MMOServer\Room\Player.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="common\message\Enum.json" />
