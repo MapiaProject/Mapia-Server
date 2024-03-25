@@ -13,4 +13,3 @@ public:
 	virtual void HandleEnter(std::shared_ptr<Session> session) override;
 	virtual void HandleLeave(std::shared_ptr<Session> session) override;
 };
-

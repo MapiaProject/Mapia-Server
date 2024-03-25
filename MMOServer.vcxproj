@@ -156,7 +156,8 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/']" -n mmo</Command>
+python execute.py -s ../../$(ProjectName)/common/ -c "['../../../WOS-Client/Source/WOS/Network/']" -n mmo
+</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -219,6 +220,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     <ClInclude Include="MMOServer\Room\Player.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="common\database\Setup.sql" />
     <None Include="common\message\Enum.json" />
     <None Include="common\message\Protocol.json" />
     <None Include="common\message\Struct.json" />
