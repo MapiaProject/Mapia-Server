@@ -8,4 +8,3 @@ public:
 	virtual void OnDisconnected(net::Endpoint) override;
 	virtual void OnReceive(std::span<char>, int32) override;
 };
-

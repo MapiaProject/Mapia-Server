@@ -8,6 +8,7 @@ void LogSession::OnConnected(net::Endpoint ep)
 	gen::logs::SystemLog sysLog;
 	sysLog.severity = gen::logs::ESeverity::INFO;
 	sysLog.serverName = TEXT("MMO Server");
+	sysLog.message = TEXT("Server started");
 	Send(&sysLog);
 }
 
