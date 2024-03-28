@@ -1,11 +1,10 @@
 {
 	"enum": [
 		{
-			"name": "ERoomEvent",
+			"name": "EEntityType",
 			"list": [
-				"CREATE",
-				"ENTER",
-				"LEAVE"
+				"Player",
+				"Monster"
 			]
 		}
 	]

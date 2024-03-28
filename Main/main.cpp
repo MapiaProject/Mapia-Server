@@ -5,8 +5,6 @@
 #include "Network/Client.hpp"
 #include "MMOServer.hpp"
 
-using namespace std;
-
 int main()
 {
 	auto logEndpoint = Endpoint(net::IpAddress::Loopback, 1225);
@@ -17,11 +15,11 @@ int main()
 		server->Run(serverEndpoint);
 		client->Run(logEndpoint);
 
-		Console::Log(LogMMOServer, Log, TEXT("MMO Server is running on ") + action::ToUnicodeString(serverEndpoint.toString()));
+		Console::Log(Category::MMOServer, Info, TEXT("MMO Server is running on ") + action::ToUnicodeString(serverEndpoint.toString()));
 
-		GEngine->ExecuteIocpLogic(thread::hardware_concurrency(), true);
+		GEngine->ExecuteIocpLogic(std::thread::hardware_concurrency(), true);
 	}
-	catch (exception& e) {
-		Console::Log(LogMMOServer, Error, action::ToUnicodeString(e.what()));
+	catch (std::exception& e) {
+		Console::Log(Category::MMOServer, Error, action::ToUnicodeString(e.what()));
 	}
 }

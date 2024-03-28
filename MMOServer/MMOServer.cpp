@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "MMOServer.hpp"
-#include "Managers/Manager.hpp"
+#include "Manager/Manager.hpp"
 
 Engine* GEngine;
 Manager* GManager;

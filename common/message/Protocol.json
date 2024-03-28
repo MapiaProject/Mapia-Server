@@ -6,54 +6,12 @@
 		"client": [
 			{
 				"name": "EnterGameReq",
-				"data": []
-			},
-			{
-				"name": "RoomEventReq",
 				"data": [
-					{
-						"type": "Room",
-						"name": "room"
-					},
-					{
-						"type": "ERoomEvent",
-						"name": "event"
-					}
 				]
 			}
 		],
 		"server": [
-			{
-				"name": "NotifyRoomList",
-				"data": [
-					{
-						"type": "list|Room",
-						"name": "roomList"
-					}
-				]
-			},
-			{
-				"name": "RoomEventRes",
-				"data": [
-					{
-						"type": "ERoomEvent",
-						"name": "event"
-					},
-					{
-						"type": "bool",
-						"name": "success"
-					}
-				]
-			},
-			{
-				"name": "NotifyPlayerList",
-				"data": [
-					{
-						"type": "list|PlayerInfo",
-						"name": "playerList"
-					}
-				]
-			}
+			
 		]
 	}
 }

@@ -7,4 +7,5 @@ public:
 	virtual void OnConnected(net::Endpoint) override;
 	virtual void OnDisconnected(net::Endpoint) override;
 	virtual void OnReceive(std::span<char>, int32) override;
+	virtual void OnFail(Failure) override;
 };

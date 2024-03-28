@@ -45,8 +45,6 @@ namespace mmo
                 break;
 			case ENTER_GAME_REQ:
 				return BIND_HANDLER(EnterGameReq, buffer);
-			case ROOM_EVENT_REQ:
-				return BIND_HANDLER(RoomEventReq, buffer);
             default:
                 break;
             }
@@ -60,7 +58,6 @@ namespace mmo
             return handler(session);
         }
 		static bool EnterGameReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterGameReq> packet);
-		static bool RoomEventReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<RoomEventReq> packet);
 	};
 }
 }

@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "LogSession.hpp"
-
+#include "Thread/ThreadManager.hpp"
 #include "generated/logs/Protocol.gen.hpp"
 
-void LogSession::OnConnected(net::Endpoint ep)
+void LogSession::OnConnected(net::Endpoint)
 {
 	gen::logs::SystemLog sysLog;
 	sysLog.severity = gen::logs::ESeverity::INFO;
@@ -14,10 +14,14 @@ void LogSession::OnConnected(net::Endpoint ep)
 
 void LogSession::OnDisconnected(net::Endpoint)
 {
-
+	GEngine->GetThreadManager()->Terminate();
 }
 
 void LogSession::OnReceive(std::span<char>, int32)
+{
+
+}
+void LogSession::OnFail(Failure)
 {
 
 }

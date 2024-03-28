@@ -188,9 +188,10 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MMOServer\Manager\MapManager.cpp" />
+    <ClCompile Include="MMOServer\Manager\Manager.cpp" />
+    <ClCompile Include="MMOServer\Storage\MapData.cpp" />
     <ClCompile Include="MMOServer\Session\LogSession.cpp" />
-    <ClCompile Include="MMOServer\Managers\DatabaseManager.cpp" />
-    <ClCompile Include="MMOServer\Room\GameRoom.cpp" />
     <ClCompile Include="MMOServer\MMOServer.cpp" />
     <ClCompile Include="MMOServer\Session\GameSession.cpp" />
     <ClCompile Include="MMOServer\ServerPacketHandler.cpp" />
@@ -201,23 +202,22 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="MMOServer\Room\Room.cpp" />
-    <ClCompile Include="MMOServer\Managers\Manager.cpp" />
-    <ClCompile Include="MMOServer\Managers\RoomManager.cpp" />
-    <ClCompile Include="MMOServer\Room\Player.cpp" />
+    <ClCompile Include="MMOServer\Object\Player.cpp" />
+    <ClCompile Include="MMOServer\Manager\NetObjectManager.cpp" />
+    <ClCompile Include="MMOServer\Object\NetObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MMOServer\Manager\MapManager.hpp" />
+    <ClInclude Include="MMOServer\Manager\Manager.hpp" />
+    <ClInclude Include="MMOServer\Storage\MapData.hpp" />
     <ClInclude Include="MMOServer\Session\LogSession.hpp" />
-    <ClInclude Include="MMOServer\Managers\DatabaseManager.hpp" />
-    <ClInclude Include="MMOServer\Room\GameRoom.hpp" />
     <ClInclude Include="MMOServer\MMOServer.hpp" />
     <ClInclude Include="MMOServer\Session\GameSession.hpp" />
     <ClInclude Include="Main\main.h" />
     <ClInclude Include="Main\PCH\pch.h" />
-    <ClInclude Include="MMOServer\Room\Room.hpp" />
-    <ClInclude Include="MMOServer\Managers\Manager.hpp" />
-    <ClInclude Include="MMOServer\Managers\RoomManager.hpp" />
-    <ClInclude Include="MMOServer\Room\Player.hpp" />
+    <ClInclude Include="MMOServer\Object\Player.hpp" />
+    <ClInclude Include="MMOServer\Manager\NetObjectManager.hpp" />
+    <ClInclude Include="MMOServer\Object\NetObject.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="common\database\Setup.sql" />
