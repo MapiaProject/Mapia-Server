@@ -16,6 +16,7 @@ public:
 	virtual void OnReceive(std::span<char>, int32) override;
 public:
 	void SetPlayer(std::shared_ptr<Player> player);
+	std::shared_ptr<Player> GetPlayer();
 private:
 	std::shared_ptr<Player> m_player;
 };

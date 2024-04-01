@@ -7,11 +7,54 @@
 			{
 				"name": "EnterGameReq",
 				"data": [
+					{
+						"type": "string",
+						"name": "uid"
+					}
+				]
+			},
+			{
+				"name": "EnterMapReq",
+				"data": [
+					{
+						"type": "string",
+						"name": "uid"
+					},
+					{
+						"type": "string",
+						"name": "mapName"
+					}
 				]
 			}
 		],
 		"server": [
-			
+			{
+				"name": "EnterGameRes",
+				"data": [
+					{
+						"type": "bool",
+						"name": "success"
+					}
+				]
+			},
+			{
+				"name": "Spawn",
+				"data": [
+					{
+						"type": "list|PlayerInfo",
+						"name": "players"
+					}
+				]
+			},
+			{
+				"name": "EnterMapRes",
+				"data": [
+					{
+						"type": "bool",
+						"name": "success"
+					}
+				]
+			}
 		]
 	}
 }

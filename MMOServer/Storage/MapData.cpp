@@ -17,6 +17,11 @@ String MapData::GetName() const
 	return m_name;
 }
 
+const Vector<Vector<Block>>& MapData::GetMap() const
+{
+	return m_map;
+}
+
 void MapData::Read(StringView filename)
 {
 	auto ini = Ini(TEXT("common/generated/maps/") + String(filename));
@@ -28,7 +33,8 @@ void MapData::Read(StringView filename)
 	auto sp = action::Split(section.Get<String>(TEXT("size")), TEXT(','));
 	m_size = Point2DI(std::stoi(sp[0]), std::stoi(sp[1]));
 
-	auto portals = action::Split(section.Get<String>(TEXT("portal")), TEXT(','));
+	auto portalsStr = section.Get<String>(TEXT("portal"));
+	auto portals = action::Split(portalsStr, TEXT(','));
 	/*---------------*/
 
 	/* load map data */

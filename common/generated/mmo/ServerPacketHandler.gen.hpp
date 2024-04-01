@@ -45,6 +45,8 @@ namespace mmo
                 break;
 			case ENTER_GAME_REQ:
 				return BIND_HANDLER(EnterGameReq, buffer);
+			case ENTER_MAP_REQ:
+				return BIND_HANDLER(EnterMapReq, buffer);
             default:
                 break;
             }
@@ -58,6 +60,7 @@ namespace mmo
             return handler(session);
         }
 		static bool EnterGameReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterGameReq> packet);
+		static bool EnterMapReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterMapReq> packet);
 	};
 }
 }

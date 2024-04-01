@@ -18,9 +18,10 @@ public:
 		return netObj;
 	}
 public:
-	void HandleEnterGameReq(std::shared_ptr<class Session> session, gen::mmo::EnterGameReq req);
+	void HandleEnterGame(std::shared_ptr<class Session> session, gen::mmo::EnterGameReq req);
 private:
 	uint64 m_lastId;
 	HashMap<uint64, std::weak_ptr<NetObject>> m_objects;
+	HashMap<String, bool> m_checkAccount;
 };
 

@@ -188,6 +188,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MMOServer\Object\GameMap.cpp" />
     <ClCompile Include="MMOServer\Manager\MapManager.cpp" />
     <ClCompile Include="MMOServer\Manager\Manager.cpp" />
     <ClCompile Include="MMOServer\Storage\MapData.cpp" />
@@ -207,6 +208,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     <ClCompile Include="MMOServer\Object\NetObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MMOServer\Object\GameMap.hpp" />
     <ClInclude Include="MMOServer\Manager\MapManager.hpp" />
     <ClInclude Include="MMOServer\Manager\Manager.hpp" />
     <ClInclude Include="MMOServer\Storage\MapData.hpp" />
@@ -230,7 +232,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties common_4message_4Struct_1json__JsonSchema="..\..\..\tools\PacketGenerator\messageScheme.json" />
+      <UserProperties />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

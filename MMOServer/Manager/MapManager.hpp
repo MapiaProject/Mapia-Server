@@ -1,14 +1,18 @@
 #pragma once
+#include "Object/GameMap.hpp"
+#include "Thread/JobSerializer.hpp"
 
-#include "Storage/MapData.hpp"
+#include "generated/mmo/Protocol.gen.hpp"
 
-class MapManager
+class MapManager : public JobSerializer
 {
 public:
 	MapManager();
 public:
-	MapData GetMap(String name);
+	std::shared_ptr<GameMap> GetMap(String name);
+public:
+	void HandleEnter(std::shared_ptr<class Session> session, gen::mmo::EnterMapReq packet);
 private:
-	HashMap<String, MapData> m_mapData;
+	HashMap<String, std::shared_ptr<GameMap>> m_mapData;
 };
 

@@ -20,3 +20,8 @@ void GameSession::SetPlayer(std::shared_ptr<Player> player)
 {
 	m_player = player;
 }
+
+std::shared_ptr<Player> GameSession::GetPlayer()
+{
+	return m_player;
+}
