@@ -24,3 +24,13 @@ void GameMap::Broadcast(Packet* packet, uint64 ignore)
 			player.second->GetSession()->Send(packet);
 	}
 }
+
+Vector<std::shared_ptr<Player>> GameMap::Players()
+{
+	Vector<std::shared_ptr<Player>> players;
+	for (const auto& player : m_players)
+	{
+		players.push_back(player.second);
+	}
+	return players;
+}
