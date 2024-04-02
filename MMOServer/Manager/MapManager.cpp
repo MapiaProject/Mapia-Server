@@ -3,6 +3,7 @@
 #include "Session/GameSession.hpp"
 #include "Object/Player.hpp"
 #include "Utility/Converter.hpp"
+#include "Manager/AccountManager.hpp"
 
 #include <filesystem>
 
@@ -41,14 +42,14 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 				myPlayer->SetPosition(Vector2DI(1, 6));
 				info.objectId = myPlayer->GetId();
 				info.position = Converter::MakeVector(myPlayer->GetPosition());
-				spawn.players.push_back(info);
 			}
 			else
 			{
 				myPlayer->SetPosition(Vector2DI(gameMap->GetMap()[0].size() - packet.position.x, packet.position.y));
 				info.position = Converter::MakeVector(myPlayer->GetPosition());
-				spawn.players.push_back(info);
 			}
+			info.name = myPlayer->GetNickname();
+			spawn.players.push_back(info);
 			session->Send(&spawn);
 		}
 
@@ -63,7 +64,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 					gen::mmo::PlayerInfo info;
 					info.objectId = player->GetId();
 					info.position = Converter::MakeVector(player->GetPosition());
-					//info.name = player->GetName();
+					info.name = player->GetNickname();
 					spawn.players.push_back(info);
 				}
 			}
@@ -75,6 +76,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			gen::mmo::Spawn spawn;
 			gen::mmo::PlayerInfo info;
 			spawn.isMine = false;
+			info.name = myPlayer->GetNickname();
 			info.objectId = myPlayer->GetId();
 			info.position = Converter::MakeVector(myPlayer->GetPosition());
 			spawn.players.push_back(info);

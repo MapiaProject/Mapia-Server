@@ -188,6 +188,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MMOServer\Manager\AccountManager.cpp" />
     <ClCompile Include="MMOServer\Utility\Converter.cpp" />
     <ClCompile Include="MMOServer\Object\GameMap.cpp" />
     <ClCompile Include="MMOServer\Manager\MapManager.cpp" />
@@ -209,6 +210,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     <ClCompile Include="MMOServer\Object\NetObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MMOServer\Manager\AccountManager.hpp" />
     <ClInclude Include="MMOServer\Utility\Converter.hpp" />
     <ClInclude Include="MMOServer\Object\GameMap.hpp" />
     <ClInclude Include="MMOServer\Manager\MapManager.hpp" />
@@ -224,6 +226,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     <ClInclude Include="MMOServer\Object\NetObject.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="common\database\Procedure.sql" />
     <None Include="common\database\Setup.sql" />
     <None Include="common\message\Enum.json" />
     <None Include="common\message\Protocol.json" />

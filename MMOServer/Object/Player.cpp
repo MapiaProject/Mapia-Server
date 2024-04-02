@@ -20,12 +20,17 @@ void Player::SetPosition(Vector2DI position)
 	m_position = position;
 }
 
+void Player::SetNickname(StringView nickname)
+{
+	m_nickname = nickname;
+}
+
 std::shared_ptr<GameSession> Player::GetSession()
 {
 	return m_session.lock();
 }
 
-std::shared_ptr<GameMap> Player::GetMap()
+std::shared_ptr<GameMap> Player::GetMap() const
 {
 	return m_map.lock();
 }
@@ -33,4 +38,9 @@ std::shared_ptr<GameMap> Player::GetMap()
 Vector2DI Player::GetPosition() const
 {
 	return m_position;
+}
+
+String Player::GetNickname() const
+{
+	return m_nickname;
 }
