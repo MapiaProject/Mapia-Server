@@ -36,7 +36,12 @@ Vector<std::shared_ptr<Player>> GameMap::Players()
 
 void GameMap::AddPlayer(std::shared_ptr<class Player> player)
 {
-	m_players[player->GetId()] = player;
+	m_players.insert({ player->GetId(), player });
+}
+
+void GameMap::RemovePlayer(std::shared_ptr<class Player> player)
+{
+	m_players.erase(player->GetId());
 }
 
 void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)

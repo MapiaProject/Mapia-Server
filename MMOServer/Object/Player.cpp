@@ -11,10 +11,17 @@ void Player::SetSession(std::shared_ptr<GameSession> session)
 	m_session = session;
 }
 
-void Player::SetMap(std::shared_ptr<GameMap> map)
+void Player::EnterMap(std::shared_ptr<GameMap> gameMap)
 {
-	m_map = map;
-	m_map.lock()->AddPlayer(std::static_pointer_cast<Player>(shared_from_this()));
+	m_map = gameMap;
+	if (auto map = m_map.lock())
+		gameMap->AddPlayer(std::static_pointer_cast<Player>(shared_from_this()));
+}
+
+void Player::LeaveMap()
+{
+	if (auto map = m_map.lock())
+		map->RemovePlayer(std::static_pointer_cast<Player>(shared_from_this()));
 }
 
 void Player::SetPosition(Vector2DI position)

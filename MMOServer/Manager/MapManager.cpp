@@ -29,7 +29,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 	auto myPlayer = gameSession->GetPlayer();
 	if (gameMap != nullptr && myPlayer->GetMap() != gameMap)
 	{
-		myPlayer->SetMap(gameMap);
+		myPlayer->EnterMap(gameMap);
 
 		// send my position
 		{
