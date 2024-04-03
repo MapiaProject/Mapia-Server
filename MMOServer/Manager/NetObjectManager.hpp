@@ -19,9 +19,12 @@ public:
 	}
 public:
 	void HandleEnterGame(std::shared_ptr<class Session> session, gen::mmo::EnterGameReq req);
+	void HandleDirectChat(std::shared_ptr<class Session> session, gen::mmo::Chat chat);
+	void HandleAllChat(std::shared_ptr<class Session> session, gen::mmo::Chat chat);
+private:
+	void BroadcastAll(Packet* packet, uint64 ignore = 0);
 private:
 	uint64 m_lastId;
 	HashMap<uint64, std::weak_ptr<NetObject>> m_objects;
-	HashMap<String, bool> m_checkAccount;
 };
 

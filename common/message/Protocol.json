@@ -47,8 +47,8 @@
 						"name": "type"
 					},
 					{
-						"type": "string",
-						"name": "targetUid"
+						"type": "uint64",
+						"name": "targetId"
 					},
 					{
 						"type": "string",
@@ -94,7 +94,7 @@
 				"data": [
 					{
 						"type": "string",
-						"name": "senderId"
+						"name": "senderName"
 					},
 					{
 						"type": "string",

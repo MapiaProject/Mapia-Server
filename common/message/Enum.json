@@ -11,7 +11,7 @@
 			"name": "EChatType",
 			"list": [
 				"Direct",
-				"Party",
+				"Local",
 				"All"
 			]
 		}

@@ -33,5 +33,21 @@ bool mmo::PacketHandler::MovePacketHandler(TSharedPtr<Session> session, TSharedP
 
 bool gen::mmo::PacketHandler::ChatPacketHandler(TSharedPtr<Session> session, TSharedPtr<Chat> packet)
 {
+	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	switch (packet->type)
+	{
+	case gen::mmo::EChatType::Direct:
+		GManager->NetObject()->Launch(&NetObjectManager::HandleDirectChat, session, *packet);
+		break;
+	case gen::mmo::EChatType::Local:
+		if (auto map = gameSession->GetPlayer()->GetMap())
+			map->Launch(&GameMap::HandleLocalChat, session, *packet);
+		break;
+	case gen::mmo::EChatType::All:
+		GManager->NetObject()->Launch(&NetObjectManager::HandleAllChat, session, *packet);
+		break;
+	default:
+		break;
+	}
 	return false;
 }
