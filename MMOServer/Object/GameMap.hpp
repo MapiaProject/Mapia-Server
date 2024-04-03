@@ -1,17 +1,22 @@
 #pragma once
+#include "Thread/JobSerializer.hpp"
 #include "Storage/MapData.hpp"
 
-class GameMap : private MapData
+#include "generated/mmo/ServerPacketHandler.gen.hpp"
+
+class GameMap : public JobSerializer, public MapData
 {
 public:
-	GameMap(MapData mapData);
+	GameMap();
+	GameMap(StringView path);
 	~GameMap();
 public:
-	const Vector<Vector<Block>>& GetMap() const;
 	void Broadcast(Packet* packet, uint64 ignore);
 	Vector<std::shared_ptr<class Player>> Players();
+	void AddPlayer(std::shared_ptr<class Player> player);
+public:
+	void HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move);
 private:
 	HashMap<uint64, std::shared_ptr<class Player>> m_players;
-	Vector<Vector<Block>> m_map;
 };
 

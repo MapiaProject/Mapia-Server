@@ -47,6 +47,10 @@ namespace mmo
 				return BIND_HANDLER(EnterGameReq, buffer);
 			case ENTER_MAP_REQ:
 				return BIND_HANDLER(EnterMapReq, buffer);
+			case MOVE:
+				return BIND_HANDLER(Move, buffer);
+			case CHAT:
+				return BIND_HANDLER(Chat, buffer);
             default:
                 break;
             }
@@ -61,6 +65,8 @@ namespace mmo
         }
 		static bool EnterGameReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterGameReq> packet);
 		static bool EnterMapReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterMapReq> packet);
+		static bool MovePacketHandler(TSharedPtr<Session> session, TSharedPtr<Move> packet);
+		static bool ChatPacketHandler(TSharedPtr<Session> session, TSharedPtr<Chat> packet);
 	};
 }
 }

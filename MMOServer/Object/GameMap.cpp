@@ -3,17 +3,16 @@
 #include "Player.hpp"
 #include "Session/GameSession.hpp"
 
-GameMap::GameMap(MapData mapData) : m_map(mapData.GetMap())
+GameMap::GameMap()
+{
+}
+
+GameMap::GameMap(StringView path) : MapData(path)
 {
 }
 
 GameMap::~GameMap()
 {
-}
-
-const Vector<Vector<Block>>& GameMap::GetMap() const
-{
-	return m_map;
 }
 
 void GameMap::Broadcast(Packet* packet, uint64 ignore)
@@ -33,4 +32,16 @@ Vector<std::shared_ptr<Player>> GameMap::Players()
 		players.push_back(player.second);
 	}
 	return players;
+}
+
+void GameMap::AddPlayer(std::shared_ptr<class Player> player)
+{
+	m_players[player->GetId()] = player;
+}
+
+void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
+{
+	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	gen::mmo::NotifyMove syncMove;
+	syncMove.position = Converter::MakeVector(gameSession->GetPlayer()->GetPosition() + Converter::MakeVector<int>(move.dir));
 }

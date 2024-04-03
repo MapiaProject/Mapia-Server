@@ -26,6 +26,7 @@ public:
 	MapData(StringView filename);
 public:
 	String GetName() const;
+	Point2DI GetSize() const;
 	const Vector<Vector<Block>>& GetMap() const;
 	void Read(StringView filename);
 private:

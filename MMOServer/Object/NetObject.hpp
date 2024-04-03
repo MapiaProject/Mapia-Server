@@ -1,6 +1,6 @@
 #pragma once
 
-class NetObject
+class NetObject : public std::enable_shared_from_this<NetObject>
 {
 public:
 	NetObject(uint64 id);

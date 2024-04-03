@@ -12,9 +12,8 @@ MapManager::MapManager()
 {
 	for (auto& iter : std::filesystem::directory_iterator(TEXT("common/generated/maps/")))
 	{
-		auto map = MapData(action::Split(String(iter.path()), TEXT('/')).back());
-		auto gameMap = std::make_shared<GameMap>(map);
-		m_mapData[map.GetName()] = gameMap;
+		auto map = std::make_shared<GameMap>(action::Split(String(iter.path()), TEXT('/')).back());
+		m_mapData[map->GetName()] = map;
 	}
 }
 
@@ -45,7 +44,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			}
 			else
 			{
-				myPlayer->SetPosition(Vector2DI(gameMap->GetMap()[0].size() - packet.position.x, packet.position.y));
+				myPlayer->SetPosition(Vector2DI(gameMap->GetSize().GetX() - static_cast<int>(packet.position.x), static_cast<int>(packet.position.y)));
 				info.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			info.name = myPlayer->GetNickname();
@@ -57,7 +56,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 		{
 			gen::mmo::Spawn spawn;
 			spawn.isMine = false;
-			for (const auto& player : gameMap->Players())
+			for (const auto player : gameMap->Players())
 			{
 				if (player->GetId() != myPlayer->GetId())
 				{
@@ -76,13 +75,13 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			gen::mmo::Spawn spawn;
 			gen::mmo::PlayerInfo info;
 			spawn.isMine = false;
+
 			info.name = myPlayer->GetNickname();
 			info.objectId = myPlayer->GetId();
 			info.position = Converter::MakeVector(myPlayer->GetPosition());
+
 			spawn.players.push_back(info);
 			gameMap->Broadcast(&spawn, myPlayer->GetId());
 		}
 	}
 }
-
-	

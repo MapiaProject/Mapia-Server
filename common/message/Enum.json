@@ -6,6 +6,14 @@
 				"Player",
 				"Monster"
 			]
+		},
+		{
+			"name": "EChatType",
+			"list": [
+				"Direct",
+				"Party",
+				"All"
+			]
 		}
 	]
 }

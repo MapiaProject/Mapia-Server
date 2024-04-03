@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Player.hpp"
+#include "GameMap.hpp"
 
 Player::Player(uint64 id) : NetObject(id), m_position(Vector2DI::Zero())
 {
@@ -13,6 +14,7 @@ void Player::SetSession(std::shared_ptr<GameSession> session)
 void Player::SetMap(std::shared_ptr<GameMap> map)
 {
 	m_map = map;
+	m_map.lock()->AddPlayer(std::static_pointer_cast<Player>(shared_from_this()));
 }
 
 void Player::SetPosition(Vector2DI position)

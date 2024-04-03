@@ -29,6 +29,32 @@
 						"name": "position"
 					}
 				]
+			},
+			{
+				"name": "Move",
+				"data": [
+					{
+						"type": "Vector2",
+						"name": "dir"
+					}
+				]
+			},
+			{
+				"name": "Chat",
+				"data": [
+					{
+						"type": "EChatType",
+						"name": "type"
+					},
+					{
+						"type": "string",
+						"name": "targetUid"
+					},
+					{
+						"type": "string",
+						"name": "message"
+					}
+				]
 			}
 		],
 		"server": [
@@ -51,6 +77,28 @@
 					{
 						"type": "list|PlayerInfo",
 						"name": "players"
+					}
+				]
+			},
+			{
+				"name": "NotifyMove",
+				"data": [
+					{
+						"type": "Vector2",
+						"name": "position"
+					}
+				]
+			},
+			{
+				"name": "NotifyChat",
+				"data": [
+					{
+						"type": "string",
+						"name": "senderId"
+					},
+					{
+						"type": "string",
+						"name": "message"
 					}
 				]
 			}

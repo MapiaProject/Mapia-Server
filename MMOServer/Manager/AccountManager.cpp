@@ -18,7 +18,7 @@ AccountManager::AccountManager()
 	ASSERT_CRASH(stmt.ExecuteQuery());
 	while (stmt.Next())
 	{
-		m_users[uid] = nickname;
+		m_userData[uid] = nickname;
 	}
 }
 
@@ -29,7 +29,7 @@ AccountManager::~AccountManager()
 
 std::optional<String> AccountManager::GetNickname(String uid)
 {
-	String nickname = m_users[uid];
+	String nickname = m_userData[uid];
 	if (nickname == TEXT(""))
 		return std::nullopt;
 	return nickname;

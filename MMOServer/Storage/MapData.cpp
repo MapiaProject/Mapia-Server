@@ -17,6 +17,11 @@ String MapData::GetName() const
 	return m_name;
 }
 
+Point2DI MapData::GetSize() const
+{
+	return m_size;
+}
+
 const Vector<Vector<Block>>& MapData::GetMap() const
 {
 	return m_map;
