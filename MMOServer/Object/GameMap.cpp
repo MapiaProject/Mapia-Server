@@ -2,6 +2,7 @@
 #include "GameMap.hpp"
 #include "Player.hpp"
 #include "Session/GameSession.hpp"
+#include "Manager/MapManager.hpp"
 
 GameMap::GameMap()
 {
@@ -61,4 +62,14 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 	notifyChat.message = chat.message;
 
 	Broadcast(&notifyChat, sender->GetId());
+}
+
+void GameMap::HandleTeleport(std::shared_ptr<Session> session, gen::mmo::TeleportReq teleport)
+{
+	auto player = m_players[teleport.objectId];
+	for (auto portal : m_portals)
+	{
+		if (portal.position == player->GetPosition())
+			player->EnterMap(GManager->Map()->GetMap(portal.destMap));
+	}
 }

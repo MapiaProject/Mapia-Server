@@ -55,6 +55,15 @@
 						"name": "message"
 					}
 				]
+			},
+			{
+				"name": "TeleportReq",
+				"data": [
+					{
+						"type": "uint64",
+						"name": "objectId"
+					}
+				]
 			}
 		],
 		"server": [

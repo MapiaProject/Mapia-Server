@@ -29,7 +29,7 @@ public:
 	Point2DI GetSize() const;
 	const Vector<Vector<Block>>& GetMap() const;
 	void Read(StringView filename);
-private:
+protected:
 	String m_name;
 	Point2DI m_size;
 	Vector<Vector<Block>> m_map;

@@ -51,3 +51,11 @@ bool gen::mmo::PacketHandler::ChatPacketHandler(TSharedPtr<Session> session, TSh
 	}
 	return false;
 }
+
+bool gen::mmo::PacketHandler::TeleportReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<TeleportReq> packet)
+{
+	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (auto map = gameSession->GetPlayer()->GetMap())
+		map->Launch(&GameMap::HandleTeleport, session, *packet);
+	return false;
+}

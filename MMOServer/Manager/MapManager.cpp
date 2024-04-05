@@ -44,7 +44,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			}
 			else
 			{
-				myPlayer->SetPosition(Vector2DI(gameMap->GetSize().GetX() - static_cast<int>(packet.position.x), static_cast<int>(packet.position.y)));
+				myPlayer->SetPosition(Vector2DI(gameMap->GetSize().x - static_cast<int>(packet.position.x), static_cast<int>(packet.position.y)));
 				info.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			info.name = myPlayer->GetNickname();

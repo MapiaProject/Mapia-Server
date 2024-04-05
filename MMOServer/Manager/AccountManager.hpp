@@ -6,7 +6,8 @@ public:
 	~AccountManager();
 public:
 	std::optional<String> GetNickname(String uid);
+	void UpdateData();
 private:
-	HashMap<String, String> m_userData;
+	HashMap<String, String> m_userAccount;
 };
 

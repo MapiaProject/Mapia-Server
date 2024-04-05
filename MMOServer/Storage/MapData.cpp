@@ -45,10 +45,10 @@ void MapData::Read(StringView filename)
 	/* load map data */
 	auto map = ini[TEXT("map")].Get<String>(TEXT("data"));
 
-	for (int i = 0; i < m_size.GetY(); ++i)
+	for (int i = 0; i < m_size.y; ++i)
 	{
-		Vector<Block> t(m_size.GetX());
-		auto submap = map.substr(i * m_size.GetX(), m_size.GetX());
+		Vector<Block> t(m_size.x);
+		auto submap = map.substr(i * m_size.x, m_size.x);
 		std::transform(submap.begin(), submap.end(), t.begin(), [&, x = 0, cnt = 0](const auto& wc) mutable
 		{
 			auto block = static_cast<Block>(wc - L'0');
