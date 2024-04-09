@@ -156,7 +156,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "['../../../WOS-Client/Source/WOS/Network/']" -n mmo
+python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Source/WOS/Network/']" -n mmo
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -226,11 +226,11 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     <ClInclude Include="MMOServer\Object\NetObject.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="common\database\Procedure.sql" />
-    <None Include="common\database\Setup.sql" />
-    <None Include="common\message\Enum.json" />
-    <None Include="common\message\Protocol.json" />
-    <None Include="common\message\Struct.json" />
+    <None Include="Common\database\Procedure.sql" />
+    <None Include="Common\database\Setup.sql" />
+    <None Include="Common\message\Enum.json" />
+    <None Include="Common\message\Protocol.json" />
+    <None Include="Common\message\Struct.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,7 +10,7 @@
 
 MapManager::MapManager()
 {
-	for (auto& iter : std::filesystem::directory_iterator(TEXT("common/generated/mapData/")))
+	for (auto& iter : std::filesystem::directory_iterator(TEXT("Common/generated/mapData/")))
 	{
 		auto map = std::make_shared<GameMap>(action::Split(String(iter.path()), TEXT('/')).back());
 		m_mapData[map->GetName()] = map;
@@ -84,4 +84,8 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			gameMap->Broadcast(&spawn, myPlayer->GetId());
 		}
 	}
+}
+
+void MapManager::Enter(std::shared_ptr<GameMap> map, std::shared_ptr<class Player> player)
+{
 }

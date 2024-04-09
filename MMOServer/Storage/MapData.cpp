@@ -29,7 +29,7 @@ const Vector<Vector<Block>>& MapData::GetMap() const
 
 void MapData::Read(StringView filename)
 {
-	auto ini = Ini(TEXT("common/generated/maps/") + String(filename));
+	auto ini = Ini(TEXT("Common/generated/mapData/") + String(filename));
 	auto section = ini[TEXT("info")];
 
 	/* load map info */
