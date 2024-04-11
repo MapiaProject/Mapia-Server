@@ -2,6 +2,12 @@
 #include "Player.hpp"
 #include "GameMap.hpp"
 
+CREATE_DYNAMIC_ARENA(Player, 256);
+
+Player::Player()
+{
+}
+
 Player::Player(uint64 id) : NetObject(id), m_position(Vector2DI::Zero())
 {
 }

@@ -8,7 +8,9 @@ class GameMap;
 
 class Player : public NetObject
 {
+	USE_ARENA();
 public:
+	Player();
 	Player(uint64 id);
 public:
 	void SetSession(std::shared_ptr<GameSession>);
@@ -17,7 +19,7 @@ public:
 	std::shared_ptr<GameSession> GetSession();
 	std::shared_ptr<GameMap> GetMap() const;
 	Vector2DI GetPosition() const;
-	String GetNickname() const;
+	String GetNickname() const;	
 
 	void EnterMap(std::shared_ptr<GameMap> gameMap);
 	void LeaveMap();
@@ -27,4 +29,3 @@ private:
 	Vector2DI m_position;
 	String m_nickname;
 };
-
