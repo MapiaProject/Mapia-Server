@@ -8,7 +8,7 @@ class GameMap;
 
 class Player : public NetObject
 {
-	USE_ARENA();
+	USE_ARENA()
 public:
 	Player();
 	Player(uint64 id);

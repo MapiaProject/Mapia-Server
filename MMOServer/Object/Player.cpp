@@ -2,7 +2,7 @@
 #include "Player.hpp"
 #include "GameMap.hpp"
 
-CREATE_DYNAMIC_ARENA(Player, 256);
+CREATE_DYNAMIC_ARENA(Player, 256)
 
 Player::Player()
 {

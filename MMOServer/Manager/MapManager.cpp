@@ -27,8 +27,12 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
 	auto gameMap = m_mapData[packet.mapName];
 	auto myPlayer = gameSession->GetPlayer();
+
+	gen::mmo::EnterMapRes res;
+	res.success = false;
 	if (gameMap != nullptr && myPlayer->GetMap() != gameMap)
 	{
+		res.success = true;
 		myPlayer->EnterMap(gameMap);
 
 		// send my position
@@ -38,7 +42,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			spawn.isMine = true;
 			if (packet.position.x == -1 && packet.position.y == -1)
 			{
-				myPlayer->SetPosition(Vector2DI(1, 6));
+				myPlayer->SetPosition(Vector2DI(2, 4));
 				info.objectId = myPlayer->GetId();
 				info.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
@@ -84,6 +88,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			gameMap->Broadcast(&spawn, myPlayer->GetId());
 		}
 	}
+	session->Send(&res);
 }
 
 void MapManager::Enter(std::shared_ptr<GameMap> map, std::shared_ptr<class Player> player)
