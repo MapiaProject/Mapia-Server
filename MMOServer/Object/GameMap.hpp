@@ -13,8 +13,8 @@ public:
 public:
 	void Broadcast(Packet* packet, uint64 ignore);
 	Vector<std::shared_ptr<class Player>> Players();
-	void AddPlayer(std::shared_ptr<class Player> player);
-	void RemovePlayer(std::shared_ptr<class Player> player);
+	void Enter(std::shared_ptr<class Player> player);
+	void Leave(std::shared_ptr<class Player> player);
 public:
 	void HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move);
 	void HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat);

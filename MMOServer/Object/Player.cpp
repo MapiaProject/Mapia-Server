@@ -6,6 +6,8 @@ CREATE_DYNAMIC_ARENA(Player, 256)
 
 Player::Player()
 {
+	if (auto map = GetMap())
+		map->Leave(std::static_pointer_cast<Player>(shared_from_this()));
 }
 
 Player::Player(uint64 id) : NetObject(id), m_position(Vector2DI::Zero())
@@ -24,13 +26,13 @@ void Player::EnterMap(std::shared_ptr<GameMap> gameMap)
 	
 	m_map = gameMap;
 	if (auto map = m_map.lock())
-		gameMap->AddPlayer(std::static_pointer_cast<Player>(shared_from_this()));
+		gameMap->Enter(std::static_pointer_cast<Player>(shared_from_this()));
 }
 
 void Player::LeaveMap()
 {
 	if (auto map = m_map.lock())
-		map->RemovePlayer(std::static_pointer_cast<Player>(shared_from_this()));
+		map->Leave(std::static_pointer_cast<Player>(shared_from_this()));
 }
 
 void Player::SetPosition(Vector2DI position)

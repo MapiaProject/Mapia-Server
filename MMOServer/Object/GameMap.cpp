@@ -21,7 +21,10 @@ void GameMap::Broadcast(Packet* packet, uint64 ignore)
 	for (const auto& player : m_players)
 	{
 		if (player.first != ignore)
-			player.second->GetSession()->Send(packet);
+		{
+			if(auto session = player.second->GetSession())
+				session->Send(packet);
+		}
 	}
 }
 
@@ -35,12 +38,12 @@ Vector<std::shared_ptr<Player>> GameMap::Players()
 	return players;
 }
 
-void GameMap::AddPlayer(std::shared_ptr<class Player> player)
+void GameMap::Enter(std::shared_ptr<class Player> player)
 {
 	m_players.insert({ player->GetId(), player });
 }
 
-void GameMap::RemovePlayer(std::shared_ptr<class Player> player)
+void GameMap::Leave(std::shared_ptr<class Player> player)
 {
 	m_players.erase(player->GetId());
 }
