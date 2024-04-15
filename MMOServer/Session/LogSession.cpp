@@ -14,7 +14,6 @@ void LogSession::OnConnected(net::Endpoint)
 
 void LogSession::OnDisconnected(net::Endpoint)
 {
-	GEngine->GetThreadManager()->Terminate();
 }
 
 void LogSession::OnReceive(std::span<char>, int32)

@@ -19,7 +19,7 @@ int main()
 
 		Console::Log(Category::MMOServer, Info, TEXT("MMO Server is running on ") + action::ToUnicodeString(serverEndpoint.toString()));
 
-		GEngine->ExecuteIocpLogic(std::thread::hardware_concurrency(), true);
+		GEngine->ExecuteThread(4, 4, true);
 	}
 	catch (std::exception& e) {
 		Console::Log(Category::MMOServer, Error, action::ToUnicodeString(e.what()));

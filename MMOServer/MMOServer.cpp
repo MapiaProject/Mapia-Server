@@ -9,6 +9,8 @@ Manager* GManager;
 MMOServer::MMOServer()
 {
 	GEngine = new Engine;
+	GEngine->Initialize();
+
 	GEngine->GetDBConnectionPool()->Connect(10, TEXT(
 		"DRIVER={MySQL ODBC 8.3 Unicode Driver};"
 		"SERVER=localhost;"

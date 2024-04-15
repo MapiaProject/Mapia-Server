@@ -7,4 +7,4 @@ struct MMOServer final
 	~MMOServer();
 };
 
-static MMOServer HazardServerInstance;
+static MMOServer WOSServerInstance;
