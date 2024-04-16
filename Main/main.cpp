@@ -5,8 +5,6 @@
 #include "Network/Client.hpp"
 #include "MMOServer.hpp"
 
-#include "Object/Player.hpp"
-
 int main()
 {
 	auto logEndpoint = Endpoint(net::IpAddress::Loopback, 1225);

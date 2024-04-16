@@ -106,7 +106,7 @@
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/']" -n mmo</Command>
+python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Source/WOS/Network/']" -n mmo</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,7 +133,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/']" -n mmo</Command>
+python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Source/WOS/Network/']" -n mmo</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -156,8 +156,7 @@ python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Projec
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Source/WOS/Network/']" -n mmo
-</Command>
+python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Source/WOS/Network/']" -n mmo</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -184,7 +183,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
-python execute.py -s ../../$(ProjectName)/common/ -c "['D:/Project/Unreal Project/MoralHazard/Source/MoralHazard/Network/']" -n mmo</Command>
+python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Source/WOS/Network/']" -n mmo</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
