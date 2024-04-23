@@ -17,7 +17,7 @@ int main()
 
 		Console::Log(Category::MMOServer, Info, TEXT("MMO Server is running on ") + action::ToUnicodeString(serverEndpoint.toString()));
 
-		GEngine->ExecuteThread(4, 4, true);
+		GEngine->ExecuteThread(4, 4);
 	}
 	catch (std::exception& e) {
 		Console::Log(Category::MMOServer, Error, action::ToUnicodeString(e.what()));
