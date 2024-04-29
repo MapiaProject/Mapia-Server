@@ -12,7 +12,7 @@ public:
 	template<class T>
 	std::shared_ptr<NetObject> Create()
 	{
-		std::shared_ptr<NetObject> netObj = Arena::MakeShared<T>(++m_lastId);
+		std::shared_ptr<NetObject> netObj = MakeShared<T>(++m_lastId);
 		m_objects[m_lastId] = netObj;
 
 		return netObj;
