@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "GameSession.hpp"
+#include "Object/Player.hpp"
+#include "Object/GameMap.hpp"
 
 void GameSession::OnConnected(net::Endpoint)
 {
@@ -8,6 +10,9 @@ void GameSession::OnConnected(net::Endpoint)
 
 void GameSession::OnDisconnected(net::Endpoint)
 {
+	if (auto map = GetPlayer()->GetMap())
+		map->Launch(&GameMap::Leave, GetPlayer());
+	
 	Console::Log(Category::MMOServer, Info, L"Disconnected!");
 }
 
