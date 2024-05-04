@@ -9,6 +9,8 @@ class GameMap;
 class Player : public NetObject
 {
 public:
+	USE_POOL(Player)
+public:
 	Player();
 	Player(uint64 id);
 public:

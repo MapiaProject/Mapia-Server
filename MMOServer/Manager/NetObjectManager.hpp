@@ -10,12 +10,12 @@ public:
 	NetObjectManager();
 public:
 	template<class T>
-	std::shared_ptr<NetObject> Create()
+	std::shared_ptr<T> Create()
 	{
 		std::shared_ptr<NetObject> netObj = MakeShared<T>(++m_lastId);
 		m_objects[m_lastId] = netObj;
 
-		return netObj;
+		return std::static_pointer_cast<T>(netObj);
 	}
 public:
 	void HandleEnterGame(std::shared_ptr<class Session> session, gen::mmo::EnterGameReq req);

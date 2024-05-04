@@ -17,6 +17,7 @@ AccountManager::~AccountManager()
 
 std::optional<String> AccountManager::GetNickname(String uid)
 {
+	UpdateData();
 	String nickname = m_userAccount[uid];
 	if (nickname == TEXT(""))
 		return std::nullopt;

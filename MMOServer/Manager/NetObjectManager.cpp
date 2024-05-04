@@ -19,7 +19,7 @@ void NetObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mm
 	res.success = nickname.has_value();
 	if (res.success)
 	{
-		auto player = std::static_pointer_cast<Player>(Create<Player>());
+		auto player = Create<Player>();
 		player->SetNickname(nickname.value());
 		gameSession->SetPlayer(player);
 
