@@ -1,18 +1,16 @@
 {
 	"enum": [
 		{
-			"name": "EEntityType",
-			"list": [
-				"Player",
-				"Monster"
-			]
-		},
-		{
 			"name": "EChatType",
 			"list": [
 				"Direct",
 				"Local",
 				"All"
+			]
+		},
+		{
+			"name": "EMonsterType",
+			"list": [
 			]
 		}
 	]

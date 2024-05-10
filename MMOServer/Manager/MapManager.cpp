@@ -40,16 +40,18 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			gen::mmo::Spawn spawn;
 			gen::mmo::PlayerInfo info;
 			spawn.isMine = true;
-			if (packet.position.x == -1 && packet.position.y == -1)
+
+			auto position = myPlayer->GetPosition();
+			if (position.x == -1 && position.y == -1)
 			{
 				myPlayer->SetPosition(Vector2DI(2, 4));
-				info.objectId = myPlayer->GetId();
-				info.position = Converter::MakeVector(myPlayer->GetPosition());
+				info.objectInfo.objectId = myPlayer->GetId();
+				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			else
 			{
-				myPlayer->SetPosition(Vector2DI(gameMap->GetSize().x - static_cast<int>(packet.position.x), static_cast<int>(packet.position.y)));
-				info.position = Converter::MakeVector(myPlayer->GetPosition());
+				myPlayer->SetPosition(Vector2DI(gameMap->GetSize().x - static_cast<int>(position.x), static_cast<int>(position.y)));
+				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			info.name = myPlayer->GetNickname();
 			spawn.players.push_back(info);
@@ -65,8 +67,8 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 				if (player->GetId() != myPlayer->GetId())
 				{
 					gen::mmo::PlayerInfo info;
-					info.objectId = player->GetId();
-					info.position = Converter::MakeVector(player->GetPosition());
+					info.objectInfo.objectId = player->GetId();
+					info.objectInfo.position = Converter::MakeVector(player->GetPosition());
 					info.name = player->GetNickname();
 					spawn.players.push_back(info);
 				}
@@ -81,8 +83,8 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			spawn.isMine = false;
 
 			info.name = myPlayer->GetNickname();
-			info.objectId = myPlayer->GetId();
-			info.position = Converter::MakeVector(myPlayer->GetPosition());
+			info.objectInfo.objectId = myPlayer->GetId();
+			info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 
 			spawn.players.push_back(info);
 			gameMap->Broadcast(&spawn, myPlayer->GetId());

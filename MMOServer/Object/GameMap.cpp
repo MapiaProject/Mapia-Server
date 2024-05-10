@@ -66,21 +66,3 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 
 	Broadcast(&notifyChat, sender->GetId());
 }
-
-void GameMap::HandleTeleport(std::shared_ptr<Session> session, gen::mmo::TeleportReq teleport)
-{
-	auto player = m_players[teleport.objectId];
-	for (auto portal : m_portals)
-	{
-		if (portal.position == player->GetPosition())
-		{
-			player->LeaveMap();
-
-			gen::mmo::LeaveMap leave;
-			leave.objectId = player->GetId();
-			Broadcast(&leave, player->GetId());
-
-			player->EnterMap(GManager->Map()->GetMap(portal.destMap));
-		}
-	}
-}

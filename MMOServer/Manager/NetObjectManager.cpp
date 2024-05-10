@@ -12,7 +12,7 @@ NetObjectManager::NetObjectManager() : m_lastId(0)
 void NetObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::EnterGameReq req)
 {
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
-	const auto& nickname = GManager->Account()->GetNickname(req.uid);
+	const auto& nickname = GManager->Account()->GetNickname(req.name);
 
 	// send enter game success or failure
 	gen::mmo::EnterGameRes res;
