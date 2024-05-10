@@ -1,4 +1,4 @@
-{
+	{
 	"include": [
 		"Struct.json"
 	],
@@ -9,7 +9,7 @@
 				"data": [
 					{
 						"type": "string",
-						"name": "uid"
+						"name": "name"
 					}
 				]
 			},
@@ -18,15 +18,7 @@
 				"data": [
 					{
 						"type": "string",
-						"name": "uid"
-					},
-					{
-						"type": "string",
 						"name": "mapName"
-					},
-					{
-						"type": "Vector2",
-						"name": "position"
 					}
 				]
 			},
@@ -57,11 +49,11 @@
 				]
 			},
 			{
-				"name": "TeleportReq",
+				"name": "AddDamageReq",
 				"data": [
 					{
-						"type": "uint64",
-						"name": "objectId"
+						"type": "DamageInfo",
+						"name": "damageInfo"
 					}
 				]
 			}
@@ -126,6 +118,28 @@
 					{
 						"type": "string",
 						"name": "message"
+					}
+				]
+			},
+			{
+				"name": "SpawnMonster",
+				"data": [
+					{
+						"type": "list|ObjectInfo",
+						"name": "monsterInfos"
+					},
+					{
+						"type": "EMonsterType",
+						"name": "monsterType"
+					}
+				]
+			},
+			{
+				"name": "NotifyDamaged",
+				"data": [
+					{
+						"type": "DamageInfo",
+						"name": "damageInfo"
 					}
 				]
 			}

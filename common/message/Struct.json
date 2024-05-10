@@ -6,20 +6,35 @@
 		{
 			"name": "Vector2",
 			"data": [
-				{ "type": "float", "name": "x" },
-				{ "type": "float", "name": "y" }
+				{
+					"type": "float",
+					"name": "x"
+				},
+				{
+					"type": "float",
+					"name": "y"
+				}
 			]
 		},
 		{
 			"name": "Vector3",
 			"data": [
-				{ "type": "float", "name": "x" },
-				{ "type": "float", "name": "y" },
-				{ "type": "float", "name": "z" }
+				{
+					"type": "float",
+					"name": "x"
+				},
+				{
+					"type": "float",
+					"name": "y"
+				},
+				{
+					"type": "float",
+					"name": "z"
+				}
 			]
 		},
 		{
-			"name": "PlayerInfo",
+			"name": "ObjectInfo",
 			"data": [
 				{
 					"type": "uint64",
@@ -28,10 +43,32 @@
 				{
 					"type": "Vector2",
 					"name": "position"
+				}
+			]
+		},
+		{
+			"name": "PlayerInfo",
+			"data": [
+				{
+					"type": "ObjectInfo",
+					"name": "objectInfo"
 				},
 				{
 					"type": "string",
 					"name": "name"
+				}
+			]
+		},
+		{
+			"name": "DamageInfo",
+			"data": [
+				{
+					"type": "uint64",
+					"name": "objectId"
+				},
+				{
+					"type": "uint32",
+					"name": "damage"
 				}
 			]
 		}
