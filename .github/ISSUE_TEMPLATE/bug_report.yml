@@ -3,10 +3,10 @@ description: MMOServer issue template
 labels: [bug]
 body:
   - type: input
-      attributes:
-        label: Description
-      validations:
-        required: true
+    attributes:
+      label: Description
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Callstack
