@@ -11,7 +11,8 @@ public:
 	GameMap(StringView path);
 	~GameMap();
 public:
-	void Broadcast(Packet* packet, uint64 ignore);
+	void Broadcast(std::span<char> buffer, uint64 ignore = 0);
+	void Broadcast(Packet* packet, uint64 ignore = 0);
 	Vector<std::shared_ptr<class Player>> Players();
 	void Enter(std::shared_ptr<class Player> player);
 	void Leave(std::shared_ptr<class Player> player);

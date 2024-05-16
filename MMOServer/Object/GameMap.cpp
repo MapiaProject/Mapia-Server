@@ -16,13 +16,25 @@ GameMap::~GameMap()
 {
 }
 
+void GameMap::Broadcast(std::span<char> buffer, uint64 ignore)
+{
+	for (const auto& player : m_players)
+	{
+		if (player.first != ignore)
+		{
+			if (auto session = player.second->GetSession())
+				session->Send(buffer);
+		}
+	}
+}
+
 void GameMap::Broadcast(Packet* packet, uint64 ignore)
 {
 	for (const auto& player : m_players)
 	{
 		if (player.first != ignore)
 		{
-			if(auto session = player.second->GetSession())
+			if (auto session = player.second->GetSession())
 				session->Send(packet);
 		}
 	}

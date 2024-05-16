@@ -187,7 +187,6 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MMOServer\Manager\AccountManager.cpp" />
     <ClCompile Include="MMOServer\Utility\Converter.cpp" />
     <ClCompile Include="MMOServer\Object\GameMap.cpp" />
     <ClCompile Include="MMOServer\Manager\MapManager.cpp" />
@@ -209,7 +208,6 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     <ClCompile Include="MMOServer\Object\NetObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MMOServer\Manager\AccountManager.hpp" />
     <ClInclude Include="MMOServer\Utility\Converter.hpp" />
     <ClInclude Include="MMOServer\Object\GameMap.hpp" />
     <ClInclude Include="MMOServer\Manager\MapManager.hpp" />

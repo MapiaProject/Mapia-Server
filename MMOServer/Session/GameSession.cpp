@@ -18,7 +18,31 @@ void GameSession::OnDisconnected(net::Endpoint)
 
 void GameSession::OnReceive(std::span<char> buffer, int32)
 {
-	gen::mmo::PacketHandler::handlePacket(shared_from_this(), buffer);
+    uint16 id = 0;
+    memcpy(&id, buffer.data(), sizeof(uint16));
+    if ((id >> 15) & 1)
+    {   
+        RpcTarget target;
+        memcpy(&target, buffer.data() + sizeof(uint16), sizeof(uint16));
+
+        switch (target)
+        {
+        case RpcTarget::All:
+            if (auto map = m_player->GetMap())
+                map->Broadcast(buffer);
+            break;
+        case RpcTarget::Other:
+            if (auto map = m_player->GetMap())
+                map->Broadcast(buffer, m_player->GetId());
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        gen::mmo::PacketHandler::handlePacket(shared_from_this(), id, buffer);
+    }
 }
 
 void GameSession::SetPlayer(std::shared_ptr<Player> player)

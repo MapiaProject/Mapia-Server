@@ -3,7 +3,6 @@
 #include "Session/GameSession.hpp"
 #include "Object/Player.hpp"
 #include "Manager.hpp"
-#include "AccountManager.hpp"
 
 NetObjectManager::NetObjectManager() : m_lastId(0)
 {
@@ -12,15 +11,15 @@ NetObjectManager::NetObjectManager() : m_lastId(0)
 void NetObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::EnterGameReq req)
 {
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
-	const auto& nickname = GManager->Account()->GetNickname(req.name);
+	const auto& nickname = req.name;
 
 	// send enter game success or failure
 	gen::mmo::EnterGameRes res;
-	res.success = nickname.has_value();
+	res.success = true;
 	if (res.success)
 	{
 		auto player = Create<Player>();
-		player->SetNickname(nickname.value());
+		player->SetNickname(nickname);
 		gameSession->SetPlayer(player);
 
 		player->SetSession(gameSession);

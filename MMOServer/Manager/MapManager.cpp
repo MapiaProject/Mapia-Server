@@ -3,7 +3,6 @@
 #include "Session/GameSession.hpp"
 #include "Object/Player.hpp"
 #include "Utility/Converter.hpp"
-#include "Manager/AccountManager.hpp"
 
 #include <filesystem>
 
@@ -45,7 +44,6 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			if (position.x == -1 && position.y == -1)
 			{
 				myPlayer->SetPosition(Vector2DI(2, 4));
-				info.objectInfo.objectId = myPlayer->GetId();
 				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			else
@@ -53,6 +51,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 				myPlayer->SetPosition(Vector2DI(gameMap->GetSize().x - static_cast<int>(position.x), static_cast<int>(position.y)));
 				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
+			info.objectInfo.objectId = myPlayer->GetId();
 			info.name = myPlayer->GetNickname();
 			spawn.players.push_back(info);
 			session->Send(&spawn);

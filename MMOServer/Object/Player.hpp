@@ -13,7 +13,7 @@ public:
 public:
 	Player();
 	Player(uint64 id);
-public:
+public:	
 	void SetSession(std::shared_ptr<GameSession>);
 	void SetPosition(Vector2DI position);
 	void SetNickname(StringView nickname);

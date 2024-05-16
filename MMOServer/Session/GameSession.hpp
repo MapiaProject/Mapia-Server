@@ -5,6 +5,12 @@
 
 class Player;
 
+enum class RpcTarget : uint16
+{
+	All,
+	Other
+};
+
 class GameSession : public Session
 {
 public:
