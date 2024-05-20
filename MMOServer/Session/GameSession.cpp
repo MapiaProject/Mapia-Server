@@ -20,7 +20,7 @@ void GameSession::OnReceive(std::span<char> buffer, int32)
 {
     uint16 id = 0;
     memcpy(&id, buffer.data(), sizeof(uint16));
-    if ((id >> 15) & 1)
+    if (Packet::IsRpcId(id))
     {   
         RpcTarget target;
         memcpy(&target, buffer.data() + sizeof(uint16), sizeof(uint16));
@@ -41,7 +41,7 @@ void GameSession::OnReceive(std::span<char> buffer, int32)
     }
     else
     {
-        gen::mmo::PacketHandler::handlePacket(shared_from_this(), id, buffer);
+        gen::mmo::PacketHandler::HandlePacket(shared_from_this(), id, buffer);
     }
 }
 

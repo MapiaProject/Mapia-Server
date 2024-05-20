@@ -69,15 +69,6 @@
 				]
 			},
 			{
-				"name": "LeaveMap",
-				"data": [
-					{
-						"type": "uint64",
-						"name": "objectId"
-					}
-				]
-			},
-			{
 				"name": "EnterMapRes",
 				"data": [
 					{
@@ -96,6 +87,15 @@
 					{
 						"type": "list|PlayerInfo",
 						"name": "players"
+					}
+				]
+			},
+			{
+				"name": "NotifyLeaveMap",
+				"data": [
+					{
+						"type": "uint64",
+						"name": "objectId"
 					}
 				]
 			},
