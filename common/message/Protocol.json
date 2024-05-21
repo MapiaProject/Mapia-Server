@@ -27,7 +27,7 @@
 				"data": [
 					{
 						"type": "Vector2",
-						"name": "dir"
+						"name": "position"
 					}
 				]
 			},

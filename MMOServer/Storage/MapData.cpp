@@ -22,7 +22,7 @@ Point2DI MapData::GetSize() const
 	return m_size;
 }
 
-const Vector<Vector<Block>>& MapData::GetMap() const
+const Vector<Vector<Block>>& MapData::GetDataArray() const
 {
 	return m_map;
 }
@@ -61,4 +61,9 @@ void MapData::Read(StringView filename)
 		m_map.push_back(t);
 	}
 	/* ------------- */
+}
+
+Block MapData::GetBlock(Point2DI position)
+{
+	return m_map[position.y][position.x];
 }

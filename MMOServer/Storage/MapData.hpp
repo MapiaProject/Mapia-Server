@@ -3,7 +3,7 @@
 enum class Block : uint8
 {
 	Air,
-	Ground,
+	Border,
 	SpawnArea,
 	Portal,
 	Entity,
@@ -27,8 +27,9 @@ public:
 public:
 	String GetName() const;
 	Point2DI GetSize() const;
-	const Vector<Vector<Block>>& GetMap() const;
+	const Vector<Vector<Block>>& GetDataArray() const;
 	void Read(StringView filename);
+	Block GetBlock(Point2DI position);
 protected:
 	String m_name;
 	Point2DI m_size;

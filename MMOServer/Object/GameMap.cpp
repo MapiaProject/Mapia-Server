@@ -63,8 +63,17 @@ void GameMap::Leave(std::shared_ptr<class Player> player)
 void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 {
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	auto player = gameSession->GetPlayer();
+
 	gen::mmo::NotifyMove syncMove;
-	syncMove.position = Converter::MakeVector(gameSession->GetPlayer()->GetPosition() + Converter::MakeVector<int>(move.dir));
+	auto prevPos = player->GetPosition();
+	auto block = GetBlock(Point2DI(move.position.x, move.position.y));
+	if (block != Block::Border)
+		syncMove.position = move.position;
+	else
+		syncMove.position = Converter::MakeVector(prevPos);
+
+	Broadcast(&syncMove);
 }
 
 void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)

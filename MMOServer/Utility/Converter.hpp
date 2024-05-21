@@ -38,7 +38,6 @@ public:
 		t.y = static_cast<T>(v.y);
 		t.z = static_cast<T>(v.z);
 		return t;
-
 	}
 };
 
