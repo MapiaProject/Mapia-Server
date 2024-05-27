@@ -19,6 +19,8 @@ public:
 public:
 	void HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move);
 	void HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat);
+public:
+	void Update();
 private:
 	HashMap<uint64, std::shared_ptr<class Player>> m_players;
 };

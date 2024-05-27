@@ -11,7 +11,7 @@ MapManager::MapManager()
 {
 	for (auto& iter : std::filesystem::directory_iterator(TEXT("Common/generated/mapData/")))
 	{
-		auto map = std::make_shared<GameMap>(action::Split(String(iter.path()), TEXT('/')).back());
+		auto map = MakeShared<GameMap>(action::Split(String(iter.path()), TEXT('/')).back());
 		m_mapData[map->GetName()] = map;
 	}
 }

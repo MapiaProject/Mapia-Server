@@ -23,7 +23,7 @@ void GameMap::Broadcast(std::span<char> buffer, uint64 ignore)
 		if (player.first != ignore)
 		{
 			if (auto session = player.second->GetSession())
-				session->Send(buffer);
+				session->SendBuffered(buffer);
 		}
 	}
 }
@@ -35,7 +35,7 @@ void GameMap::Broadcast(Packet* packet, uint64 ignore)
 		if (player.first != ignore)
 		{
 			if (auto session = player.second->GetSession())
-				session->Send(packet);
+				session->Send(packet, true);
 		}
 	}
 }
@@ -86,4 +86,10 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 	notifyChat.message = chat.message;
 
 	Broadcast(&notifyChat, sender->GetId());
+}
+
+void GameMap::Update()
+{
+	//Launch<100>(&GameMap::Update);
+	Console::Log(Category::Temp, LogType::Debug, TEXT("Update"));
 }
