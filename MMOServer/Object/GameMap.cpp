@@ -90,6 +90,10 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 
 void GameMap::Update()
 {
-	//Launch<100>(&GameMap::Update);
-	Console::Log(Category::Temp, LogType::Debug, TEXT("Update"));
+	Launch<100>(&GameMap::Update);
+	for (const auto& pair : m_players)
+	{
+		auto player = pair.second;
+		player->Update();
+	}
 }

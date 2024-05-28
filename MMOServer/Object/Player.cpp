@@ -12,6 +12,11 @@ Player::Player(uint64 id) : NetObject(id), m_position(Vector2DI::Zero())
 {
 }
 
+void Player::Update()
+{
+	Console::Log(Category::Temp, LogType::Info, std::format(TEXT("Update at {}"), GetId()));
+}
+
 void Player::SetSession(std::shared_ptr<GameSession> session)
 {
 	m_session = session;

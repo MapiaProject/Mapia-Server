@@ -13,6 +13,7 @@ MapManager::MapManager()
 	{
 		auto map = MakeShared<GameMap>(action::Split(String(iter.path()), TEXT('/')).back());
 		m_mapData[map->GetName()] = map;
+		map->Launch(&GameMap::Update);
 	}
 }
 

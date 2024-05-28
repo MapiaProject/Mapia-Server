@@ -13,6 +13,8 @@ public:
 public:
 	Player();
 	Player(uint64 id);
+public:
+	void Update();
 public:	
 	void SetSession(std::shared_ptr<GameSession>);
 	void SetPosition(Vector2DI position);
