@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GameSession.hpp"
 #include "Object/Player.hpp"
-#include "Object/GameMap.hpp"
+#include "Storage/GameMap.hpp"
 
 void GameSession::OnConnected(net::Endpoint)
 {

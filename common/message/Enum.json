@@ -1,6 +1,13 @@
 {
 	"enum": [
 		{
+			"name": "EObjectType",
+			"list": [
+				"Player",
+				"Monster"
+			]
+		},
+		{
 			"name": "EChatType",
 			"list": [
 				"Direct",

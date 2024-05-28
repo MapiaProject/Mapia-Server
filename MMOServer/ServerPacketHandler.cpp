@@ -3,7 +3,7 @@
 #include "Session/GameSession.hpp"
 
 #include "Object/Player.hpp"
-#include "Object/GameMap.hpp"
+#include "Storage/GameMap.hpp"
 
 #include "Manager/Manager.hpp"
 #include "Manager/NetObjectManager.hpp"

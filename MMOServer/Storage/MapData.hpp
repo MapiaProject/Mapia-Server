@@ -30,6 +30,7 @@ public:
 	const Vector<Vector<Block>>& GetDataArray() const;
 	void Read(StringView filename);
 	Block GetBlock(Point2DI position);
+	Vector<Point2DI> GetBlocks(Block block);
 protected:
 	String m_name;
 	Point2DI m_size;

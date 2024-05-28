@@ -52,10 +52,15 @@ void MapData::Read(StringView filename)
 		std::transform(submap.begin(), submap.end(), t.begin(), [&, x = 0, cnt = 0](const auto& wc) mutable
 		{
 			auto block = static_cast<Block>(wc - L'0');
-			if (block == Block::Portal)
+			switch (block)
+			{
+			case Block::Portal:
 				m_portals.push_back(Portal(portals[cnt++], Point2DI(x, i)));
+				break;
+			default:
+				break;
+			}
 			++x;
-
 			return block;
 		});
 		m_map.push_back(t);
@@ -66,4 +71,18 @@ void MapData::Read(StringView filename)
 Block MapData::GetBlock(Point2DI position)
 {
 	return m_map[position.y][position.x];
+}
+
+Vector<Point2DI> MapData::GetBlocks(Block block)
+{
+	Vector<Point2DI> res;
+	for (int i = 0; i < m_map.size(); ++i)
+	{
+		for (int j = 0; j < m_map[i].size(); ++j)
+		{
+			if (m_map[i][j] == block)
+				res.emplace_back(j, i);
+		}
+	}
+	return res;
 }

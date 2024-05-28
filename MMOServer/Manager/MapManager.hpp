@@ -1,5 +1,5 @@
 #pragma once
-#include "Object/GameMap.hpp"
+#include "Storage/GameMap.hpp"
 #include "Thread/JobSerializer.hpp"
 
 #include "generated/mmo/Protocol.gen.hpp"

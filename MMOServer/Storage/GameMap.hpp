@@ -14,6 +14,7 @@ public:
 	void Broadcast(std::span<char> buffer, uint64 ignore = 0);
 	void Broadcast(Packet* packet, uint64 ignore = 0);
 	Vector<std::shared_ptr<class Player>> Players();
+	Vector<std::shared_ptr<class Monster>> Monsters();
 	void Enter(std::shared_ptr<class Player> player);
 	void Leave(std::shared_ptr<class Player> player);
 public:
@@ -22,6 +23,6 @@ public:
 public:
 	void Update();
 private:
-	HashMap<uint64, std::shared_ptr<class Player>> m_players;
+	HashMap<uint64, std::shared_ptr<class NetObject>> m_objects;
 };
 

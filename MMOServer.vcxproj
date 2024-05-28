@@ -188,7 +188,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MMOServer\Utility\Converter.cpp" />
-    <ClCompile Include="MMOServer\Object\GameMap.cpp" />
+    <ClCompile Include="MMOServer\Storage\GameMap.cpp" />
     <ClCompile Include="MMOServer\Manager\MapManager.cpp" />
     <ClCompile Include="MMOServer\Manager\Manager.cpp" />
     <ClCompile Include="MMOServer\Storage\MapData.cpp" />
@@ -209,7 +209,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MMOServer\Utility\Converter.hpp" />
-    <ClInclude Include="MMOServer\Object\GameMap.hpp" />
+    <ClInclude Include="MMOServer\Storage\GameMap.hpp" />
     <ClInclude Include="MMOServer\Manager\MapManager.hpp" />
     <ClInclude Include="MMOServer\Manager\Manager.hpp" />
     <ClInclude Include="MMOServer\Storage\MapData.hpp" />

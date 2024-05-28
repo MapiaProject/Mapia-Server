@@ -8,13 +8,12 @@ class GameMap;
 
 class Player : public NetObject
 {
-public:
 	USE_POOL(Player)
 public:
 	Player();
 	Player(uint64 id);
 public:
-	void Update();
+	void Update() override;
 public:	
 	void SetSession(std::shared_ptr<GameSession>);
 	void SetPosition(Vector2DI position);

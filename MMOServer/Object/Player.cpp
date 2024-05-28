@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Player.hpp"
-#include "GameMap.hpp"
+#include "Storage/GameMap.hpp"
 
 Player::Player()
 {
@@ -8,7 +8,7 @@ Player::Player()
 		map->Leave(std::static_pointer_cast<Player>(shared_from_this()));
 }
 
-Player::Player(uint64 id) : NetObject(id), m_position(Vector2DI::Zero())
+Player::Player(uint64 id) : NetObject(id, mmo::Player), m_position(Vector2DI::Zero())
 {
 }
 

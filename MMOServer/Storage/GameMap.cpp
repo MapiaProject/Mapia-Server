@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "GameMap.hpp"
-#include "Player.hpp"
+#include "Object/Player.hpp"
 #include "Session/GameSession.hpp"
 #include "Manager/MapManager.hpp"
 
@@ -18,11 +18,12 @@ GameMap::~GameMap()
 
 void GameMap::Broadcast(std::span<char> buffer, uint64 ignore)
 {
-	for (const auto& player : m_players)
+	for (const auto& pair : m_objects)
 	{
-		if (player.first != ignore)
+		const auto& object = pair.second;
+		if (pair.first != ignore && object->GetType() == mmo::Player)
 		{
-			if (auto session = player.second->GetSession())
+			if (auto session = std::static_pointer_cast<Player>(object)->GetSession())
 				session->SendBuffered(buffer);
 		}
 	}
@@ -30,11 +31,12 @@ void GameMap::Broadcast(std::span<char> buffer, uint64 ignore)
 
 void GameMap::Broadcast(Packet* packet, uint64 ignore)
 {
-	for (const auto& player : m_players)
+	for (const auto& pair : m_objects)
 	{
-		if (player.first != ignore)
+		const auto& object = pair.second;
+		if (pair.first != ignore && object->GetType() == mmo::Player)
 		{
-			if (auto session = player.second->GetSession())
+			if (auto session = std::static_pointer_cast<Player>(object)->GetSession())
 				session->Send(packet, true);
 		}
 	}
@@ -43,21 +45,33 @@ void GameMap::Broadcast(Packet* packet, uint64 ignore)
 Vector<std::shared_ptr<Player>> GameMap::Players()
 {
 	Vector<std::shared_ptr<Player>> players;
-	for (const auto& player : m_players)
+	for (const auto& pair : m_objects)
 	{
-		players.push_back(player.second);
+		if (pair.second->GetType() == mmo::Player)
+			players.push_back(std::static_pointer_cast<Player>(pair.second));
 	}
 	return players;
 }
 
+Vector<std::shared_ptr<class Monster>> GameMap::Monsters()
+{
+	Vector<std::shared_ptr<Monster>> monsteres;
+	for (const auto& pair : m_objects)
+	{
+		if (pair.second->GetType() == mmo::Monster)
+			monsteres.push_back(std::static_pointer_cast<Monster>(pair.second));
+	}
+	return monsteres;
+}
+
 void GameMap::Enter(std::shared_ptr<class Player> player)
 {
-	m_players.insert({ player->GetId(), player });
+	m_objects.insert({ player->GetId(), player });
 }
 
 void GameMap::Leave(std::shared_ptr<class Player> player)
 {
-	m_players.erase(player->GetId());
+	m_objects.erase(player->GetId());
 }
 
 void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
@@ -91,7 +105,19 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 void GameMap::Update()
 {
 	Launch<100>(&GameMap::Update);
-	for (const auto& pair : m_players)
+
+	static const auto spawnArea = GetBlocks(Block::SpawnArea);
+	int count = 0;
+	while (count + Monsters().size() < 10)
+	{
+		auto idx = action::Random::RandomRange<uint32>(0, spawnArea.size());
+		auto spawn = spawnArea[idx];
+		gen::mmo::SpawnMonster monster;
+		count++;
+	}
+
+	// NetObject `Update` logic
+	for (const auto& pair : m_objects)
 	{
 		auto player = pair.second;
 		player->Update();
