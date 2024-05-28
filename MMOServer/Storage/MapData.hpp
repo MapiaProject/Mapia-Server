@@ -29,7 +29,7 @@ public:
 	Point2DI GetSize() const;
 	const Vector<Vector<Block>>& GetDataArray() const;
 	void Read(StringView filename);
-	Block GetBlock(Point2DI position);
+	std::optional<Block> GetBlock(Point2DI position);
 	Vector<Point2DI> GetBlocks(Block block);
 protected:
 	String m_name;

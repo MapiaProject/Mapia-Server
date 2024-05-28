@@ -68,8 +68,11 @@ void MapData::Read(StringView filename)
 	/* ------------- */
 }
 
-Block MapData::GetBlock(Point2DI position)
+std::optional<Block> MapData::GetBlock(Point2DI position)
 {
+	if (position.x < 0 || position.y < 0 ||
+		position.x >= m_map[0].size() || position.y >= m_map.size())
+		return std::nullopt;
 	return m_map[position.y][position.x];
 }
 

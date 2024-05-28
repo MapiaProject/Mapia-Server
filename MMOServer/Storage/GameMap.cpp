@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "GameMap.hpp"
+
 #include "Object/Player.hpp"
+#include "Object/Monster.hpp"
+
 #include "Session/GameSession.hpp"
 #include "Manager/MapManager.hpp"
 
@@ -82,11 +85,18 @@ void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 	gen::mmo::NotifyMove syncMove;
 	auto prevPos = player->GetPosition();
 	auto block = GetBlock(Point2DI(move.position.x, move.position.y));
-	if (block != Block::Border)
-		syncMove.position = move.position;
-	else
+	if (!block.has_value())
+	{
 		syncMove.position = Converter::MakeVector(prevPos);
-
+	}
+	else
+	{
+		if (block != Block::Border)
+			syncMove.position = move.position;
+		else
+			syncMove.position = Converter::MakeVector(prevPos);
+		player->SetPosition(Converter::MakeVector<int>(syncMove.position));
+	}
 	Broadcast(&syncMove);
 }
 
@@ -107,13 +117,15 @@ void GameMap::Update()
 	Launch<100>(&GameMap::Update);
 
 	static const auto spawnArea = GetBlocks(Block::SpawnArea);
-	int count = 0;
-	while (count + Monsters().size() < 10)
+	if (spawnArea.size() > 0)
 	{
-		auto idx = action::Random::RandomRange<uint32>(0, spawnArea.size());
-		auto spawn = spawnArea[idx];
-		gen::mmo::SpawnMonster monster;
-		count++;
+		int count = 0;
+		while (count + Monsters().size() < 10)
+		{
+			auto idx = action::Random::RandomRange<uint32>(0, spawnArea.size()-1);
+			auto spawn = spawnArea[idx];
+			count++;
+		}
 	}
 
 	// NetObject `Update` logic

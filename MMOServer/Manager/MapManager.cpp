@@ -42,14 +42,14 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			spawn.isMine = true;
 
 			auto position = myPlayer->GetPosition();
-			if (position.x == -1 && position.y == -1)
+			if (packet.mapName == TEXT("Village"))
 			{
 				myPlayer->SetPosition(Vector2DI(2, 4));
 				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			else
 			{
-				myPlayer->SetPosition(Vector2DI(gameMap->GetSize().x - static_cast<int>(position.x), static_cast<int>(position.y)));
+				myPlayer->SetPosition(Vector2DI(gameMap->GetSize().x - static_cast<int>(position.x) - 1, static_cast<int>(position.y)));
 				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			info.objectInfo.objectId = myPlayer->GetId();
