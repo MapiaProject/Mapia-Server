@@ -4,13 +4,13 @@
 
 Player::Player()
 {
-	m_position = Vector2DI(-1, -1);
 	if (auto map = GetMap())
 		map->Leave(std::static_pointer_cast<Player>(shared_from_this()));
 }
 
-Player::Player(uint64 id) : NetObject(id, mmo::Player), m_position(Vector2DI::Zero())
+Player::Player(uint64 id) : NetObject(id, mmo::Player)
 {
+	SetPosition(Vector2DI::Zero());
 }
 
 void Player::Update()

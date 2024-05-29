@@ -11,13 +11,16 @@ public:
 	NetObject(uint64 id, mmo::EObjectType type);
 	virtual ~NetObject();
 public:
-	uint64 GetId() const;
-	void SetId(uint64 id);
+	__forceinline Vector2DI GetPosition() const { return m_position; }
+	__forceinline uint64 GetId() const { return m_objectId; }
+	__forceinline void SetPosition(Vector2DI position) { m_position = position; }
+	__forceinline void SetId(uint64 id) { m_objectId = id; }
 	__forceinline mmo::EObjectType GetType() const { return m_objectTy; }
 public:
 	virtual void Update() abstract;
-private:
+protected:
 	uint64 m_objectId;
 	mmo::EObjectType m_objectTy;
+	Vector2DI m_position;
 };
 

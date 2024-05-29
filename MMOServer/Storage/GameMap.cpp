@@ -7,6 +7,8 @@
 #include "Session/GameSession.hpp"
 #include "Manager/MapManager.hpp"
 
+#include "Manager/NetObjectManager.hpp"
+
 GameMap::GameMap()
 {
 }
@@ -84,7 +86,7 @@ void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 
 	gen::mmo::NotifyMove syncMove;
 	auto prevPos = player->GetPosition();
-	auto block = GetBlock(Point2DI(move.position.x, move.position.y));
+	auto block = GetBlock(Vector2DI(move.position.x, move.position.y));
 	if (!block.has_value())
 	{
 		syncMove.position = Converter::MakeVector(prevPos);
@@ -120,12 +122,25 @@ void GameMap::Update()
 	if (spawnArea.size() > 0)
 	{
 		int count = 0;
+		Vector<mmo::ObjectInfo> infos;
 		while (count + Monsters().size() < 10)
 		{
 			auto idx = action::Random::RandomRange<uint32>(0, spawnArea.size()-1);
-			auto spawn = spawnArea[idx];
+			Vector2DI spawnPosition = spawnArea[idx];
+
+			auto monster = GManager->NetObject()->Create<Monster>();
+			monster->SetPosition(spawnPosition);
+
+			mmo::ObjectInfo info;
+			info.position = Converter::MakeVector(spawnPosition);
+			info.objectId = monster->GetId();
+			infos.push_back(info);
+
 			count++;
 		}
+		mmo::SpawnMonster spawn;
+		spawn.monsterInfos = infos;
+		Broadcast(&spawn);
 	}
 
 	// NetObject `Update` logic

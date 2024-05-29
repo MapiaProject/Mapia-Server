@@ -17,7 +17,7 @@ String MapData::GetName() const
 	return m_name;
 }
 
-Point2DI MapData::GetSize() const
+Vector2DI MapData::GetSize() const
 {
 	return m_size;
 }
@@ -36,7 +36,7 @@ void MapData::Read(StringView filename)
 	m_name = section.Get<String>(TEXT("name"));
 
 	auto sp = action::Split(section.Get<String>(TEXT("size")), TEXT(','));
-	m_size = Point2DI(std::stoi(sp[0]), std::stoi(sp[1]));
+	m_size = Vector2DI(std::stoi(sp[0]), std::stoi(sp[1]));
 
 	auto portalsStr = section.Get<String>(TEXT("portal"));
 	auto portals = action::Split(portalsStr, TEXT(','));
@@ -55,7 +55,7 @@ void MapData::Read(StringView filename)
 			switch (block)
 			{
 			case Block::Portal:
-				m_portals.push_back(Portal(portals[cnt++], Point2DI(x, i)));
+				m_portals.push_back(Portal(portals[cnt++], Vector2DI(x, i)));
 				break;
 			default:
 				break;
@@ -68,7 +68,7 @@ void MapData::Read(StringView filename)
 	/* ------------- */
 }
 
-std::optional<Block> MapData::GetBlock(Point2DI position)
+std::optional<Block> MapData::GetBlock(Vector2DI position)
 {
 	if (position.x < 0 || position.y < 0 ||
 		position.x >= m_map[0].size() || position.y >= m_map.size())
@@ -76,9 +76,9 @@ std::optional<Block> MapData::GetBlock(Point2DI position)
 	return m_map[position.y][position.x];
 }
 
-Vector<Point2DI> MapData::GetBlocks(Block block)
+Vector<Vector2DI> MapData::GetBlocks(Block block)
 {
-	Vector<Point2DI> res;
+	Vector<Vector2DI> res;
 	for (int i = 0; i < m_map.size(); ++i)
 	{
 		for (int j = 0; j < m_map[i].size(); ++j)

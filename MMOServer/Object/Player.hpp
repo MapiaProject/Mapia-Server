@@ -28,6 +28,5 @@ public:
 private:
 	std::weak_ptr<GameSession> m_session;
 	std::weak_ptr<GameMap> m_map;
-	Vector2DI m_position;
 	String m_nickname;
 };
