@@ -103,6 +103,10 @@
 				"name": "NotifyMove",
 				"data": [
 					{
+						"type": "uint64",
+						"name": "objectId"
+					},
+					{
 						"type": "Vector2",
 						"name": "position"
 					}

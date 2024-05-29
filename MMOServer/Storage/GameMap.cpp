@@ -85,6 +85,7 @@ void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 	auto player = gameSession->GetPlayer();
 
 	gen::mmo::NotifyMove syncMove;
+	syncMove.objectId = player->GetId();
 	auto prevPos = player->GetPosition();
 	auto block = GetBlock(Vector2DI(move.position.x, move.position.y));
 	if (!block.has_value())
