@@ -5,5 +5,7 @@ class Monster : public NetObject
 {
 public:
 	Monster(uint64 id);
+
+	void Update() override;
 };
 
