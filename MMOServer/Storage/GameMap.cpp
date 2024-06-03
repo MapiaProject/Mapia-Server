@@ -148,7 +148,7 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 
 void GameMap::Tick()
 {
-	Launch<33>(&GameMap::Tick);
+	Launch<TickDelta>(&GameMap::Tick);
 
 	Launch(&GameMap::SpawnMonster);
 
@@ -156,6 +156,6 @@ void GameMap::Tick()
 	for (const auto& pair : m_objects)
 	{
 		if (auto object = pair.second)
-			object->Tick();
+			object->Tick(TickDelta);
 	}
 }

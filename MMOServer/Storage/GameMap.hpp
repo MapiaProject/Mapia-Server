@@ -6,6 +6,10 @@
 
 class GameMap : public JobSerializer, public MapData
 {
+	enum
+	{
+		TickDelta = 33
+	};
 public:
 	GameMap();
 	GameMap(StringView path);

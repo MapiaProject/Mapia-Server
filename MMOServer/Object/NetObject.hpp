@@ -17,7 +17,7 @@ public:
 	__forceinline void SetId(uint64 id) { m_objectId = id; }
 	__forceinline mmo::EObjectType GetType() const { return m_objectTy; }
 public:
-	virtual void Tick() abstract;
+	virtual void Tick(uint32 tick) abstract;
 protected:
 	uint64 m_objectId;
 	mmo::EObjectType m_objectTy;
