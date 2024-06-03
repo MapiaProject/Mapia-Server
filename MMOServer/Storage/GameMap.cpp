@@ -29,7 +29,7 @@ void GameMap::Broadcast(std::span<char> buffer, uint64 ignore)
 		if (pair.first != ignore && object->GetType() == mmo::Player)
 		{
 			if (auto session = std::static_pointer_cast<Player>(object)->GetSession())
-				session->SendBuffered(buffer);
+				session->SendAtomic(buffer);
 		}
 	}
 }
@@ -69,14 +69,45 @@ Vector<std::shared_ptr<class Monster>> GameMap::Monsters()
 	return monsteres;
 }
 
-void GameMap::Enter(std::shared_ptr<class Player> player)
+void GameMap::Enter(std::shared_ptr<Player> player)
 {
 	m_objects.insert({ player->GetId(), player });
 }
 
-void GameMap::Leave(std::shared_ptr<class Player> player)
+void GameMap::Leave(std::shared_ptr<Player> player)
 {
+	mmo::NotifyLeaveMap leaveMap;
+	leaveMap.objectId = player->GetId();
 	m_objects.erase(player->GetId());
+	Broadcast(&leaveMap);
+}
+
+void GameMap::SpawnMonster()
+{
+	const auto spawnArea = GetBlocks(Block::SpawnArea);
+	auto count = Monsters().size();
+	if (spawnArea.size() > 0 && count < 10)
+	{
+		Vector<mmo::ObjectInfo> infos;
+		for (int i = 0; i < 10 - count; ++i)
+		{
+			auto idx = action::Random::RandomRange<uint32>(0, spawnArea.size() - 1);
+			Vector2DI spawnPosition = spawnArea[idx];
+
+			auto monster = GManager->Object()->Create<Monster>();
+			monster->SetPosition(spawnPosition);
+
+			m_objects[monster->GetId()] = monster;
+
+			mmo::ObjectInfo info;
+			info.position = Converter::MakeVector(spawnPosition);
+			info.objectId = monster->GetId();
+			infos.push_back(info);
+		}
+		mmo::SpawnMonster spawn;
+		spawn.monsterInfos = infos;
+		Broadcast(&spawn);
+	}
 }
 
 void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
@@ -117,37 +148,14 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 
 void GameMap::Update()
 {
-	Launch<100>(&GameMap::Update);
+	Launch<33>(&GameMap::Update);
 
-	static const auto spawnArea = GetBlocks(Block::SpawnArea);
-	if (spawnArea.size() > 0)
-	{
-		int count = 0;
-		Vector<mmo::ObjectInfo> infos;
-		while (count + Monsters().size() < 10)
-		{
-			auto idx = action::Random::RandomRange<uint32>(0, spawnArea.size()-1);
-			Vector2DI spawnPosition = spawnArea[idx];
-
-			auto monster = GManager->NetObject()->Create<Monster>();
-			monster->SetPosition(spawnPosition);
-
-			mmo::ObjectInfo info;
-			info.position = Converter::MakeVector(spawnPosition);
-			info.objectId = monster->GetId();
-			infos.push_back(info);
-
-			count++;
-		}
-		mmo::SpawnMonster spawn;
-		spawn.monsterInfos = infos;
-		Broadcast(&spawn);
-	}
+	Launch(&GameMap::SpawnMonster);
 
 	// NetObject `Update` logic
 	for (const auto& pair : m_objects)
 	{
-		auto player = pair.second;
-		player->Update();
+		if (auto player = pair.second)
+			player->Update();
 	}
 }

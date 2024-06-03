@@ -24,19 +24,19 @@ void NetObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mm
 
 		player->SetSession(gameSession);
 	}
-	gameSession->Send(&res);
+	gameSession->Send(&res, true);
 }
 
 void NetObjectManager::HandleDirectChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
 {
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
-	auto target = std::static_pointer_cast<Player>(m_objects[chat.targetId].lock());
+	auto target = std::static_pointer_cast<Player>(m_objects[chat.targetId]);
 
 	gen::mmo::NotifyChat notifyChat;
 	notifyChat.senderName = gameSession->GetPlayer()->GetNickname();
 	notifyChat.message = chat.message;
 
-	target->GetSession()->Send(&notifyChat);
+	target->GetSession()->Send(&notifyChat, true);
 }
 
 void NetObjectManager::HandleAllChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
@@ -55,7 +55,7 @@ void NetObjectManager::BroadcastAll(Packet* packet, uint64 ignore)
 {
 	for (const auto& obj : m_objects)
 	{
-		if (auto player = std::static_pointer_cast<Player>(obj.second.lock()))
+		if (auto player = std::static_pointer_cast<Player>(obj.second))
 			if (player->GetId() != ignore) player->GetSession()->Send(packet);
 	}
 }

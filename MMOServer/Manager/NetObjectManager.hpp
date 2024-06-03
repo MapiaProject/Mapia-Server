@@ -12,10 +12,9 @@ public:
 	template<class T>
 	std::shared_ptr<T> Create()
 	{
-		std::shared_ptr<NetObject> netObj = MakeShared<T>(++m_lastId);
-		m_objects[m_lastId] = netObj;
-
-		return std::static_pointer_cast<T>(netObj);
+		auto object = MakeShared<T>(++m_lastId);
+		m_objects.insert({ m_lastId, object });
+		return object;
 	}
 public:
 	void HandleEnterGame(std::shared_ptr<class Session> session, gen::mmo::EnterGameReq req);
@@ -24,7 +23,7 @@ public:
 private:
 	void BroadcastAll(Packet* packet, uint64 ignore = 0);
 private:
-	uint64 m_lastId;
-	HashMap<uint64, std::weak_ptr<NetObject>> m_objects;
+	std::atomic<uint64> m_lastId;
+	ConcurrencyHashMap<uint64, std::shared_ptr<class NetObject>> m_objects;
 };
 

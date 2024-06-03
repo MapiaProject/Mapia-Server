@@ -13,7 +13,7 @@ using namespace gen;
 
 bool mmo::PacketHandler::EnterGameReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterGameReq> packet)
 {
-	GManager->NetObject()->Launch(&NetObjectManager::HandleEnterGame, session, *packet);
+	GManager->Object()->Launch(&NetObjectManager::HandleEnterGame, session, *packet);
 	return false;
 }
 
@@ -37,14 +37,14 @@ bool gen::mmo::PacketHandler::ChatPacketHandler(TSharedPtr<Session> session, TSh
 	switch (packet->type)
 	{
 	case gen::mmo::EChatType::Direct:
-		GManager->NetObject()->Launch(&NetObjectManager::HandleDirectChat, session, *packet);
+		GManager->Object()->Launch(&NetObjectManager::HandleDirectChat, session, *packet);
 		break;
 	case gen::mmo::EChatType::Local:
 		if (auto map = gameSession->GetPlayer()->GetMap())
 			map->Launch(&GameMap::HandleLocalChat, session, *packet);
 		break;
 	case gen::mmo::EChatType::All:
-		GManager->NetObject()->Launch(&NetObjectManager::HandleAllChat, session, *packet);
+		GManager->Object()->Launch(&NetObjectManager::HandleAllChat, session, *packet);
 		break;
 	default:
 		break;

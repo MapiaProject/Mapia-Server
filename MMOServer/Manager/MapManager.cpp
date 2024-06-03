@@ -11,7 +11,8 @@ MapManager::MapManager()
 {
 	for (auto& iter : std::filesystem::directory_iterator(TEXT("Common/generated/mapData/")))
 	{
-		auto map = MakeShared<GameMap>(action::Split(String(iter.path()), TEXT('/')).back());
+		auto sp = action::Split(String(iter.path()), TEXT('/'));
+		auto map = MakeShared<GameMap>(sp.back());
 		m_mapData[map->GetName()] = map;
 		map->Launch(&GameMap::Update);
 	}
@@ -55,7 +56,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			info.objectInfo.objectId = myPlayer->GetId();
 			info.name = myPlayer->GetNickname();
 			spawn.players.push_back(info);
-			session->Send(&spawn);
+			session->Send(&spawn, true);
 		}
 
 		// send other player list
@@ -73,7 +74,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 					spawn.players.push_back(info);
 				}
 			}
-			session->Send(&spawn);
+			session->Send(&spawn, true);
 		}
 
 		// notify exist players
@@ -90,7 +91,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			gameMap->Broadcast(&spawn, myPlayer->GetId());
 		}
 	}
-	session->Send(&res);
+	session->Send(&res, true);
 }
 
 void MapManager::Enter(std::shared_ptr<GameMap> map, std::shared_ptr<class Player> player)

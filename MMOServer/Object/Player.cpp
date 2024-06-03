@@ -35,14 +35,10 @@ void Player::EnterMap(std::shared_ptr<GameMap> gameMap)
 
 void Player::LeaveMap()
 {
-	gen::mmo::NotifyLeaveMap leave;
-	leave.objectId = GetId();
-
-	auto map = m_map.lock();
-	if (map)
+	if (auto map = m_map.lock())
 	{
-		map->Broadcast(&leave);
-		map->Leave(std::static_pointer_cast<Player>(shared_from_this()));
+		map->Launch(&GameMap::Leave, std::static_pointer_cast<Player>(shared_from_this()));
+		m_map.reset();
 	}
 }
 

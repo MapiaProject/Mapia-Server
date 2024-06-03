@@ -10,10 +10,10 @@ void GameSession::OnConnected(net::Endpoint)
 
 void GameSession::OnDisconnected(net::Endpoint)
 {
-	if (auto map = GetPlayer()->GetMap())
-		map->Launch(&GameMap::Leave, GetPlayer());
-	
+    m_player->LeaveMap();
 	Console::Log(Category::MMOServer, Info, L"Disconnected!");
+
+
 }
 
 void GameSession::OnReceive(std::span<char> buffer, int32)

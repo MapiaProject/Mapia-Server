@@ -17,6 +17,7 @@ public:
 	Vector<std::shared_ptr<class Monster>> Monsters();
 	void Enter(std::shared_ptr<class Player> player);
 	void Leave(std::shared_ptr<class Player> player);
+	void SpawnMonster();
 public:
 	void HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move);
 	void HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat);
