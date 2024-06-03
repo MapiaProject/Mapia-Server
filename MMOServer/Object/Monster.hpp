@@ -6,6 +6,6 @@ class Monster : public NetObject
 public:
 	Monster(uint64 id);
 
-	void Tick(uint32 deltaTime) override;
+	void Tick(float deltaTime) override;
 };
 

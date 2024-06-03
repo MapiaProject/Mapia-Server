@@ -13,7 +13,7 @@ public:
 	Player();
 	Player(uint64 id);
 public:
-	void Tick(uint32 deltaTime) override;
+	void Tick(float deltaTime) override;
 public:	
 	void SetSession(std::shared_ptr<GameSession>);
 	void SetPosition(Vector2DI position);

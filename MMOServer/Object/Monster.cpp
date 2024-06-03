@@ -6,6 +6,6 @@ Monster::Monster(uint64 id) : NetObject(id, mmo::Monster)
 	SetPosition(Vector2DI::Zero());
 }
 
-void Monster::Tick(uint32 deltaTime)
+void Monster::Tick(float deltaTime)
 {
 }

@@ -8,7 +8,7 @@ class GameMap : public JobSerializer, public MapData
 {
 	enum
 	{
-		TickDelta = 33
+		TickDelta = 32
 	};
 public:
 	GameMap();
@@ -29,5 +29,6 @@ public:
 	void Tick();
 private:
 	HashMap<uint64, std::shared_ptr<class NetObject>> m_objects;
+	uint64 m_lastTick;
 };
 

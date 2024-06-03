@@ -156,6 +156,7 @@ void GameMap::Tick()
 	for (const auto& pair : m_objects)
 	{
 		if (auto object = pair.second)
-			object->Tick(TickDelta);
+			object->Tick((GetTickCount64() - m_lastTick)/1000.f);
 	}
+	m_lastTick = GetTickCount64();
 }
