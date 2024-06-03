@@ -6,7 +6,6 @@ Monster::Monster(uint64 id) : NetObject(id, mmo::Monster)
 	SetPosition(Vector2DI::Zero());
 }
 
-void Monster::Update()
+void Monster::Tick()
 {
-	Console::Log(Category::Temp, LogType::Debug, TEXT("Update Monster"));
 }

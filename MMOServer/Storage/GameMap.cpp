@@ -146,16 +146,16 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 	Broadcast(&notifyChat, sender->GetId());
 }
 
-void GameMap::Update()
+void GameMap::Tick()
 {
-	Launch<33>(&GameMap::Update);
+	Launch<33>(&GameMap::Tick);
 
 	Launch(&GameMap::SpawnMonster);
 
 	// NetObject `Update` logic
 	for (const auto& pair : m_objects)
 	{
-		if (auto player = pair.second)
-			player->Update();
+		if (auto object = pair.second)
+			object->Tick();
 	}
 }

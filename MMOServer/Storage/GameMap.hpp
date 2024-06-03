@@ -22,7 +22,7 @@ public:
 	void HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move);
 	void HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat);
 public:
-	void Update();
+	void Tick();
 private:
 	HashMap<uint64, std::shared_ptr<class NetObject>> m_objects;
 };

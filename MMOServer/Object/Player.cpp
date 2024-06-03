@@ -13,9 +13,8 @@ Player::Player(uint64 id) : NetObject(id, mmo::Player)
 	SetPosition(Vector2DI::Zero());
 }
 
-void Player::Update()
+void Player::Tick()
 {
-	Console::Log(Category::Temp, LogType::Info, std::format(TEXT("Update at {}"), GetId()));
 }
 
 void Player::SetSession(std::shared_ptr<GameSession> session)

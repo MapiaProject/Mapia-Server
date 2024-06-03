@@ -14,7 +14,7 @@ MapManager::MapManager()
 		auto sp = action::Split(String(iter.path()), TEXT('/'));
 		auto map = MakeShared<GameMap>(sp.back());
 		m_mapData[map->GetName()] = map;
-		map->Launch(&GameMap::Update);
+		map->Launch(&GameMap::Tick);
 	}
 }
 
