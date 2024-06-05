@@ -5,7 +5,7 @@
 
 class Player;
 
-enum class RpcTarget : uint16
+enum class RpcTarget : uint8
 {
 	All,
 	Other

@@ -18,13 +18,10 @@ void GameSession::OnDisconnected(net::Endpoint)
 
 void GameSession::OnReceive(std::span<char> buffer, int32)
 {
-    uint16 id = 0;
-    memcpy(&id, buffer.data(), sizeof(uint16));
+    uint16 id = *reinterpret_cast<uint16*>(buffer.data());
     if (Packet::IsRpcId(id))
     {   
-        RpcTarget target;
-        memcpy(&target, buffer.data() + sizeof(uint16), sizeof(uint16));
-
+        RpcTarget target = *reinterpret_cast<RpcTarget*>(buffer.data() + sizeof(uint16));
         switch (target)
         {
         case RpcTarget::All:
