@@ -116,6 +116,10 @@
 				"name": "NotifyChat",
 				"data": [
 					{
+						"type": "EChatType",
+						"name": "type"
+					},
+					{
 						"type": "string",
 						"name": "senderName"
 					},

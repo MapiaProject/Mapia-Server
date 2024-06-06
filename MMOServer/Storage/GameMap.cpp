@@ -140,6 +140,7 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 	auto sender = gameSession->GetPlayer();
 
 	gen::mmo::NotifyChat notifyChat;
+	notifyChat.type = mmo::EChatType::Local;
 	notifyChat.senderName = sender->GetNickname();
 	notifyChat.message = chat.message;
 
@@ -148,7 +149,7 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 
 void GameMap::Tick()
 {
-	Launch<TickDelta>(&GameMap::Tick);
+	Launch<GameTick>(&GameMap::Tick);
 
 	Launch(&GameMap::SpawnMonster);
 

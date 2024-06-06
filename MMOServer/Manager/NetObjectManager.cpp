@@ -33,6 +33,7 @@ void NetObjectManager::HandleDirectChat(std::shared_ptr<Session> session, gen::m
 	auto target = std::static_pointer_cast<Player>(m_objects[chat.targetId]);
 
 	gen::mmo::NotifyChat notifyChat;
+	notifyChat.type = mmo::EChatType::Direct;
 	notifyChat.senderName = gameSession->GetPlayer()->GetNickname();
 	notifyChat.message = chat.message;
 
@@ -45,6 +46,7 @@ void NetObjectManager::HandleAllChat(std::shared_ptr<Session> session, gen::mmo:
 	auto sender = gameSession->GetPlayer();
 
 	gen::mmo::NotifyChat notifyChat;
+	notifyChat.type = mmo::EChatType::All;
 	notifyChat.senderName = sender->GetNickname();
 	notifyChat.message = chat.message;
 
