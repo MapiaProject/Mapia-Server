@@ -12,12 +12,13 @@ void GameSession::OnDisconnected(net::Endpoint)
 {
     m_player->LeaveMap();
 	Console::Log(Category::MMOServer, Info, L"Disconnected!");
-
-
 }
 
-void GameSession::OnReceive(std::span<char> buffer, int32)
+void GameSession::OnReceive(std::span<char> buffer, int32 len)
 {
+    if (len < 3)
+        return;
+
     uint16 id = *reinterpret_cast<uint16*>(buffer.data());
     if (Packet::IsRpcId(id))
     {   

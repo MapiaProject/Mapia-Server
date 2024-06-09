@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "GameMap.hpp"
 
-#include "Object/Player.hpp"
-#include "Object/Monster.hpp"
+#include "Object/Object.hpp"
 
 #include "Session/GameSession.hpp"
 #include "Manager/MapManager.hpp"

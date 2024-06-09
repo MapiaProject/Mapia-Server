@@ -1,11 +1,11 @@
 #pragma once
-#include "NetObject.hpp"
+#include "Object/NetObject.hpp"
 
 class Monster : public NetObject
 {
 public:
 	Monster(uint64 id);
 
-	void Tick(float deltaTime) override;
+	virtual void Tick(float deltaTime) override;
 };
 
