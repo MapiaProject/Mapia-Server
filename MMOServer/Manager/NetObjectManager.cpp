@@ -57,7 +57,14 @@ void NetObjectManager::BroadcastAll(Packet* packet, uint64 ignore)
 {
 	for (const auto& obj : m_objects)
 	{
-		if (auto player = std::static_pointer_cast<Player>(obj.second))
-			if (player->GetId() != ignore) player->GetSession()->Send(packet);
+		if (obj.second->GetType() == mmo::EObjectType::Player)
+		{
+			auto player = std::static_pointer_cast<Player>(obj.second);
+			if (player->GetId() != ignore)
+			{
+				if (auto session = player->GetSession())
+					session->Send(packet);
+			}
+		}
 	}
 }
