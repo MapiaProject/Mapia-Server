@@ -39,8 +39,8 @@
 						"name": "type"
 					},
 					{
-						"type": "uint64",
-						"name": "targetId"
+						"type": "string",
+						"name": "targetName"
 					},
 					{
 						"type": "string",

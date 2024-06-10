@@ -30,14 +30,26 @@ void NetObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mm
 void NetObjectManager::HandleDirectChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
 {
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
-	auto target = std::static_pointer_cast<Player>(m_objects[chat.targetId]);
+	for (const auto& [_, object] : m_objects)
+	{
+		if (object->GetType() == mmo::EObjectType::Player)
+		{
+			if (auto player = std::static_pointer_cast<Player>(object))
+			{
+				if (player->GetNickname() == chat.targetName)
+				{
+					gen::mmo::NotifyChat notifyChat;
+					notifyChat.type = mmo::EChatType::Direct;
+					notifyChat.senderName = gameSession->GetPlayer()->GetNickname();
+					notifyChat.message = chat.message;
 
-	gen::mmo::NotifyChat notifyChat;
-	notifyChat.type = mmo::EChatType::Direct;
-	notifyChat.senderName = gameSession->GetPlayer()->GetNickname();
-	notifyChat.message = chat.message;
-
-	target->GetSession()->Send(&notifyChat, true);
+					if (auto session = player->GetSession())
+						session->Send(&notifyChat, true);
+					break;
+				}
+			}
+		}
+	}
 }
 
 void NetObjectManager::HandleAllChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
