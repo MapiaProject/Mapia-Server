@@ -8,7 +8,7 @@ class GameMap : public JobSerializer, public MapData
 {
 	enum
 	{
-		GameTick = 32 // for 30fps tick rate
+		GameTick = 33 // for 30fps tick rate
 	};
 public:
 	GameMap();

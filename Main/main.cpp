@@ -15,13 +15,13 @@ int main()
 		server->Run(serverEndpoint);
 		client->Run(logEndpoint);
 
-		Console::Log(Category::MMOServer, Info, TEXT("MMO Server is running on ") + action::ToUnicodeString(serverEndpoint.toString()));
+		Console::Log(Category::MMOServer, Info, TEXT("MMO Server is running on ") + ToUnicodeString(serverEndpoint.toString()));
 
 		GEngine->ExecuteThread(4, 4);
 
 		getchar();
 	}
 	catch (std::exception& e) {
-		Console::Log(Category::MMOServer, Error, action::ToUnicodeString(e.what()));
+		Console::Log(Category::MMOServer, Error, ToUnicodeString(e.what()));
 	}
 }

@@ -90,11 +90,12 @@ void GameMap::SpawnMonster()
 		Vector<mmo::ObjectInfo> infos;
 		for (int i = 0; i < 10 - count; ++i)
 		{
-			auto idx = action::Random::RandomRange<uint32>(0, spawnArea.size() - 1);
+			auto idx = Random::Range<uint32>(0, spawnArea.size() - 1);
 			Vector2DI spawnPosition = spawnArea[idx];
 
-			auto monster = GManager->Object()->Create<Monster>();
-			monster->SetPosition(spawnPosition);
+			auto monster = GManager->Object()->Create<Monster>(std::static_pointer_cast<GameMap>(shared_from_this()));
+			monster->SetPosition(Vector2DF(spawnPosition.x, spawnPosition.y));
+			monster->BeginPlay();
 
 			m_objects[monster->GetId()] = monster;
 
@@ -128,7 +129,7 @@ void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 			syncMove.position = move.position;
 		else
 			syncMove.position = Converter::MakeVector(prevPos);
-		player->SetPosition(Converter::MakeVector<int>(syncMove.position));
+		player->SetPosition(Converter::MakeVector<float>(syncMove.position));
 	}
 	Broadcast(&syncMove);
 }
@@ -153,10 +154,9 @@ void GameMap::Tick()
 	Launch(&GameMap::SpawnMonster);
 
 	// NetObject `Update` logic
-	for (const auto& pair : m_objects)
+	for (const auto&[_, object] : m_objects)
 	{
-		if (auto object = pair.second)
-			object->Tick((GetTickCount64() - m_lastTick)/1000.f);
+		object->Tick((GetTickCount64() - m_lastTick)/1000.f);
 	}
 	m_lastTick = GetTickCount64();
 }

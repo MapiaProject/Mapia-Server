@@ -10,7 +10,7 @@ Player::Player()
 
 Player::Player(uint64 id) : NetObject(id, mmo::Player)
 {
-	SetPosition(Vector2DI::Zero());
+	SetPosition(Vector2DF::Zero());
 }
 
 void Player::Tick(float deltaTime)
@@ -41,11 +41,6 @@ void Player::LeaveMap()
 	}
 }
 
-void Player::SetPosition(Vector2DI position)
-{
-	m_position = position;
-}
-
 void Player::SetNickname(StringView nickname)
 {
 	m_nickname = nickname;
@@ -59,11 +54,6 @@ std::shared_ptr<GameSession> Player::GetSession()
 std::shared_ptr<GameMap> Player::GetMap() const
 {
 	return m_map.lock();
-}
-
-Vector2DI Player::GetPosition() const
-{
-	return m_position;
 }
 
 String Player::GetNickname() const

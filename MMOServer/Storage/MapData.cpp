@@ -35,11 +35,11 @@ void MapData::Read(StringView filename)
 	/* load map info */
 	m_name = section.Get<String>(TEXT("name"));
 
-	auto sp = action::Split(section.Get<String>(TEXT("size")), TEXT(','));
+	auto sp = Split(section.Get<String>(TEXT("size")), TEXT(','));
 	m_size = Vector2DI(std::stoi(sp[0]), std::stoi(sp[1]));
 
 	auto portalsStr = section.Get<String>(TEXT("portal"));
-	auto portals = action::Split(portalsStr, TEXT(','));
+	auto portals = Split(portalsStr, TEXT(','));
 	/*---------------*/
 
 	/* load map data */
@@ -71,7 +71,7 @@ void MapData::Read(StringView filename)
 std::optional<Block> MapData::GetBlock(Vector2DI position)
 {
 	if (position.x < 0 || position.y < 0 ||
-		position.x >= m_map[0].size() || position.y >= m_map.size())
+		position.x >= m_size.x || position.y >= m_size.y)
 		return std::nullopt;
 	return m_map[position.y][position.x];
 }

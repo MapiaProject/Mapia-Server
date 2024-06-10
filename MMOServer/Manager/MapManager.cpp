@@ -11,7 +11,7 @@ MapManager::MapManager()
 {
 	for (auto& iter : std::filesystem::directory_iterator(TEXT("Common/generated/mapData/")))
 	{
-		auto sp = action::Split(String(iter.path()), TEXT('/'));
+		auto sp = Split(String(iter.path()), TEXT('/'));
 		auto map = MakeShared<GameMap>(sp.back());
 		m_mapData[map->GetName()] = map;
 		map->Launch(&GameMap::Tick);
@@ -45,12 +45,12 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			auto position = myPlayer->GetPosition();
 			if (packet.mapName == TEXT("Village"))
 			{
-				myPlayer->SetPosition(Vector2DI(2, 4));
+				myPlayer->SetPosition(Vector2DF(2, 4));
 				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			else
 			{
-				myPlayer->SetPosition(Vector2DI(gameMap->GetSize().x - static_cast<int>(position.x) - 1, static_cast<int>(position.y)));
+				myPlayer->SetPosition(Vector2DF(gameMap->GetSize().x - static_cast<int>(position.x) - 1, static_cast<int>(position.y)));
 				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			info.objectInfo.objectId = myPlayer->GetId();

@@ -16,11 +16,9 @@ public:
 	void Tick(float deltaTime) override;
 public:	
 	void SetSession(std::shared_ptr<GameSession>);
-	void SetPosition(Vector2DI position);
 	void SetNickname(StringView nickname);
 	std::shared_ptr<GameSession> GetSession();
 	std::shared_ptr<GameMap> GetMap() const;
-	Vector2DI GetPosition() const;
 	String GetNickname() const;	
 
 	void EnterMap(std::shared_ptr<GameMap> gameMap);

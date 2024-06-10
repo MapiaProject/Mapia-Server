@@ -9,10 +9,10 @@ class NetObjectManager : public JobSerializer
 public:
 	NetObjectManager();
 public:
-	template<class T>
-	std::shared_ptr<T> Create()
+	template<class T, class... Args>
+	std::shared_ptr<T> Create(Args&&... args)
 	{
-		auto object = MakeShared<T>(++m_lastId);
+		auto object = MakeShared<T>(++m_lastId, std::forward<Args>(args)...);
 		m_objects.insert({ m_lastId, object });
 		return object;
 	}
