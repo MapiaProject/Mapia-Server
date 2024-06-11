@@ -16,9 +16,15 @@ public:
 	__forceinline void SetPosition(Vector2DF position) { m_position = position; }
 	__forceinline void SetId(uint64 id) { m_objectId = id; }
 	__forceinline mmo::EObjectType GetType() const { return m_objectTy; }
+	__forceinline int32 GetHp() const { return m_hp; };
 public:
-	virtual void Tick(float tick) abstract;
+	virtual void BeginPlay() {};
+	virtual void Tick(float deltaTime) {};
+	virtual void OnDestroy();
+public:
+	void TakeDamage(int32 damage);
 private:
+	int32 m_hp;
 	uint64 m_objectId;
 	mmo::EObjectType m_objectTy;
 	Vector2DF m_position;

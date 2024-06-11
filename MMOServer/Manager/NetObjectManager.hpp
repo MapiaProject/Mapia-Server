@@ -16,6 +16,7 @@ public:
 		m_objects.insert({ m_lastId, object });
 		return object;
 	}
+	void RemoveObject(uint64 id);
 public:
 	void HandleEnterGame(std::shared_ptr<class Session> session, gen::mmo::EnterGameReq req);
 	void HandleDirectChat(std::shared_ptr<class Session> session, gen::mmo::Chat chat);

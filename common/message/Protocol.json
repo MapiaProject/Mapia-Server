@@ -147,7 +147,7 @@
 				"data": [
 					{
 						"type": "DamageInfo",
-						"name": "damageInfo"
+						"name": "damageResult"
 					}
 				]
 			}

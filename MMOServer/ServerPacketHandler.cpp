@@ -54,5 +54,8 @@ bool gen::mmo::PacketHandler::ChatPacketHandler(TSharedPtr<Session> session, TSh
 
 bool gen::mmo::PacketHandler::AddDamageReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<AddDamageReq> packet)
 {
+	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (auto map = gameSession->GetPlayer()->GetMap())
+		map->Launch(&GameMap::HandleDamage, session, *packet);
 	return false;
 }

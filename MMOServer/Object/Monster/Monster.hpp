@@ -7,7 +7,7 @@ public:
 	Monster(uint64 id, std::shared_ptr<class GameMap> map);
 	virtual ~Monster() {}
 public:
-	virtual void BeginPlay();
+	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;
 protected:
 	std::weak_ptr<class GameMap> m_map;

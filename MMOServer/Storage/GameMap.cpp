@@ -22,10 +22,9 @@ GameMap::~GameMap()
 
 void GameMap::Broadcast(std::span<char> buffer, uint64 ignore)
 {
-	for (const auto& pair : m_objects)
+	for (const auto&[id, object] : m_objects)
 	{
-		const auto& object = pair.second;
-		if (pair.first != ignore && object->GetType() == mmo::Player)
+		if (id != ignore && object->GetType() == mmo::Player)
 		{
 			if (auto session = std::static_pointer_cast<Player>(object)->GetSession())
 				session->SendAtomic(buffer);
@@ -35,10 +34,9 @@ void GameMap::Broadcast(std::span<char> buffer, uint64 ignore)
 
 void GameMap::Broadcast(Packet* packet, uint64 ignore)
 {
-	for (const auto& pair : m_objects)
+	for (const auto&[id, object] : m_objects)
 	{
-		const auto& object = pair.second;
-		if (pair.first != ignore && object->GetType() == mmo::Player)
+		if (id != ignore && object->GetType() == mmo::Player)
 		{
 			if (auto session = std::static_pointer_cast<Player>(object)->GetSession())
 				session->Send(packet, true);
@@ -49,10 +47,10 @@ void GameMap::Broadcast(Packet* packet, uint64 ignore)
 Vector<std::shared_ptr<Player>> GameMap::Players()
 {
 	Vector<std::shared_ptr<Player>> players;
-	for (const auto& pair : m_objects)
+	for (const auto&[_, object] : m_objects)
 	{
-		if (pair.second->GetType() == mmo::Player)
-			players.push_back(std::static_pointer_cast<Player>(pair.second));
+		if (object->GetType() == mmo::Player)
+			players.push_back(std::static_pointer_cast<Player>(object));
 	}
 	return players;
 }
@@ -60,10 +58,10 @@ Vector<std::shared_ptr<Player>> GameMap::Players()
 Vector<std::shared_ptr<class Monster>> GameMap::Monsters()
 {
 	Vector<std::shared_ptr<Monster>> monsteres;
-	for (const auto& pair : m_objects)
+	for (const auto&[_, object] : m_objects)
 	{
-		if (pair.second->GetType() == mmo::Monster)
-			monsteres.push_back(std::static_pointer_cast<Monster>(pair.second));
+		if (object->GetType() == mmo::Monster)
+			monsteres.push_back(std::static_pointer_cast<Monster>(object));
 	}
 	return monsteres;
 }
@@ -145,6 +143,19 @@ void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat c
 	notifyChat.message = chat.message;
 
 	Broadcast(&notifyChat, sender->GetId());
+}
+
+void GameMap::HandleDamage(std::shared_ptr<Session> session, mmo::AddDamageReq damage)
+{
+	if (const auto& object = m_objects[damage.damageInfo.objectId])
+	{
+		object->TakeDamage(damage.damageInfo.damage);
+		mmo::NotifyDamaged notify;
+		notify.damageResult.objectId = object->GetId();
+		notify.damageResult.damage = object->GetHp();
+
+		Broadcast(&notify);
+	}
 }
 
 void GameMap::Tick()

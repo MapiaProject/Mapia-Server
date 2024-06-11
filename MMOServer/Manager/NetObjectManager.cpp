@@ -8,6 +8,12 @@ NetObjectManager::NetObjectManager() : m_lastId(0)
 {
 }
 
+void NetObjectManager::RemoveObject(uint64 id)
+{
+	if (auto& object = m_objects[id])
+		object = nullptr;
+}
+
 void NetObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::EnterGameReq req)
 {
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
