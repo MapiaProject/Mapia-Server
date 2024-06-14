@@ -13,8 +13,10 @@ MapManager::MapManager()
 	{
 		auto sp = Split(String(iter.path()), TEXT('/'));
 		auto map = MakeShared<GameMap>(sp.back());
+		map->BeginPlay();
+		map->Tick();
+
 		m_mapData[map->GetName()] = map;
-		map->Launch(&GameMap::Tick);
 	}
 }
 
@@ -45,12 +47,12 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			auto position = myPlayer->GetPosition();
 			if (packet.mapName == TEXT("Village"))
 			{
-				myPlayer->SetPosition(Vector2DF(2, 4));
+				myPlayer->SetPosition(Vector2DF(14, 11));
 				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			else
 			{
-				myPlayer->SetPosition(Vector2DF(gameMap->GetSize().x - static_cast<int>(position.x) - 1, static_cast<int>(position.y)));
+				myPlayer->SetPosition(Vector2D(gameMap->GetSize().x - position.x + 1, position.y));
 				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			info.objectInfo.objectId = myPlayer->GetId();
@@ -92,8 +94,4 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 		}
 	}
 	session->Send(&res, true);
-}
-
-void MapManager::Enter(std::shared_ptr<GameMap> map, std::shared_ptr<class Player> player)
-{
 }

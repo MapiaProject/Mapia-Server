@@ -3,6 +3,10 @@
 
 class Monster : public NetObject
 {
+	enum
+	{
+		MoveTick = 150
+	};
 public:
 	Monster(uint64 id, std::shared_ptr<class GameMap> map);
 	virtual ~Monster() {}
@@ -16,6 +20,7 @@ private:
 private:
 	int32 m_dir;
 	int32 m_dest;
-	uint64 m_nextTime;
+	int64 m_moveTime;
+	uint64 m_nextMoveTime;
 };
 

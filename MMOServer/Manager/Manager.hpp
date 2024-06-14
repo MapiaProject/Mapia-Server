@@ -9,11 +9,11 @@ public:
 	Manager();
 	~Manager();
 public:
-	NetObjectManager* Object();
-	MapManager* Map();
+	std::shared_ptr<NetObjectManager> Object();
+	std::shared_ptr<MapManager> Map();
 private:
-	NetObjectManager* m_netObject;
-	MapManager* m_map;
+	std::shared_ptr<NetObjectManager> m_netObject;
+	std::shared_ptr<MapManager> m_map;
 };
 
 extern Manager* GManager;

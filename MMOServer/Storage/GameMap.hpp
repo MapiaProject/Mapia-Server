@@ -11,7 +11,6 @@ class GameMap : public JobSerializer, public MapData
 		GameTick = 33 // for 30fps tick rate
 	};
 public:
-	GameMap();
 	GameMap(StringView path);
 	~GameMap();
 public:
@@ -27,6 +26,7 @@ public:
 	void HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat);
 	void HandleDamage(std::shared_ptr<Session> session, gen::mmo::AddDamageReq damage);
 public:
+	void BeginPlay();
 	void Tick();
 private:
 	HashMap<uint64, std::shared_ptr<class NetObject>> m_objects;

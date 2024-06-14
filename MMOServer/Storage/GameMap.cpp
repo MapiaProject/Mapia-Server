@@ -8,10 +8,6 @@
 
 #include "Manager/NetObjectManager.hpp"
 
-GameMap::GameMap()
-{
-}
-
 GameMap::GameMap(StringView path) : MapData(path)
 {
 }
@@ -106,6 +102,7 @@ void GameMap::SpawnMonster()
 		spawn.monsterInfos = infos;
 		Broadcast(&spawn);
 	}
+	Launch(Random::Range(1000, 15000), &GameMap::SpawnMonster);
 }
 
 void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
@@ -120,16 +117,38 @@ void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 	if (!block.has_value())
 	{
 		syncMove.position = Converter::MakeVector(prevPos);
+		Broadcast(&syncMove);
 	}
 	else
 	{
-		if (block != Block::Border)
-			syncMove.position = move.position;
-		else
+		switch (block.value())
+		{
+		case Block::Portal:
+			for (const auto& portal : m_portals)
+			{
+				auto position = Vector2D(move.position.x, move.position.y);
+				if (portal.position == Vector2DI(position.x, position.y))
+				{
+					player->SetPosition(position);
+					mmo::EnterMapReq enter;
+					enter.mapName = portal.destMap;
+					GManager->Map()->Launch(&MapManager::HandleEnter, session, enter);
+					break;
+				}
+			}
+			break;
+		case Block::Border:
 			syncMove.position = Converter::MakeVector(prevPos);
-		player->SetPosition(Converter::MakeVector<float>(syncMove.position));
+			player->SetPosition(Converter::MakeVector<float>(syncMove.position));
+			Broadcast(&syncMove);
+			break;
+		default:
+			syncMove.position = move.position;
+			player->SetPosition(Converter::MakeVector<float>(syncMove.position));
+			Broadcast(&syncMove);
+			break;
+		}
 	}
-	Broadcast(&syncMove);
 }
 
 void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
@@ -158,11 +177,14 @@ void GameMap::HandleDamage(std::shared_ptr<Session> session, mmo::AddDamageReq d
 	}
 }
 
+void GameMap::BeginPlay()
+{
+	Launch(&GameMap::SpawnMonster);
+}
+
 void GameMap::Tick()
 {
 	Launch<GameTick>(&GameMap::Tick);
-
-	Launch(&GameMap::SpawnMonster);
 
 	// NetObject `Update` logic
 	for (const auto&[_, object] : m_objects)
