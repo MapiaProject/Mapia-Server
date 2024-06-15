@@ -15,7 +15,7 @@ void Monster::BeginPlay()
 	NextDestination();
 }
 
-void Monster::Tick(float deltaTime)
+void Monster::Tick()
 {
 	if (GetTickCount64() >= m_nextMoveTime && GetTickCount64() >= m_moveTime)
 	{
@@ -37,6 +37,10 @@ void Monster::Tick(float deltaTime)
 		}
 		m_moveTime = GetTickCount64() + MoveTick;
 	}
+}
+
+void Monster::OnDestroy()
+{
 }
 
 void Monster::NextDestination()

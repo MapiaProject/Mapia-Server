@@ -4,6 +4,8 @@
 
 #include "generated/mmo/Protocol.gen.hpp"
 
+class BaseObject;
+
 class NetObjectManager : public JobSerializer
 {
 public:
@@ -25,6 +27,6 @@ private:
 	void BroadcastAll(Packet* packet, uint64 ignore = 0);
 private:
 	std::atomic<uint64> m_lastId;
-	ConcurrencyHashMap<uint64, std::shared_ptr<class NetObject>> m_objects;
+	ConcurrencyHashMap<uint64, std::shared_ptr<BaseObject>> m_objects;
 };
 

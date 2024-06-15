@@ -168,11 +168,26 @@ void GameMap::HandleDamage(std::shared_ptr<Session> session, mmo::AddDamageReq d
 {
 	if (const auto& object = m_objects[damage.damageInfo.objectId])
 	{
-		object->TakeDamage(damage.damageInfo.damage);
 		mmo::NotifyDamaged notify;
-		notify.damageResult.objectId = object->GetId();
-		notify.damageResult.damage = object->GetHp();
-
+		switch (object->GetType())
+		{
+		case mmo::EObjectType::Monster:
+		{
+			const auto& monster = std::static_pointer_cast<Monster>(object);
+			monster->TakeDamage(damage.damageInfo.damage);
+			notify.damageResult.objectId = monster->GetId();
+			notify.damageResult.damage = monster->GetHp();
+		}
+		break;
+		case mmo::EObjectType::Player:
+		{
+			const auto& player = std::static_pointer_cast<Player>(object);
+			player->TakeDamage(damage.damageInfo.damage);
+		}
+		break;
+		default:
+			break;
+		}
 		Broadcast(&notify);
 	}
 }
@@ -186,10 +201,21 @@ void GameMap::Tick()
 {
 	Launch<GameTick>(&GameMap::Tick);
 
+	Console::Log(Category::Temp, Debug, TEXT("Tick"));
+
 	// NetObject `Update` logic
 	for (const auto&[_, object] : m_objects)
 	{
-		object->Tick((GetTickCount64() - m_lastTick)/1000.f);
+		switch (object->GetType())
+		{
+		case mmo::EObjectType::Monster:
+			std::static_pointer_cast<Monster>(object)->Tick();
+			break;
+		case mmo::EObjectType::Player:
+			std::static_pointer_cast<Player>(object)->Tick();
+			break;
+		default:
+			break;
+		}
 	}
-	m_lastTick = GetTickCount64();
 }

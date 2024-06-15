@@ -1,7 +1,7 @@
 #pragma once
 #include "Object/NetObject.hpp"
 
-class Monster : public NetObject
+class Monster : public NetObject<Monster>
 {
 	enum
 	{
@@ -11,8 +11,9 @@ public:
 	Monster(uint64 id, std::shared_ptr<class GameMap> map);
 	virtual ~Monster() {}
 public:
-	virtual void BeginPlay() override;
-	virtual void Tick(float deltaTime) override;
+	void BeginPlay();
+	void Tick();
+	void OnDestroy();
 protected:
 	std::weak_ptr<class GameMap> m_map;
 private:

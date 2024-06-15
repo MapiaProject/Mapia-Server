@@ -6,14 +6,14 @@
 class GameSession;
 class GameMap;
 
-class Player : public NetObject
+class Player : public NetObject<Player>
 {
 	USE_POOL(Player)
 public:
 	Player();
 	Player(uint64 id);
 public:
-	void Tick(float deltaTime) override;
+	void Tick();
 public:	
 	void SetSession(std::shared_ptr<GameSession>);
 	void SetNickname(StringView nickname);

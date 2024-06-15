@@ -4,6 +4,8 @@
 
 #include "generated/mmo/ServerPacketHandler.gen.hpp"
 
+class BaseObject;
+
 class GameMap : public JobSerializer, public MapData
 {
 	enum
@@ -29,7 +31,6 @@ public:
 	void BeginPlay();
 	void Tick();
 private:
-	HashMap<uint64, std::shared_ptr<class NetObject>> m_objects;
-	uint64 m_lastTick;
+	HashMap<uint64, std::shared_ptr<BaseObject>> m_objects;
 };
 

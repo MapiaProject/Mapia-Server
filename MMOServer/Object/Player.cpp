@@ -13,7 +13,7 @@ Player::Player(uint64 id) : NetObject(id, mmo::Player)
 	SetPosition(Vector2DF::Zero());
 }
 
-void Player::Tick(float deltaTime)
+void Player::Tick()
 {
 }
 
