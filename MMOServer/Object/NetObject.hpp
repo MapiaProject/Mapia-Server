@@ -23,38 +23,22 @@ protected:
 	int32 m_hp;
 };
 
-template<class Derived>
 class NetObject :
-	public std::enable_shared_from_this<Derived>,
+	public std::enable_shared_from_this<NetObject>,
 	public BaseObject
 {
 public:
-	NetObject() : BaseObject()
-	{
-	}
-	NetObject(uint64 id, mmo::EObjectType type) : BaseObject(type), m_objectId(id)
-	{
-	}
+	NetObject();
+	NetObject(uint64 id, mmo::EObjectType type);
 public:
 	__forceinline uint64 GetId() const { return m_objectId; }
 	__forceinline void SetId(uint64 id) { m_objectId = id; }
 public:
-	void BeginPlay() { Derived::BeginPlay(); }
-	void Tick() { Derived::Tick(); }
-	void OnDestroy()
-	{
-		GManager->Object()->RemoveObject(m_objectId);
-		reinterpret_cast<Derived&>(*this).OnDestroy();
-	}
+	virtual void BeginPlay() { };
+	virtual void Tick() { };
+	virtual void OnDestroy();
 public:
-	void TakeDamage(int32 damage)
-	{
-		m_hp -= damage;
-		if (m_hp <= 0)
-		{
-			OnDestroy();
-		}
-	}
+	void TakeDamage(int32 damage);
 private:
 	uint64 m_objectId;
 };

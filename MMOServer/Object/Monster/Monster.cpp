@@ -2,7 +2,7 @@
 #include "Monster.hpp"
 #include "Storage/GameMap.hpp"
 
-Monster::Monster(uint64 id, std::shared_ptr<GameMap> map) : NetObject(id, mmo::Monster), m_map(map)
+Monster::Monster(uint64 id, std::shared_ptr<GameMap> map) : NetObject(id, mmo::Monster), m_map(map), m_usePatrol(true)
 {
 	SetPosition(Vector2DF::Zero());
 	m_moveTime = GetTickCount64();
@@ -12,35 +12,54 @@ Monster::Monster(uint64 id, std::shared_ptr<GameMap> map) : NetObject(id, mmo::M
 
 void Monster::BeginPlay()
 {
-	NextDestination();
+	if (m_usePatrol)
+		NextDestination();
 }
 
 void Monster::Tick()
 {
-	if (GetTickCount64() >= m_nextMoveTime && GetTickCount64() >= m_moveTime)
+	if (m_usePatrol)
 	{
-		auto position = GetPosition();
-		if (m_dir > 0 && position.x < m_dest)
+		if (GetTickCount64() >= m_nextMoveTime && GetTickCount64() >= m_moveTime)
 		{
-			position.x++;
-			SetPosition(position);
+			auto position = GetPosition();
+			if (m_dir > 0 && position.x < m_dest)
+			{
+				position.x++;
+				SetPosition(position);
+			}
+			else if (m_dir < 0 && position.x > m_dest)
+			{
+				position.x--;
+				SetPosition(position);
+			}
+			else
+			{
+				m_nextMoveTime = GetTickCount64() + Random::Range(250, 750);
+				NextDestination();
+			}
+			m_moveTime = GetTickCount64() + MoveTick;
 		}
-		else if (m_dir < 0 && position.x > m_dest)
-		{
-			position.x--;
-			SetPosition(position);
-		}
-		else
-		{
-			m_nextMoveTime = GetTickCount64() + Random::Range(250, 750);
-			NextDestination();
-		}
-		m_moveTime = GetTickCount64() + MoveTick;
 	}
 }
 
 void Monster::OnDestroy()
 {
+	NetObject::OnDestroy();
+	if (auto map = GetMap())
+	{
+		map->Leave(shared_from_this());
+	}
+}
+
+void Monster::EnablePatrol(bool enable)
+{
+	m_usePatrol = enable;
+}
+
+std::shared_ptr<GameMap> Monster::GetMap() const
+{
+	return m_map.lock();
 }
 
 void Monster::NextDestination()

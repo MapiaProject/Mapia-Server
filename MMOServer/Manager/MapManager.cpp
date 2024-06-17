@@ -63,7 +63,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 		{
 			gen::mmo::Spawn spawn;
 			spawn.isMine = false;
-			for (const auto player : gameMap->Players())
+			for (const auto&[_, player] : gameMap->GetPlayers())
 			{
 				if (player->GetId() != myPlayer->GetId())
 				{

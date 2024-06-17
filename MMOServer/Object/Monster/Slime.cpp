@@ -9,9 +9,10 @@ Slime::Slime(uint64 id, std::shared_ptr<GameMap> map) : Monster(id, map)
 
 void Slime::BeginPlay()
 {
+	EnablePatrol(false);
 }
 
-void Slime::Tick(float deltaTime)
+void Slime::Tick()
 {
 	
 }

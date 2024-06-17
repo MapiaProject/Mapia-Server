@@ -4,7 +4,7 @@
 
 #include "generated/mmo/ServerPacketHandler.gen.hpp"
 
-class BaseObject;
+class NetObject;
 
 class GameMap : public JobSerializer, public MapData
 {
@@ -19,11 +19,12 @@ public:
 public:
 	void Broadcast(std::span<char> buffer, uint64 ignore = 0);
 	void Broadcast(Packet* packet, uint64 ignore = 0);
-	Vector<std::shared_ptr<class Player>> Players();
-	Vector<std::shared_ptr<class Monster>> Monsters();
-	void Enter(std::shared_ptr<class Player> player);
-	void Leave(std::shared_ptr<class Player> player);
+	void Enter(std::shared_ptr<NetObject> object);
+	void Leave(std::shared_ptr<NetObject> object);
 	void SpawnMonster();
+public:
+	HashMap<uint64, std::shared_ptr<class Player>> GetPlayers() const;
+	HashMap<uint64, std::shared_ptr<class Monster>> GetMonsters() const;
 public:
 	void HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move);
 	void HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat);
@@ -32,6 +33,7 @@ public:
 	void BeginPlay();
 	void Tick();
 private:
-	HashMap<uint64, std::shared_ptr<BaseObject>> m_objects;
+	HashMap<uint64, std::shared_ptr<class Player>> m_players;
+	HashMap<uint64, std::shared_ptr<class Monster>> m_monsters;
 };
 

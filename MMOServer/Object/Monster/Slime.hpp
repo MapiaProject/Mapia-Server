@@ -3,10 +3,11 @@
 
 class Slime : public Monster
 {
+	USE_POOL(Slime)
 public:
 	Slime(uint64 id, std::shared_ptr<class GameMap> map);
 public:
-	void BeginPlay();
-	void Tick(float deltaTime);
+	void BeginPlay() override;
+	void Tick() override;
 };
 

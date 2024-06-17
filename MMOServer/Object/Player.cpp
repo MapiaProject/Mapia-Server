@@ -5,7 +5,7 @@
 Player::Player()
 {
 	if (auto map = GetMap())
-		map->Leave(std::static_pointer_cast<Player>(shared_from_this()));
+		map->Leave(shared_from_this());
 }
 
 Player::Player(uint64 id) : NetObject(id, mmo::Player)
@@ -13,8 +13,21 @@ Player::Player(uint64 id) : NetObject(id, mmo::Player)
 	SetPosition(Vector2DF::Zero());
 }
 
+void Player::BeginPlay()
+{
+}
+
 void Player::Tick()
 {
+}
+
+void Player::OnDestroy()
+{
+	NetObject::OnDestroy();
+	if (auto map = GetMap())
+	{
+		map->Leave(shared_from_this());
+	}
 }
 
 void Player::SetSession(std::shared_ptr<GameSession> session)
@@ -29,14 +42,14 @@ void Player::EnterMap(std::shared_ptr<GameMap> gameMap)
 	
 	m_map = gameMap;
 	if (auto map = m_map.lock())
-		gameMap->Enter(std::static_pointer_cast<Player>(shared_from_this()));
+		gameMap->Enter(shared_from_this());
 }
 
 void Player::LeaveMap()
 {
 	if (auto map = m_map.lock())
 	{
-		map->Launch(&GameMap::Leave, std::static_pointer_cast<Player>(shared_from_this()));
+		map->Launch(&GameMap::Leave, shared_from_this());
 		m_map.reset();
 	}
 }

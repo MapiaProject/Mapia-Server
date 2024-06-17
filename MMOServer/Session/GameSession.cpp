@@ -5,13 +5,13 @@
 
 void GameSession::OnConnected(net::Endpoint)
 {
-	Console::Log(Category::MMOServer, Info, L"Connected!");
+	Console::Log(Category::MMOServer, TEXT("Connected!"));
 }
 
 void GameSession::OnDisconnected(net::Endpoint)
 {
     m_player->LeaveMap();
-	Console::Log(Category::MMOServer, Info, L"Disconnected!");
+	Console::Log(Category::MMOServer, TEXT("Disconnected!"));
 }
 
 void GameSession::OnReceive(std::span<char> buffer, int32 len)
