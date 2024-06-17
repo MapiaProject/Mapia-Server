@@ -15,10 +15,12 @@ Player::Player(uint64 id) : NetObject(id, mmo::Player)
 
 void Player::BeginPlay()
 {
+	NetObject::BeginPlay();
 }
 
 void Player::Tick()
 {
+	NetObject::Tick();
 }
 
 void Player::OnDestroy()

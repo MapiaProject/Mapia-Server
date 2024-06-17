@@ -17,12 +17,11 @@ public:
 public:
 	void EnablePatrol(bool enable);
 	std::shared_ptr<class GameMap> GetMap() const;
+	bool GetIsUsePatrol();
 private:
 	void NextDestination();
 private:
 	std::weak_ptr<class GameMap> m_map;
-
-	uint64 m_sendMoveTime;
 
 	/* patrol data */
 	bool m_usePatrol;

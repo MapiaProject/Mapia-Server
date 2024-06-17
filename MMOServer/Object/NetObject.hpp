@@ -37,8 +37,9 @@ public:
 	virtual void BeginPlay() { };
 	virtual void Tick() { };
 	virtual void OnDestroy();
+	virtual void OnDamaged(const std::shared_ptr<NetObject> attacker) { };
 public:
-	void TakeDamage(int32 damage);
+	void TakeDamage(const std::shared_ptr<NetObject>& attacker, int32 damage);
 private:
 	uint64 m_objectId;
 };
