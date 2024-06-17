@@ -5,7 +5,7 @@ class Monster : public NetObject
 {
 	enum
 	{
-		MoveTick = 150
+		MoveTick = 200
 	};
 public:
 	Monster(uint64 id, std::shared_ptr<class GameMap> map);
@@ -22,10 +22,13 @@ private:
 private:
 	std::weak_ptr<class GameMap> m_map;
 
+	uint64 m_sendMoveTime;
+
+	/* patrol data */
 	bool m_usePatrol;
 	int32 m_dir;
 	int32 m_dest;
-	int64 m_moveTime;
+	uint64 m_moveTime;
 	uint64 m_nextMoveTime;
 };
 

@@ -2,7 +2,8 @@
 #include "Monster.hpp"
 #include "Storage/GameMap.hpp"
 
-Monster::Monster(uint64 id, std::shared_ptr<GameMap> map) : NetObject(id, mmo::Monster), m_map(map), m_usePatrol(true)
+Monster::Monster(uint64 id, std::shared_ptr<GameMap> map)
+	: NetObject(id, mmo::Monster), m_map(map), m_usePatrol(true)
 {
 	SetPosition(Vector2DF::Zero());
 	m_moveTime = GetTickCount64();
@@ -39,6 +40,12 @@ void Monster::Tick()
 				NextDestination();
 			}
 			m_moveTime = GetTickCount64() + MoveTick;
+
+			mmo::NotifyMove move;
+			move.objectId = GetId();
+			move.position = Converter::MakeVector(GetPosition());
+			if (auto map = GetMap())
+				map->Broadcast(&move);
 		}
 	}
 }
