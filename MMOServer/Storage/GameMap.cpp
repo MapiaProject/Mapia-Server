@@ -181,7 +181,7 @@ void GameMap::HandleDamage(std::shared_ptr<Session> session, mmo::AddDamageReq d
 	if (object)
 	{
 		mmo::NotifyDamaged notify;
-		object->TakeDamage(damage.damageInfo.damage);
+		object->TakeDamage(object, damage.damageInfo.damage);
 		notify.damageResult.objectId = object->GetId();
 		notify.damageResult.damage = object->GetHp();
 

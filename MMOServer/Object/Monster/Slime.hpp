@@ -9,5 +9,7 @@ public:
 public:
 	void BeginPlay() override;
 	void Tick() override;
+	void OnDamaged(const std::shared_ptr<NetObject> attacker) override;
+private:
+	std::weak_ptr<NetObject> m_target;
 };
-

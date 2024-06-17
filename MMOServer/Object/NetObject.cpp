@@ -19,9 +19,10 @@ void NetObject::OnDestroy()
 	GManager->Object()->RemoveObject(m_objectId);
 }
 
-void NetObject::TakeDamage(int32 damage)
+void NetObject::TakeDamage(const std::shared_ptr<NetObject>& attacker, int32 damage)
 {
 	m_hp -= damage;
+	OnDamaged(attacker);
 	if (m_hp <= 0)
 	{
 		OnDestroy();

@@ -13,12 +13,14 @@ Monster::Monster(uint64 id, std::shared_ptr<GameMap> map)
 
 void Monster::BeginPlay()
 {
+	NetObject::BeginPlay();
 	if (m_usePatrol)
 		NextDestination();
 }
 
 void Monster::Tick()
 {
+	NetObject::Tick();
 	if (m_usePatrol)
 	{
 		if (GetTickCount64() >= m_nextMoveTime && GetTickCount64() >= m_moveTime)
@@ -67,6 +69,11 @@ void Monster::EnablePatrol(bool enable)
 std::shared_ptr<GameMap> Monster::GetMap() const
 {
 	return m_map.lock();
+}
+
+bool Monster::GetIsUsePatrol()
+{
+	return m_usePatrol;
 }
 
 void Monster::NextDestination()
