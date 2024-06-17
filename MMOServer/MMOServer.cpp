@@ -21,6 +21,7 @@ MMOServer::MMOServer()
 		"OPTION=3;"
 	));
 	GManager = new Manager;
+	GManager->Initialize();
 }
 
 MMOServer::~MMOServer()

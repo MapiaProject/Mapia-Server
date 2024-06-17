@@ -6,20 +6,25 @@
 
 Manager::Manager()
 {
-	m_netObject = MakeShared<NetObjectManager>();
-	m_map = MakeShared<MapManager>();
+	m_netObject = new NetObjectManager();
+	m_map = new MapManager();
 }
 
 Manager::~Manager()
 {
 }
 
-std::shared_ptr<NetObjectManager> Manager::Object()
+void Manager::Initialize()
+{
+	m_map->Initialize();
+}
+
+NetObjectManager* Manager::Object()
 {
 	return m_netObject;
 }
 
-std::shared_ptr<MapManager> Manager::Map()
+MapManager* Manager::Map()
 {
 	return m_map;
 }

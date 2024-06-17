@@ -77,6 +77,8 @@ void GameMap::Leave(std::shared_ptr<Player> player)
 
 void GameMap::SpawnMonster()
 {
+	Launch<SpawnTick>(&GameMap::SpawnMonster);
+
 	const auto spawnArea = GetBlocks(Block::SpawnArea);
 	auto count = Monsters().size();
 	if (spawnArea.size() > 0 && count < 10)
@@ -102,7 +104,6 @@ void GameMap::SpawnMonster()
 		spawn.monsterInfos = infos;
 		Broadcast(&spawn);
 	}
-	Launch(Random::Range(1000, 15000), &GameMap::SpawnMonster);
 }
 
 void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
@@ -194,14 +195,12 @@ void GameMap::HandleDamage(std::shared_ptr<Session> session, mmo::AddDamageReq d
 
 void GameMap::BeginPlay()
 {
-	Launch(&GameMap::SpawnMonster);
+	SpawnMonster();
 }
 
 void GameMap::Tick()
 {
 	Launch<GameTick>(&GameMap::Tick);
-
-	Console::Log(Category::Temp, Debug, TEXT("Tick"));
 
 	// NetObject `Update` logic
 	for (const auto&[_, object] : m_objects)

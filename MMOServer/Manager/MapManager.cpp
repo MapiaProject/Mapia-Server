@@ -13,8 +13,6 @@ MapManager::MapManager()
 	{
 		auto sp = Split(String(iter.path()), TEXT('/'));
 		auto map = MakeShared<GameMap>(sp.back());
-		map->BeginPlay();
-		map->Tick();
 
 		m_mapData[map->GetName()] = map;
 	}
@@ -94,4 +92,13 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 		}
 	}
 	session->Send(&res, true);
+}
+
+void MapManager::Initialize()
+{
+	for (const auto& [_, map] : m_mapData)
+	{
+		map->BeginPlay();
+		map->Tick();
+	}
 }
