@@ -4,6 +4,7 @@
 
 Player::Player()
 {
+	SetHp(10);
 	if (auto map = GetMap())
 		map->Leave(shared_from_this());
 }

@@ -54,8 +54,8 @@ void NetObjectManager::HandleDirectChat(std::shared_ptr<Session> session, gen::m
 					notifyChat.senderName = gameSession->GetPlayer()->GetNickname();
 					notifyChat.message = chat.message;
 
-					if (auto session = player->GetSession())
-						session->Send(&notifyChat, true);
+					if (auto targetSession = player->GetSession())
+						targetSession->Send(&notifyChat, true);
 					break;
 				}
 			}
