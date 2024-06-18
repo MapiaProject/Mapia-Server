@@ -6,7 +6,7 @@
 
 Monster::Monster(uint64 id, std::shared_ptr<GameMap> map)
 	: NetObject(id, mmo::Monster),
-	m_map(map), m_enableAutomove(true), m_dir(0), m_target(), m_patrol(true), m_attackRange(0), m_state(PATROL)
+	m_map(map), m_enableAutomove(true), m_dir(0), m_target(), m_patrol(true), m_state(PATROL)
 {
 	SetPosition(Vector2DF::Zero());
 	m_moveTime = GetTickCount64();
@@ -140,6 +140,8 @@ void Monster::Attack()
 	if (auto target = m_target.lock())
 	{
 		m_state = ATTACK;
+
+		target->TryDamage(shared_from_this());
 		mmo::TakeAttack attack;
 		attack.target = target->GetId();
 		if (auto session = target->GetSession())

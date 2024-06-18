@@ -2,7 +2,7 @@
 #include "generated/mmo/ServerPacketHandler.gen.hpp"
 #include "Session/GameSession.hpp"
 
-#include "Object/Player.hpp"
+#include "Object/Object.hpp"
 #include "Storage/GameMap.hpp"
 
 #include "Manager/Manager.hpp"
@@ -62,6 +62,8 @@ bool gen::mmo::PacketHandler::AddDamageReqPacketHandler(TSharedPtr<Session> sess
 
 bool gen::mmo::PacketHandler::HitStatusPacketHandler(TSharedPtr<Session> session, TSharedPtr<HitStatus> packet)
 {
-
+	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (auto map = gameSession->GetPlayer()->GetMap())
+		map->Launch(&GameMap::HandleHitStatus, session, *packet);
 	return false;
 }

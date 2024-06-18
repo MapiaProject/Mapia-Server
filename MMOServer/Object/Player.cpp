@@ -5,6 +5,7 @@
 Player::Player() noexcept
 {
 	SetHp(10);
+	SetPower(2);
 	if (auto map = GetMap())
 		map->Leave(shared_from_this());
 }
@@ -33,6 +34,11 @@ void Player::OnDestroy()
 	}
 }
 
+void Player::OnDamaged(const std::shared_ptr<NetObject> hitter)
+{
+	m_hitter = hitter;
+}
+
 void Player::SetSession(std::shared_ptr<GameSession> session)
 {
 	m_session = session;
@@ -57,6 +63,11 @@ void Player::LeaveMap()
 	}
 }
 
+void Player::TryDamage(const std::shared_ptr<NetObject> hitter)
+{
+	OnDamaged(hitter);
+}
+
 void Player::SetNickname(StringView nickname)
 {
 	m_nickname = nickname;
@@ -75,4 +86,9 @@ std::shared_ptr<GameMap> Player::GetMap() const
 String Player::GetNickname() const
 {
 	return m_nickname;
+}
+
+std::shared_ptr<NetObject> Player::GetHitter()
+{
+	return m_hitter.lock();
 }

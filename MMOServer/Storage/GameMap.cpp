@@ -189,6 +189,25 @@ void GameMap::HandleDamage(std::shared_ptr<Session> session, mmo::AddDamageReq d
 	}
 }
 
+void GameMap::HandleHitStatus(std::shared_ptr<Session> session, gen::mmo::HitStatus hit)
+{
+	const auto& gameSession = std::static_pointer_cast<GameSession>(session);
+	const auto& player = gameSession->GetPlayer();
+	const auto& hitter = player->GetHitter();
+
+	if (!player || !hitter)
+		return;
+
+	switch (hit.state)
+	{
+	case mmo::EPlayerState::Parrying:
+		break;
+	default:
+		player->TakeDamage(nullptr, player->GetHitter()->GetPower()); // To reset player's hitter
+		break;
+	}
+}
+
 void GameMap::BeginPlay()
 {
 	SpawnMonster();

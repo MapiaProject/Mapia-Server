@@ -44,9 +44,5 @@ private:
 
 	/* Follow */
 	std::weak_ptr<class Player> m_target;
-
-	/* attack */
-	uint32 m_power;
-	float m_attackRange;
 };
 

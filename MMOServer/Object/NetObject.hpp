@@ -14,14 +14,21 @@ public:
 public:
 	__forceinline mmo::EObjectType GetType() const { return m_objectTy; }
 	__forceinline Vector2DF GetPosition() const { return m_position; }
-	__forceinline int32 GetHp() const { return m_hp; }
+	__forceinline uint32 GetHp() const { return m_hp; }
+	__forceinline uint32 GetPower() const { return m_power; }
+	__forceinline float GetAttackRange() const { return m_attackRange; }
+
 	__forceinline void SetType(mmo::EObjectType type) { m_objectTy = type; }
 	__forceinline void SetPosition(Vector2DF position) { m_position = position; }
-	__forceinline void SetHp(int32 hp) { m_hp = hp; };
+	__forceinline void SetHp(uint32 hp) { m_hp = hp; };
+	__forceinline void SetPower(uint32 power) { m_power = power; }
+	__forceinline void SetAttackRange(float attackRange) { m_attackRange = attackRange; }
 protected:
 	mmo::EObjectType m_objectTy;
 	Vector2DF m_position;
-	int32 m_hp;
+	uint32 m_hp;
+	uint32 m_power;
+	float m_attackRange;
 };
 
 class NetObject :
@@ -39,9 +46,9 @@ public:
 	virtual void BeginPlay() { };
 	virtual void Tick() { };
 	virtual void OnDestroy();
-	virtual void OnDamaged(const std::shared_ptr<NetObject> attacker) { };
+	virtual void OnDamaged(const std::shared_ptr<NetObject>) { };
 public:
-	void TakeDamage(const std::shared_ptr<NetObject>& attacker, int32 damage);
+	void TakeDamage(const std::shared_ptr<NetObject>& hitter, int32 damage);
 private:
 	uint64 m_objectId;
 };
