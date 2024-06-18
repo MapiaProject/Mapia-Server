@@ -1,12 +1,5 @@
-	{
+{
 	"enum": [
-		{
-			"name": "EObjectType",
-			"list": [
-				"Player",
-				"Monster"
-			]
-		},
 		{
 			"name": "EChatType",
 			"list": [
@@ -18,6 +11,22 @@
 		{
 			"name": "EMonsterType",
 			"list": [
+			]
+		},
+		{
+			"name": "EObjectType",
+			"list": [
+				"Player",
+				"Monster"
+			]
+		},
+		{
+			"name": "EPlayerState",
+			"list": [
+				"Idle",
+				"Jump",
+				"Attack",
+				"Parrying"
 			]
 		}
 	]

@@ -2,7 +2,7 @@
 #include "Player.hpp"
 #include "Storage/GameMap.hpp"
 
-Player::Player()
+Player::Player() noexcept
 {
 	SetHp(10);
 	if (auto map = GetMap())

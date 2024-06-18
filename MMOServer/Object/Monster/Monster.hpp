@@ -7,23 +7,33 @@ class Monster : public NetObject
 	{
 		MoveTick = 200
 	};
+	enum State
+	{
+		IDLE,
+		PATROL,
+		FOLLOW,
+		ATTACK
+	};
 public:
 	Monster(uint64 id, std::shared_ptr<class GameMap> map);
-	virtual ~Monster() {}
+	virtual ~Monster() noexcept {}
 public:
 	virtual void BeginPlay();
 	virtual void Tick();
 	virtual void OnDestroy();
 	virtual void OnDamaged(const std::shared_ptr<NetObject> attacker);
 public:
-	void EnableAutomove(bool enable);
+	void SetAutomove(bool enable);
+	bool IsAutomove() const;
 	std::shared_ptr<class GameMap> GetMap() const;
-	bool GetEnabledAutomove();
 private:
 	void NextDestination();
+	void Attack();
 private:
+	/* functional */
 	std::weak_ptr<class GameMap> m_map;
 	bool m_enableAutomove;
+	State m_state;
 
 	/* patrol data */
 	bool m_patrol;
@@ -34,5 +44,9 @@ private:
 
 	/* Follow */
 	std::weak_ptr<class NetObject> m_target;
+
+	/* attack */
+	uint32 m_power;
+	float m_attackRange;
 };
 

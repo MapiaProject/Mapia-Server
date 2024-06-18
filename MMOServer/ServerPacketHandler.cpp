@@ -59,3 +59,8 @@ bool gen::mmo::PacketHandler::AddDamageReqPacketHandler(TSharedPtr<Session> sess
 		map->Launch(&GameMap::HandleDamage, session, *packet);
 	return false;
 }
+
+bool gen::mmo::PacketHandler::HitStatusPacketHandler(TSharedPtr<Session> session, TSharedPtr<HitStatus> packet)
+{
+	return false;
+}

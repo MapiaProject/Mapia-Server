@@ -10,7 +10,7 @@ class Player : public NetObject
 {
 	USE_POOL(Player)
 public:
-	Player();
+	Player() noexcept;
 	Player(uint64 id);
 public:
 	virtual void BeginPlay();

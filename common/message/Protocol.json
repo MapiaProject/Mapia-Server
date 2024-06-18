@@ -1,4 +1,4 @@
-	{
+{
 	"include": [
 		"Struct.json"
 	],
@@ -54,6 +54,15 @@
 					{
 						"type": "DamageInfo",
 						"name": "damageInfo"
+					}
+				]
+			},
+			{
+				"name": "HitStatus",
+				"data": [
+					{
+						"type": "EPlayerState",
+						"name": "state"
 					}
 				]
 			}
@@ -148,6 +157,15 @@
 					{
 						"type": "DamageInfo",
 						"name": "damageResult"
+					}
+				]
+			},
+			{
+				"name": "TakeAttack",
+				"data": [
+					{
+						"type": "uint64",
+						"name": "target"
 					}
 				]
 			}

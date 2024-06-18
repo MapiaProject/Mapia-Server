@@ -1,16 +1,16 @@
 #include "pch.h"
 #include "NetObject.hpp"
 
-BaseObject::BaseObject(mmo::EObjectType type) : m_objectTy(type)
+GameObject::GameObject(mmo::EObjectType type) : m_objectTy(type)
 {
 
 }
 
-NetObject::NetObject() : BaseObject()
+NetObject::NetObject() : GameObject()
 {
 }
 
-NetObject::NetObject(uint64 id, mmo::EObjectType type) : BaseObject(type), m_objectId(id)
+NetObject::NetObject(uint64 id, mmo::EObjectType type) : GameObject(type), m_objectId(id)
 {
 }
 

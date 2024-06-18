@@ -4,7 +4,7 @@
 
 Monster::Monster(uint64 id, std::shared_ptr<GameMap> map)
 	: NetObject(id, mmo::Monster),
-	m_map(map), m_enableAutomove(true), m_dir(0), m_target(), m_patrol(true)
+	m_map(map), m_enableAutomove(true), m_dir(0), m_target(), m_patrol(true), m_attackRange(0), m_state(PATROL)
 {
 	SetPosition(Vector2DF::Zero());
 	m_moveTime = GetTickCount64();
@@ -16,14 +16,36 @@ void Monster::BeginPlay()
 {
 	NetObject::BeginPlay();
 	if (m_enableAutomove)
+	{
 		NextDestination();
+		m_state = PATROL;
+	}
+	else
+	{
+		m_state = IDLE;
+	}
 }
-
+	
 void Monster::Tick()
 {
 	NetObject::Tick();
 
-	if (m_enableAutomove)
+	// attack
+	if (auto target = m_target.lock())
+	{
+		if ((GetPosition() - target->GetPosition()).Length() > m_attackRange)
+		{
+			m_target.reset();
+			m_state = PATROL;
+		}
+		else
+		{
+			Attack();
+		}
+	}
+
+	// auto move
+	if (m_enableAutomove && m_state == PATROL)
 	{
 		if (auto target = m_target.lock())
 		{
@@ -76,7 +98,7 @@ void Monster::OnDamaged(const std::shared_ptr<NetObject> attacker)
 	m_target = attacker;
 }
 
-void Monster::EnableAutomove(bool enable)
+void Monster::SetAutomove(bool enable)
 {
 	m_enableAutomove = enable;
 }
@@ -86,7 +108,7 @@ std::shared_ptr<GameMap> Monster::GetMap() const
 	return m_map.lock();
 }
 
-bool Monster::GetEnabledAutomove()
+bool Monster::IsAutomove() const
 {
 	return m_enableAutomove;
 }
@@ -97,6 +119,8 @@ void Monster::NextDestination()
 	if (!map)
 		return;
 
+	m_state = PATROL;
+
 	auto [x, y] = GetPosition();
 	m_dir = Random::Range(-1, 1);
 	if (m_dir != 0)
@@ -106,4 +130,9 @@ void Monster::NextDestination()
 		m_dest = Random::Range<int>(0, x);
 	else
 		m_dest = Random::Range<int>(x, 0);
+}
+
+void Monster::Attack()
+{
+	m_state = ATTACK;
 }

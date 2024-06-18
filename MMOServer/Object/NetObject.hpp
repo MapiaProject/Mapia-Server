@@ -5,11 +5,12 @@
 
 using namespace gen;
 
-class BaseObject
+class GameObject
 {
 public:
-	BaseObject() = default;
-	BaseObject(mmo::EObjectType type);
+	GameObject() = default;
+	GameObject(mmo::EObjectType type);
+	virtual ~GameObject() noexcept { };
 public:
 	__forceinline mmo::EObjectType GetType() const { return m_objectTy; }
 	__forceinline Vector2DF GetPosition() const { return m_position; }
@@ -25,11 +26,12 @@ protected:
 
 class NetObject :
 	public std::enable_shared_from_this<NetObject>,
-	public BaseObject
+	public GameObject
 {
 public:
 	NetObject();
 	NetObject(uint64 id, mmo::EObjectType type);
+	virtual ~NetObject() noexcept { }
 public:
 	__forceinline uint64 GetId() const { return m_objectId; }
 	__forceinline void SetId(uint64 id) { m_objectId = id; }
