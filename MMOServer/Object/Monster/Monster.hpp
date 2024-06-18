@@ -43,7 +43,7 @@ private:
 	uint64 m_nextMoveTime;
 
 	/* Follow */
-	std::weak_ptr<class NetObject> m_target;
+	std::weak_ptr<class Player> m_target;
 
 	/* attack */
 	uint32 m_power;

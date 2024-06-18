@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Monster.hpp"
 #include "Storage/GameMap.hpp"
+#include "Object/Player.hpp"
+#include "Session/GameSession.hpp"
 
 Monster::Monster(uint64 id, std::shared_ptr<GameMap> map)
 	: NetObject(id, mmo::Monster),
@@ -95,7 +97,8 @@ void Monster::OnDestroy()
 
 void Monster::OnDamaged(const std::shared_ptr<NetObject> attacker)
 {
-	m_target = attacker;
+	if (attacker->GetType() == mmo::EObjectType::Player)
+		m_target = std::static_pointer_cast<Player>(attacker);
 }
 
 void Monster::SetAutomove(bool enable)
@@ -134,5 +137,12 @@ void Monster::NextDestination()
 
 void Monster::Attack()
 {
-	m_state = ATTACK;
+	if (auto target = m_target.lock())
+	{
+		m_state = ATTACK;
+		mmo::TakeAttack attack;
+		attack.target = target->GetId();
+		if (auto session = target->GetSession())
+			session->Send(&attack);
+	}
 }

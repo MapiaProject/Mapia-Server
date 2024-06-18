@@ -62,5 +62,6 @@ bool gen::mmo::PacketHandler::AddDamageReqPacketHandler(TSharedPtr<Session> sess
 
 bool gen::mmo::PacketHandler::HitStatusPacketHandler(TSharedPtr<Session> session, TSharedPtr<HitStatus> packet)
 {
+
 	return false;
 }
