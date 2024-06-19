@@ -110,7 +110,7 @@ void Monster::OnDamaged(const std::shared_ptr<NetObject> attacker)
 		m_target = std::static_pointer_cast<Player>(attacker);
 }
 
-void Monster::OnAttack(const std::shared_ptr<NetObject> target)
+void Monster::ProcessAttack(const std::shared_ptr<NetObject> target)
 {
 	if (!target)
 		return;
@@ -193,7 +193,7 @@ void Monster::Attack()
 	{
 		m_state = ATTACK;
 
-		OnAttack(target);
+		ProcessAttack(target);
 	}
 	else if (m_enableAutomove)
 		m_state = PATROL;

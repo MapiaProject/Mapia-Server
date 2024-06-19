@@ -22,6 +22,7 @@ public:
 	void Enter(std::shared_ptr<NetObject> object);
 	void Leave(std::shared_ptr<NetObject> object);
 	void SpawnMonster();
+	std::shared_ptr<GameMap> SharedThis();
 public:
 	HashMap<uint64, std::shared_ptr<class Player>> GetPlayers() const;
 	HashMap<uint64, std::shared_ptr<class Monster>> GetMonsters() const;

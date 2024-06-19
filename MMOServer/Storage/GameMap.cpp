@@ -77,6 +77,10 @@ void GameMap::Leave(std::shared_ptr<NetObject> object)
 
 void GameMap::SpawnMonster()
 {
+	auto spawnMonster = GetSpawnMonster();
+	if (!spawnMonster.has_value())
+		return;
+
 	Launch<SpawnTick>(&GameMap::SpawnMonster);
 
 	const auto spawnArea = GetBlocks(Block::SpawnArea);
@@ -89,7 +93,23 @@ void GameMap::SpawnMonster()
 			auto idx = Random::Range<uint32>(0, spawnArea.size() - 1);
 			Vector2DI spawnPosition = spawnArea[idx];
 
-			auto monster = GManager->Object()->Create<Monster>(std::static_pointer_cast<GameMap>(shared_from_this()));
+			std::shared_ptr<Monster> monster = nullptr;
+			switch (spawnMonster.value())
+			{
+			case mmo::EMonsterType::Slime:
+				monster = GManager->Object()->Create<Slime>(SharedThis());
+				break;
+			case mmo::EMonsterType::TurretPlant:
+				monster = GManager->Object()->Create<TurretPlant>(SharedThis());
+				break;
+			case mmo::EMonsterType::GeminiRobot:
+				break;
+			default:
+				break;
+			}
+			if (!monster)
+				return;
+
 			monster->SetPosition(Vector2DF(spawnPosition.x, spawnPosition.y));
 			monster->BeginPlay();
 
@@ -104,6 +124,11 @@ void GameMap::SpawnMonster()
 		spawn.monsterInfos = infos;
 		Broadcast(&spawn);
 	}
+}
+
+std::shared_ptr<GameMap> GameMap::SharedThis()
+{
+	return std::static_pointer_cast<GameMap>(shared_from_this());
 }
 
 HashMap<uint64, std::shared_ptr<class Player>> GameMap::GetPlayers() const
@@ -210,7 +235,8 @@ void GameMap::HandleHitStatus(std::shared_ptr<Session> session, gen::mmo::HitSta
 
 void GameMap::BeginPlay()
 {
-	SpawnMonster();
+	if (auto spawnMonster = GetSpawnMonster(); spawnMonster.has_value())
+		SpawnMonster();
 }
 
 void GameMap::Tick()

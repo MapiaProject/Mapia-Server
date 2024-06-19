@@ -19,7 +19,7 @@ void TurretPlant::Tick()
 	Monster::Tick();
 }
 
-void TurretPlant::OnAttack(const std::shared_ptr<NetObject> target)
+void TurretPlant::ProcessAttack(const std::shared_ptr<NetObject> target)
 {
-	Monster::OnAttack(target);
+
 }

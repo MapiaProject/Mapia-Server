@@ -20,7 +20,7 @@ protected:
 	virtual void Tick();
 	virtual void OnDestroy();
 	virtual void OnDamaged(const std::shared_ptr<NetObject> hitter);
-	virtual void OnAttack(const std::shared_ptr<NetObject> target);
+	virtual void ProcessAttack(const std::shared_ptr<NetObject> target);
 public:
 	/* --- Get Set --- */
 

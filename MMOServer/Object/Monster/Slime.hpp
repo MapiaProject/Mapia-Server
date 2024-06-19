@@ -9,5 +9,5 @@ public:
 private:
 	void BeginPlay() override;
 	void Tick() override;
-	void OnAttack(const std::shared_ptr<NetObject>) override;
+	void ProcessAttack(const std::shared_ptr<NetObject>) override;
 };
