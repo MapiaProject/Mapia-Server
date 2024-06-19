@@ -187,6 +187,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MMOServer\Object\Monster\GeminiRobot.cpp" />
     <ClCompile Include="MMOServer\Utility\Converter.cpp" />
     <ClCompile Include="MMOServer\Storage\GameMap.cpp" />
     <ClCompile Include="MMOServer\Manager\MapManager.cpp" />
@@ -211,6 +212,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     <ClCompile Include="MMOServer\Object\Monster\TurretPlant.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MMOServer\Object\Monster\GeminiRobot.hpp" />
     <ClInclude Include="MMOServer\Object\Object.hpp" />
     <ClInclude Include="MMOServer\Utility\Converter.hpp" />
     <ClInclude Include="MMOServer\Storage\GameMap.hpp" />

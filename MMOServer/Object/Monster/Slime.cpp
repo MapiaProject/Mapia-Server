@@ -7,6 +7,7 @@ Slime::Slime(uint64 id, std::shared_ptr<GameMap> map)
 {
 	SetHp(10);
 	SetPower(1);
+	SetAttackRange(1);
 }
 
 void Slime::BeginPlay()

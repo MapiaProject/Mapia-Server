@@ -103,6 +103,7 @@ void GameMap::SpawnMonster()
 				monster = GManager->Object()->Create<TurretPlant>(SharedThis());
 				break;
 			case mmo::EMonsterType::GeminiRobot:
+				monster = GManager->Object()->Create<GeminiRobot>(SharedThis());
 				break;
 			default:
 				break;
