@@ -20,17 +20,19 @@ void GameSession::OnReceive(std::span<char> buffer, int32 len)
         return;
 
     uint16 id = *reinterpret_cast<uint16*>(buffer.data());
-    if (Packet::IsRpcId(id))
+    if (Packet::IsRpcId(id)) // Check if the top 1 bit is `1`
     {   
         RpcTarget target = *reinterpret_cast<RpcTarget*>(buffer.data() + sizeof(uint16));
         switch (target)
         {
         case RpcTarget::All:
             if (auto map = m_player->GetMap())
+                // Broadcast to sender and cloned objects
                 map->Broadcast(buffer);
             break;
         case RpcTarget::Other:
             if (auto map = m_player->GetMap())
+                // Broadcast to only cloned objectss
                 map->Broadcast(buffer, m_player->GetId());
             break;
         default:

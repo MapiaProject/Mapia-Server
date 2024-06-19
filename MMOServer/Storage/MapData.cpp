@@ -2,6 +2,7 @@
 #include "MapData.hpp"
 
 #include "Util/Parser/Ini.hpp"
+#include "magic_enum.hpp"
 
 MapData::MapData() : m_size(0, 0)
 {
@@ -40,6 +41,8 @@ void MapData::Read(StringView filename)
 
 	auto portalsStr = section.Get<String>(TEXT("portal"));
 	auto portals = Split(portalsStr, TEXT(','));
+
+	m_spawnMonster = section.Get<String>(TEXT("monster"));
 	/*---------------*/
 
 	/* load map data */
@@ -88,4 +91,11 @@ Vector<Vector2DI> MapData::GetBlocks(Block block)
 		}
 	}
 	return res;
+}
+
+std::optional<mmo::EMonsterType> MapData::GetSpawnMonster() const
+{
+	return magic_enum::enum_cast<mmo::EMonsterType>(
+		ToAnsiString(m_spawnMonster)
+	);
 }

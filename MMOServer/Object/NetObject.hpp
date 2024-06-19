@@ -16,19 +16,16 @@ public:
 	__forceinline Vector2DF GetPosition() const { return m_position; }
 	__forceinline uint32 GetHp() const { return m_hp; }
 	__forceinline uint32 GetPower() const { return m_power; }
-	__forceinline float GetAttackRange() const { return m_attackRange; }
 
 	__forceinline void SetType(mmo::EObjectType type) { m_objectTy = type; }
 	__forceinline void SetPosition(Vector2DF position) { m_position = position; }
 	__forceinline void SetHp(uint32 hp) { m_hp = hp; };
 	__forceinline void SetPower(uint32 power) { m_power = power; }
-	__forceinline void SetAttackRange(float attackRange) { m_attackRange = attackRange; }
 protected:
 	mmo::EObjectType m_objectTy;
 	Vector2DF m_position;
 	uint32 m_hp;
 	uint32 m_power;
-	float m_attackRange;
 };
 
 class NetObject :

@@ -5,7 +5,7 @@
 Slime::Slime(uint64 id, std::shared_ptr<GameMap> map)
 	: Monster(id, map)
 {
-	SetHp(5);
+	SetHp(10);
 	SetPower(1);
 }
 
@@ -18,4 +18,9 @@ void Slime::BeginPlay()
 void Slime::Tick()
 {
 	Monster::Tick();
+}
+
+void Slime::OnAttack(const std::shared_ptr<NetObject> target)
+{
+	Monster::OnAttack(target);
 }

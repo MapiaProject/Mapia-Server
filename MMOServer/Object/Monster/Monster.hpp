@@ -3,10 +3,8 @@
 
 class Monster : public NetObject
 {
-	enum
-	{
-		MoveTick = 200
-	};
+	friend class GameMap;
+
 	enum State
 	{
 		IDLE,
@@ -17,30 +15,50 @@ class Monster : public NetObject
 public:
 	Monster(uint64 id, std::shared_ptr<class GameMap> map);
 	virtual ~Monster() noexcept {}
-public:
+protected:
 	virtual void BeginPlay();
 	virtual void Tick();
 	virtual void OnDestroy();
-	virtual void OnDamaged(const std::shared_ptr<NetObject> attacker);
+	virtual void OnDamaged(const std::shared_ptr<NetObject> hitter);
+	virtual void OnAttack(const std::shared_ptr<NetObject> target);
 public:
+	/* --- Get Set --- */
+
+	/* Movement */
 	void SetAutomove(bool enable);
 	bool IsAutomove() const;
+
+	/* Tick data */
+	uint64 GetAttackTick() const;
+	uint64 GetMoveTick() const;
+	void SetAttackTick(uint64);
+	void SetMoveTick(uint64);
+
+	/* Functional */
 	std::shared_ptr<class GameMap> GetMap() const;
+	void SetAttackRange(float range);
+	float GetAttackRange() const;
 private:
 	void NextDestination();
 	void Attack();
 private:
+	/* delay data */
+	uint64 m_moveTick = 200;
+	uint64 m_attackTick = 500;
+	uint64 m_moveTime;
+	uint64 m_nextMoveTime;
+	uint64 m_attackTime;
+
 	/* functional */
 	std::weak_ptr<class GameMap> m_map;
 	bool m_enableAutomove;
 	State m_state;
+	float m_attackRange;
 
 	/* patrol data */
 	bool m_patrol;
 	int32 m_dir;
 	int32 m_dest;
-	uint64 m_moveTime;
-	uint64 m_nextMoveTime;
 
 	/* Follow */
 	std::weak_ptr<class Player> m_target;

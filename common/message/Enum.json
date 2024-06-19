@@ -11,6 +11,10 @@
 		{
 			"name": "EMonsterType",
 			"list": [
+				"Slime",
+				"TurretPlant",
+				"Robot",
+				"AttackDrone"
 			]
 		},
 		{

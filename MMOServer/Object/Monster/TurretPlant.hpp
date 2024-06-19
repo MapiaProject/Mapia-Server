@@ -1,13 +1,14 @@
 #pragma once
 #include "Monster.hpp"
 
-class Slime : public Monster
+class TurretPlant : public Monster
 {
-	USE_POOL(Slime)
+	USE_POOL(TurretPlant)
 public:
-	Slime(uint64 id, std::shared_ptr<class GameMap> map);
+	TurretPlant(uint64 id, std::shared_ptr<class GameMap> map);
 private:
 	void BeginPlay() override;
 	void Tick() override;
 	void OnAttack(const std::shared_ptr<NetObject>) override;
 };
+

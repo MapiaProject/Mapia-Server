@@ -11,6 +11,7 @@ Monster::Monster(uint64 id, std::shared_ptr<GameMap> map)
 	SetPosition(Vector2DF::Zero());
 	m_moveTime = GetTickCount64();
 	m_nextMoveTime = GetTickCount64();
+	m_attackTime = GetTickCount64();
 	m_dest = 0;
 }
 
@@ -38,13 +39,21 @@ void Monster::Tick()
 		if ((GetPosition() - target->GetPosition()).Length() > m_attackRange)
 		{
 			m_target.reset();
-			m_state = PATROL;
+			if (m_enableAutomove)
+				m_state = PATROL;
+			else
+				m_state = IDLE;
 		}
-		else
+		else if (GetTickCount64() >= m_attackTime)
 		{
 			Attack();
+			m_attackTime = GetTickCount64() + m_attackTick;
 		}
 	}
+	else if (m_enableAutomove)
+		m_state = PATROL;
+	else
+		m_state = IDLE;
 
 	// auto move
 	if (m_enableAutomove && m_state == PATROL)
@@ -75,7 +84,7 @@ void Monster::Tick()
 				m_nextMoveTime = GetTickCount64() + Random::Range(250, 750);
 				NextDestination();
 			}
-			m_moveTime = GetTickCount64() + MoveTick;
+			m_moveTime = GetTickCount64() + m_moveTick;
 
 			mmo::NotifyMove move;
 			move.objectId = GetId();
@@ -101,6 +110,19 @@ void Monster::OnDamaged(const std::shared_ptr<NetObject> attacker)
 		m_target = std::static_pointer_cast<Player>(attacker);
 }
 
+void Monster::OnAttack(const std::shared_ptr<NetObject> target)
+{
+	if (!target)
+		return;
+
+	const auto& player = std::static_pointer_cast<Player>(target);
+	player->TryDamage(shared_from_this());
+	mmo::TakeAttack attack;
+	attack.target = player->GetId();
+	if (auto session = player->GetSession())
+		session->Send(&attack);
+}
+
 void Monster::SetAutomove(bool enable)
 {
 	m_enableAutomove = enable;
@@ -111,9 +133,39 @@ std::shared_ptr<GameMap> Monster::GetMap() const
 	return m_map.lock();
 }
 
+void Monster::SetAttackRange(float range)
+{
+	m_attackRange = range;
+}
+
+float Monster::GetAttackRange() const
+{
+	return m_attackRange;
+}
+
 bool Monster::IsAutomove() const
 {
 	return m_enableAutomove;
+}
+
+uint64 Monster::GetAttackTick() const
+{
+	return m_attackTick;
+}
+
+uint64 Monster::GetMoveTick() const
+{
+	return m_moveTick;
+}
+
+void Monster::SetAttackTick(uint64 tick)
+{
+	m_attackTick = tick;
+}
+
+void Monster::SetMoveTick(uint64 tick)
+{
+	m_moveTick = tick;
 }
 
 void Monster::NextDestination()
@@ -141,10 +193,9 @@ void Monster::Attack()
 	{
 		m_state = ATTACK;
 
-		target->TryDamage(shared_from_this());
-		mmo::TakeAttack attack;
-		attack.target = target->GetId();
-		if (auto session = target->GetSession())
-			session->Send(&attack);
+		OnAttack(target);
 	}
+	else if (m_enableAutomove)
+		m_state = PATROL;
+	else m_state = IDLE;
 }

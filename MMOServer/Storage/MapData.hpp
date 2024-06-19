@@ -1,5 +1,7 @@
 #pragma once
 
+using namespace gen;
+
 enum class Block : uint8
 {
 	Air,
@@ -31,10 +33,12 @@ public:
 	void Read(StringView filename);
 	std::optional<Block> GetBlock(Vector2DI position);
 	Vector<Vector2DI> GetBlocks(Block block);
+	std::optional<mmo::EMonsterType> GetSpawnMonster() const;
 protected:
 	String m_name;
 	Vector2DI m_size;
 	Vector<Vector<Block>> m_map;
 	Vector<Portal> m_portals;
+	String m_spawnMonster;
 };
 
