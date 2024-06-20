@@ -34,7 +34,6 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 	if (gameMap != nullptr && myPlayer->GetMap() != gameMap)
 	{
 		res.success = true;
-		myPlayer->EnterMap(gameMap);
 
 		// send my position
 		{
@@ -43,9 +42,9 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			spawn.isMine = true;
 
 			auto position = myPlayer->GetPosition();
-			if (packet.mapName == TEXT("Village"))
+			if (auto prevMap = myPlayer->GetMap(); !prevMap)
 			{
-				myPlayer->SetPosition(Vector2DF(14, 11));
+				myPlayer->SetPosition(Vector2DF(14, 2));
 				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			else
@@ -53,6 +52,8 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 				myPlayer->SetPosition(Vector2D(gameMap->GetSize().x - position.x + 1, position.y));
 				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
+			myPlayer->EnterMap(gameMap);
+
 			info.objectInfo.objectId = myPlayer->GetId();
 			info.name = myPlayer->GetNickname();
 			spawn.players.push_back(info);

@@ -23,6 +23,7 @@ void Player::BeginPlay()
 void Player::Tick()
 {
 	NetObject::Tick();
+	Console::Debug(Category::Temp, std::to_wstring(GetPosition().x) + TEXT(", ") + std::to_wstring(GetPosition().y));
 }
 
 void Player::OnDestroy()

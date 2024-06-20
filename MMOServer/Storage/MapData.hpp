@@ -29,7 +29,7 @@ public:
 public:
 	String GetName() const;
 	Vector2DI GetSize() const;
-	const Vector<Vector<Block>>& GetDataArray() const;
+	const Deque<Vector<Block>>& GetDataArray() const;
 	void Read(StringView filename);
 	std::optional<Block> GetBlock(Vector2DI position);
 	Vector<Vector2DI> GetBlocks(Block block);
@@ -37,7 +37,7 @@ public:
 protected:
 	String m_name;
 	Vector2DI m_size;
-	Vector<Vector<Block>> m_map;
+	Deque<Vector<Block>> m_map;
 	Vector<Portal> m_portals;
 	String m_spawnMonster;
 };

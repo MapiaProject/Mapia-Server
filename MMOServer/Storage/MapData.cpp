@@ -2,7 +2,8 @@
 #include "MapData.hpp"
 
 #include "Util/Parser/Ini.hpp"
-#include "magic_enum.hpp"
+#include "magic_enum/magic_enum.hpp"
+#include <ranges>
 
 MapData::MapData() : m_size(0, 0)
 {
@@ -23,7 +24,7 @@ Vector2DI MapData::GetSize() const
 	return m_size;
 }
 
-const Vector<Vector<Block>>& MapData::GetDataArray() const
+const Deque<Vector<Block>>& MapData::GetDataArray() const
 {
 	return m_map;
 }
@@ -58,7 +59,7 @@ void MapData::Read(StringView filename)
 			switch (block)
 			{
 			case Block::Portal:
-				m_portals.push_back(Portal(portals[cnt++], Vector2DI(x, i)));
+				m_portals.push_back(Portal(portals[cnt++], Vector2DI(x, m_size.y - i - 1)));
 				break;
 			default:
 				break;
@@ -66,7 +67,7 @@ void MapData::Read(StringView filename)
 			++x;
 			return block;
 		});
-		m_map.push_back(t);
+		m_map.push_front(t);
 	}
 	/* ------------- */
 }

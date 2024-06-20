@@ -13,7 +13,7 @@ GameMap::GameMap(StringView path) : MapData(path)
 }
 
 GameMap::~GameMap()
-{
+{	
 }
 
 void GameMap::Broadcast(std::span<char> buffer, uint64 ignore)
@@ -150,7 +150,7 @@ void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 	gen::mmo::NotifyMove syncMove;
 	syncMove.objectId = player->GetId();
 	auto prevPos = player->GetPosition();
-	auto block = GetBlock(Vector2DI(move.position.x, move.position.y));
+	auto block = GetBlock(Vector2DI(std::round(move.position.x), std::round(move.position.y)));
 	if (!block.has_value())
 	{
 		syncMove.position = Converter::MakeVector(prevPos);
@@ -161,18 +161,7 @@ void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 		switch (block.value())
 		{
 		case Block::Portal:
-			for (const auto& portal : m_portals)
-			{
-				auto position = Vector2D(move.position.x, move.position.y);
-				if (portal.position == Vector2DI(position.x, position.y))
-				{
-					player->SetPosition(position);
-					mmo::EnterMapReq enter;
-					enter.mapName = portal.destMap;
-					GManager->Map()->Launch(&MapManager::HandleEnter, session, enter);
-					break;
-				}
-			}
+			Console::Debug(Category::Temp, TEXT("PORTAL"));
 			break;
 		case Block::Border:
 			syncMove.position = Converter::MakeVector(prevPos);
