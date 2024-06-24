@@ -53,7 +53,7 @@
 					"type": "ObjectInfo",
 					"name": "objectInfo"
 				},
-				{F
+				{
 					"type": "string",
 					"name": "name"
 				}

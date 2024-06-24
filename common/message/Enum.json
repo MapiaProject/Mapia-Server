@@ -21,7 +21,8 @@
 			"name": "EObjectType",
 			"list": [
 				"Player",
-				"Monster"
+				"Monster",
+				"Projectile"
 			]
 		},
 		{

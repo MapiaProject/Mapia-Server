@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TurretPlant.hpp"
+#include "Projectile.hpp"
 
 TurretPlant::TurretPlant(uint64 id, std::shared_ptr<GameMap> map)
 	: Monster(id, map)
@@ -22,5 +23,5 @@ void TurretPlant::Tick()
 
 void TurretPlant::ProcessAttack(const std::shared_ptr<NetObject> target)
 {
-
+	auto projectile = GManager->Object()->Create<Projectile>(GetMap(), target->GetPosition());
 }

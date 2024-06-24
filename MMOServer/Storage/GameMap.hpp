@@ -11,7 +11,7 @@ class GameMap : public JobSerializer, public MapData
 	enum
 	{
 		GameTick = 42, // for 30fps tick rate
-		SpawnTick = 5000
+		SpawnTick = 12000
 	};	
 public:
 	GameMap(StringView path);
