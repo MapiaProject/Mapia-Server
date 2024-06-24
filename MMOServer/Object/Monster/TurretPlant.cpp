@@ -19,9 +19,13 @@ void TurretPlant::BeginPlay()
 void TurretPlant::Tick()
 {
 	Monster::Tick();
+	if (m_projectile)
+		m_projectile->Tick();
 }
 
 void TurretPlant::ProcessAttack(const std::shared_ptr<NetObject> target)
 {
-	auto projectile = GManager->Object()->Create<Projectile>(GetMap(), target->GetPosition());
+	m_projectile = GManager->Object()->Create<Projectile>(target->GetPosition());
+	m_projectile->SetPosition(GetPosition());
+	m_projectile->BeginPlay();
 }

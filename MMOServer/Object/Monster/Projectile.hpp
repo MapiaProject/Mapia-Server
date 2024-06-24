@@ -3,6 +3,7 @@
 
 class Projectile : public NetObject
 {
+	friend class TurretPlant;
 	USE_POOL(Projectile)
 public:
 	Projectile(uint64 id, Vector2DF targetPosition);
