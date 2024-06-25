@@ -23,6 +23,10 @@ void TurretPlant::Tick()
 	Monster::Tick();
 	if (m_projectile)
 	{
+		auto map = GetMap();
+		if (!map)
+			return;
+
 		if (m_tick >= GetTickCount64())
 		{
 			m_tick = GetTickCount64() + UPDATE_PROJECTILE_TICK;
@@ -30,8 +34,7 @@ void TurretPlant::Tick()
 			mmo::NotifyMove move;
 			move.objectId = GetId();
 			move.position = Converter::MakeVector(m_projectile->GetPosition());
-			if (auto map = GetMap())
-				map->Broadcast(&move);
+			map->Broadcast(&move);
 		}
 
 		if ((m_targetPosition - m_projectile->GetPosition()).Length() >= 0.2f)
@@ -41,13 +44,18 @@ void TurretPlant::Tick()
 		}
 		else
 		{
-			if (auto target = m_target.lock(); target && (target->GetPosition() - GetPosition()).Length() < 0.2f)
+			if (auto target = m_target.lock(); target)
 			{
-				mmo::NotifyDamaged damage;
-				damage.damageResult.damage = GetPower();
-				damage.damageResult.objectId = target->GetId();
-				if (auto map = GetMap())
-					map->Broadcast(&damage);
+				for (const auto&[_, player] : map->GetPlayers())
+				{
+					if ((player->GetPosition() - m_projectile->GetPosition()).Length() < 0.2f)
+					{
+						mmo::NotifyDamaged damage;
+						damage.damageResult.damage = GetPower();
+						damage.damageResult.objectId = target->GetId();
+						map->Broadcast(&damage);
+					}
+				}
 			}
 			m_projectile = nullptr;
 		}
