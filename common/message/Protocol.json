@@ -90,12 +90,8 @@
 				"name": "Spawn",
 				"data": [
 					{
-						"type": "bool",
-						"name": "isMine"
-					},
-					{
-						"type": "list|PlayerInfo",
-						"name": "players"
+						"type": "ObjectInfo",
+						"name": "object"
 					}
 				]
 			},
@@ -139,24 +135,20 @@
 				]
 			},
 			{
-				"name": "SpawnMonster",
-				"data": [
-					{
-						"type": "list|ObjectInfo",
-						"name": "monsterInfos"
-					},
-					{
-						"type": "EMonsterType",
-						"name": "monsterType"
-					}
-				]
-			},
-			{
 				"name": "NotifyDamaged",
 				"data": [
 					{
 						"type": "DamageInfo",
 						"name": "damageResult"
+					}
+				]
+			},
+			{
+				"name": "NotifySpawn",
+				"data": [
+					{
+						"type": "list|ObjectInfo",
+						"name": "objects"
 					}
 				]
 			},

@@ -46,13 +46,11 @@ void GameMap::Enter(std::shared_ptr<NetObject> object)
 			std::static_pointer_cast<Player>(object)
 		});
 		break;
-	case mmo::EObjectType::Monster:
+	default:
 		m_monsters.insert({
 			object->GetId(),
 			std::static_pointer_cast<Monster>(object)
 		});
-		break;
-	default:
 		break;
 	}
 }
@@ -66,10 +64,8 @@ void GameMap::Leave(std::shared_ptr<NetObject> object)
 	case mmo::EObjectType::Player:
 		m_players.erase(object->GetId());
 		break;
-	case mmo::EObjectType::Monster:
-		m_monsters.erase(object->GetId());
-		break;
 	default:
+		m_monsters.erase(object->GetId());
 		break;
 	}
 	Broadcast(&leaveMap);
@@ -96,13 +92,13 @@ void GameMap::SpawnMonster()
 			std::shared_ptr<Monster> monster = nullptr;
 			switch (spawnMonster.value())
 			{
-			case mmo::EMonsterType::Slime:
+			case mmo::Slime:
 				monster = GManager->Object()->Create<Slime>(SharedThis());
 				break;
-			case mmo::EMonsterType::TurretPlant:
+			case mmo::TurretPlant:
 				monster = GManager->Object()->Create<TurretPlant>(SharedThis());
 				break;
-			case mmo::EMonsterType::GeminiRobot:
+			case mmo::GeminiRobot:
 				monster = GManager->Object()->Create<GeminiRobot>(SharedThis());
 				break;
 			default:
@@ -117,12 +113,13 @@ void GameMap::SpawnMonster()
 			m_monsters[monster->GetId()] = monster;
 
 			mmo::ObjectInfo info;
-			info.position = Converter::MakeVector(spawnPosition);
 			info.objectId = monster->GetId();
+			info.position = Converter::MakeVector(spawnPosition);
+			info.type = spawnMonster.value();
 			infos.push_back(info);
 		}
-		mmo::SpawnMonster spawn;
-		spawn.monsterInfos = infos;
+		mmo::NotifySpawn spawn;
+		spawn.objects = infos;
 		Broadcast(&spawn);
 	}
 }

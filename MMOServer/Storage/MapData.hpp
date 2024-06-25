@@ -33,7 +33,7 @@ public:
 	void Read(StringView filename);
 	std::optional<Block> GetBlock(Vector2DI position);
 	Vector<Vector2DI> GetBlocks(Block block);
-	std::optional<mmo::EMonsterType> GetSpawnMonster() const;
+	std::optional<mmo::EObjectType> GetSpawnMonster() const;
 protected:
 	String m_name;
 	Vector2DI m_size;

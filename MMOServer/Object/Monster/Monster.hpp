@@ -13,7 +13,7 @@ class Monster : public NetObject
 		ATTACK
 	};
 public:
-	Monster(uint64 id, std::shared_ptr<class GameMap> map);
+	Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap> map);
 	virtual ~Monster() noexcept {}
 protected:
 	virtual void BeginPlay();

@@ -9,12 +9,19 @@
 
 MapManager::MapManager()
 {
-	for (auto& iter : std::filesystem::directory_iterator(TEXT("Common/generated/mapData/")))
-	{
-		auto sp = Split(String(iter.path()), TEXT('/'));
-		auto map = MakeShared<GameMap>(sp.back());
+	try {
+		for (auto& iter : std::filesystem::directory_iterator(TEXT("Common/generated/mapData/")))
+		{
+			auto sp = Split(String(iter.path()), TEXT('/'));
+			auto map = MakeShared<GameMap>(sp.back());
 
-		m_mapData[map->GetName()] = map;
+			m_mapData[map->GetName()] = map;
+		}
+	}
+	catch (std::exception e)
+	{
+		Console::Error(Category::MMOServer, TEXT("Can't load map data. please check is map data exists."));
+		exit(0);
 	}
 }
 
@@ -38,41 +45,39 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 		// send my position
 		{
 			gen::mmo::Spawn spawn;
-			gen::mmo::PlayerInfo info;
-			spawn.isMine = true;
+			gen::mmo::ObjectInfo info;
 
 			auto position = myPlayer->GetPosition();
 			if (auto prevMap = myPlayer->GetMap(); !prevMap)
 			{
 				myPlayer->SetPosition(Vector2DF(14, 2));
-				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
+				info.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			else
 			{
 				myPlayer->SetPosition(Vector2D(gameMap->GetSize().x - position.x + 1, position.y));
-				info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
+				info.position = Converter::MakeVector(myPlayer->GetPosition());
 			}
 			myPlayer->EnterMap(gameMap);
 
-			info.objectInfo.objectId = myPlayer->GetId();
+			info.objectId = myPlayer->GetId();
 			info.name = myPlayer->GetNickname();
-			spawn.players.push_back(info);
+			spawn.object = info;
 			session->Send(&spawn, true);
 		}
 
 		// send other player list
 		{
-			gen::mmo::Spawn spawn;
-			spawn.isMine = false;
+			gen::mmo::NotifySpawn spawn;
 			for (const auto&[_, player] : gameMap->GetPlayers())
 			{
 				if (player->GetId() != myPlayer->GetId())
 				{
-					gen::mmo::PlayerInfo info;
-					info.objectInfo.objectId = player->GetId();
-					info.objectInfo.position = Converter::MakeVector(player->GetPosition());
+					gen::mmo::ObjectInfo info;
+					info.objectId = player->GetId();
+					info.position = Converter::MakeVector(player->GetPosition());
 					info.name = player->GetNickname();
-					spawn.players.push_back(info);
+					spawn.objects.push_back(info);
 				}
 			}
 			session->Send(&spawn, true);
@@ -80,15 +85,14 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 
 		// notify exist players
 		{
-			gen::mmo::Spawn spawn;
-			gen::mmo::PlayerInfo info;
-			spawn.isMine = false;
+			gen::mmo::NotifySpawn spawn;
+			gen::mmo::ObjectInfo info;
 
 			info.name = myPlayer->GetNickname();
-			info.objectInfo.objectId = myPlayer->GetId();
-			info.objectInfo.position = Converter::MakeVector(myPlayer->GetPosition());
+			info.objectId = myPlayer->GetId();
+			info.position = Converter::MakeVector(myPlayer->GetPosition());
 
-			spawn.players.push_back(info);
+			spawn.objects.push_back(info);
 			gameMap->Broadcast(&spawn, myPlayer->GetId());
 		}
 	}

@@ -6,12 +6,18 @@ GameObject::GameObject(mmo::EObjectType type) : m_objectTy(type)
 
 }
 
-NetObject::NetObject() : GameObject()
+NetObject::NetObject() : GameObject(), m_lastTickCount(GetTickCount64())
 {
 }
 
 NetObject::NetObject(uint64 id, mmo::EObjectType type) : GameObject(type), m_objectId(id)
 {
+}
+
+void NetObject::Tick()
+{
+	m_delta = GetTickCount64() - m_lastTickCount;
+	m_lastTickCount = GetTickCount64();
 }
 
 void NetObject::OnDestroy()

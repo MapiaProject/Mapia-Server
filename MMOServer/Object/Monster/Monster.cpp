@@ -4,8 +4,8 @@
 #include "Object/Player.hpp"
 #include "Session/GameSession.hpp"
 
-Monster::Monster(uint64 id, std::shared_ptr<GameMap> map)
-	: NetObject(id, mmo::Monster),
+Monster::Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap> map)
+	: NetObject(id, type),
 	m_map(map), m_enableAutomove(true), m_dir(0), m_target(), m_patrol(true), m_state(PATROL)
 {
 	SetPosition(Vector2DF::Zero());

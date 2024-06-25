@@ -2,7 +2,7 @@
 #include "GeminiRobot.hpp"
 
 GeminiRobot::GeminiRobot(uint64 id, std::shared_ptr<GameMap> map)
-	: Monster(id, map)
+	: Monster(id, mmo::GeminiRobot, map)
 {
 	SetHp(100);
 	SetPower(10);

@@ -43,15 +43,10 @@
 				{
 					"type": "Vector2",
 					"name": "position"
-				}
-			]
-		},
-		{
-			"name": "PlayerInfo",
-			"data": [
+				},
 				{
-					"type": "ObjectInfo",
-					"name": "objectInfo"
+					"type": "EObjectType",
+					"name": "type"
 				},
 				{
 					"type": "string",

@@ -41,12 +41,16 @@ public:
 	__forceinline void SetId(uint64 id) { m_objectId = id; }
 public:
 	virtual void BeginPlay() { };
-	virtual void Tick() { };
+	virtual void Tick();
 	virtual void OnDestroy();
 	virtual void OnDamaged(const std::shared_ptr<NetObject>) { };
 public:
 	void TakeDamage(const std::shared_ptr<NetObject>& hitter, int32 damage);
+protected:
+	float GetDeltatime() const { return m_delta/1000.f; }
 private:
 	uint64 m_objectId;
+	uint64 m_lastTickCount;
+	uint32 m_delta;
 };
 

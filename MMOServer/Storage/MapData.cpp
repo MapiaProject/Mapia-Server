@@ -94,9 +94,9 @@ Vector<Vector2DI> MapData::GetBlocks(Block block)
 	return res;
 }
 
-std::optional<mmo::EMonsterType> MapData::GetSpawnMonster() const
+std::optional<mmo::EObjectType> MapData::GetSpawnMonster() const
 {
-	return magic_enum::enum_cast<mmo::EMonsterType>(
+	return magic_enum::enum_cast<mmo::EObjectType>(
 		ToAnsiString(m_spawnMonster)
 	);
 }

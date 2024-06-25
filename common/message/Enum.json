@@ -9,20 +9,13 @@
 			]
 		},
 		{
-			"name": "EMonsterType",
+			"name": "EObjectType",
 			"list": [
+				"Player",
 				"Slime",
 				"TurretPlant",
 				"GeminiRobot",
 				"AttackDrone"
-			]
-		},
-		{
-			"name": "EObjectType",
-			"list": [
-				"Player",
-				"Monster",
-				"Projectile"
 			]
 		},
 		{
