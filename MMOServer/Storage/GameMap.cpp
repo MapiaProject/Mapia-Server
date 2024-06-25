@@ -38,35 +38,38 @@ void GameMap::Broadcast(Packet* packet, uint64 ignore)
 
 void GameMap::Enter(std::shared_ptr<NetObject> object)
 {
-	switch (object->GetType())
+	m_entities.insert({ object->GetId(), object });
+	auto type = object->GetType();
+	if (type == mmo::PLAYER)
 	{
-	case mmo::EObjectType::Player:
 		m_players.insert({
 			object->GetId(),
 			std::static_pointer_cast<Player>(object)
 		});
-		break;
-	default:
+	}
+	else if (type >= mmo::MONSTER && type < mmo::THING)
+	{
 		m_monsters.insert({
 			object->GetId(),
 			std::static_pointer_cast<Monster>(object)
 		});
-		break;
 	}
 }
 
 void GameMap::Leave(std::shared_ptr<NetObject> object)
 {
+	m_entities[object->GetId()].reset();
 	mmo::NotifyLeaveMap leaveMap;
 	leaveMap.objectId = object->GetId();
-	switch (object->GetType())
+
+	auto type = object->GetType();
+	if (type == mmo::PLAYER)
 	{
-	case mmo::EObjectType::Player:
 		m_players.erase(object->GetId());
-		break;
-	default:
+	}
+	else if (type >= mmo::MONSTER && type < mmo::THING)
+	{
 		m_monsters.erase(object->GetId());
-		break;
 	}
 	Broadcast(&leaveMap);
 }
@@ -86,8 +89,8 @@ void GameMap::SpawnMonster()
 		Vector<mmo::ObjectInfo> infos;
 		for (int i = 0; i < 10 - count; ++i)
 		{
-			auto idx = Random::Range<uint32>(0, spawnArea.size() - 1);
-			Vector2DI spawnPosition = spawnArea[idx];
+			auto idx = Random::Range<size_t>(0llu, spawnArea.size() - 1);
+			Vector2D spawnPosition = spawnArea[idx];
 
 			std::shared_ptr<Monster> monster = nullptr;
 			switch (spawnMonster.value())
@@ -107,7 +110,10 @@ void GameMap::SpawnMonster()
 			if (!monster)
 				return;
 
-			monster->SetPosition(Vector2DF(spawnPosition.x, spawnPosition.y));
+			monster->SetPosition(Vector2DF {
+				static_cast<float>(spawnPosition.x),
+				static_cast<float>(spawnPosition.y)
+			});
 			monster->BeginPlay();
 
 			m_monsters[monster->GetId()] = monster;
@@ -147,7 +153,10 @@ void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 	gen::mmo::NotifyMove syncMove;
 	syncMove.objectId = player->GetId();
 	auto prevPos = player->GetPosition();
-	auto block = GetBlock(Vector2DI(std::round(move.position.x), std::round(move.position.y)));
+	auto block = GetBlock(Vector2DI{
+		static_cast<int32>(std::round(move.position.x)),
+		static_cast<int32>(std::round(move.position.y))
+	});
 	if (!block.has_value())
 	{
 		syncMove.position = Converter::MakeVector(prevPos);
@@ -231,12 +240,10 @@ void GameMap::Tick()
 	Launch<GameTick>(&GameMap::Tick);
 
 	// Execute NetObject's `Update` logic
-	for (const auto&[_, object] : m_players)
+	for (const auto&[id, object] : m_entities)
 	{
-		object->Tick();
-	}
-	for (const auto& [_, object] : m_monsters)
-	{
-		object->Tick();
+		if (auto entity = object.lock())
+			entity->Tick();
+		else m_entities[id].reset();
 	}
 }

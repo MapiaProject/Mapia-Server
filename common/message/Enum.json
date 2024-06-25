@@ -11,11 +11,14 @@
 		{
 			"name": "EObjectType",
 			"list": [
-				"Player",
+				"PLAYER",
+				"MONSTER",
 				"Slime",
 				"TurretPlant",
 				"GeminiRobot",
-				"AttackDrone"
+				"AttackDrone",
+				"THING",
+				"Projectile"
 			]
 		},
 		{

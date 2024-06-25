@@ -3,6 +3,8 @@
 #include "generated/mmo/Enum.gen.hpp"
 #include "Manager/NetObjectManager.hpp"
 
+#define CreateObject(Type, ...) GManager->Object()->Create<Type>(__VA_ARGS__)
+
 using namespace gen;
 
 class GameObject
@@ -46,6 +48,11 @@ public:
 	virtual void OnDamaged(const std::shared_ptr<NetObject>) { };
 public:
 	void TakeDamage(const std::shared_ptr<NetObject>& hitter, int32 damage);
+public:
+	bool operator<(const NetObject& object)
+	{
+		return m_objectId > object.GetId();
+	}
 protected:
 	float GetDeltatime() const { return m_delta/1000.f; }
 private:

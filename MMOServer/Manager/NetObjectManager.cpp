@@ -43,7 +43,7 @@ void NetObjectManager::HandleDirectChat(std::shared_ptr<Session> session, gen::m
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
 	for (const auto& [_, object] : m_objects)
 	{
-		if (object->GetType() == mmo::EObjectType::Player)
+		if (object->GetType() == mmo::EObjectType::PLAYER)
 		{
 			if (auto player = std::static_pointer_cast<Player>(object))
 			{
@@ -80,7 +80,7 @@ void NetObjectManager::BroadcastAll(Packet* packet, uint64 ignore)
 {
 	for (const auto& obj : m_objects)
 	{
-		if (obj.second->GetType() == mmo::EObjectType::Player)
+		if (obj.second->GetType() == mmo::EObjectType::PLAYER)
 		{
 			auto player = std::static_pointer_cast<Player>(obj.second);
 			if (player->GetId() != ignore)

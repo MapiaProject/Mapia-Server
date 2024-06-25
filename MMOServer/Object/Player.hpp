@@ -30,6 +30,8 @@ public:
 
 	void TryDamage(const std::shared_ptr<NetObject> hitter);
 private:
+	std::shared_ptr<Player> SharedThis();
+private:
 	std::weak_ptr<GameSession> m_session;
 	std::weak_ptr<GameMap> m_map;
 	std::weak_ptr<NetObject> m_hitter;

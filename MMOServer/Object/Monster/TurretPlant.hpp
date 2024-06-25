@@ -11,6 +11,8 @@ private:
 	void Tick() override;
 	void ProcessAttack(const std::shared_ptr<NetObject>) override;
 private:
+	std::weak_ptr<class Player> m_target;
+	Vector2DF m_targetPosition;
 	std::shared_ptr<NetObject> m_projectile;
 };
 

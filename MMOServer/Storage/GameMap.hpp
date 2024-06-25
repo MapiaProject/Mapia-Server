@@ -37,5 +37,6 @@ public:
 private:
 	HashMap<uint64, std::shared_ptr<class Player>> m_players;
 	HashMap<uint64, std::shared_ptr<class Monster>> m_monsters;
+	ConcurrencyHashMap<uint64, std::weak_ptr<NetObject>> m_entities;
 };
 

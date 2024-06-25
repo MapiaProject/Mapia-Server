@@ -16,7 +16,7 @@ NetObject::NetObject(uint64 id, mmo::EObjectType type) : GameObject(type), m_obj
 
 void NetObject::Tick()
 {
-	m_delta = GetTickCount64() - m_lastTickCount;
+	m_delta = static_cast<decltype(m_delta)>(GetTickCount64() - m_lastTickCount);
 	m_lastTickCount = GetTickCount64();
 }
 

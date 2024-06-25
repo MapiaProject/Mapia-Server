@@ -10,7 +10,7 @@ Player::Player() noexcept
 		map->Leave(shared_from_this());
 }
 
-Player::Player(uint64 id) : NetObject(id, mmo::Player)
+Player::Player(uint64 id) : NetObject(id, mmo::PLAYER)
 {
 	SetPosition(Vector2DF::Zero());
 }
@@ -52,7 +52,7 @@ void Player::EnterMap(std::shared_ptr<GameMap> gameMap)
 	
 	m_map = gameMap;
 	if (auto map = m_map.lock())
-		gameMap->Enter(shared_from_this());
+		gameMap->Enter(SharedThis());
 }
 
 void Player::LeaveMap()
@@ -67,6 +67,11 @@ void Player::LeaveMap()
 void Player::TryDamage(const std::shared_ptr<NetObject> hitter)
 {
 	OnDamaged(hitter);
+}
+
+std::shared_ptr<Player> Player::SharedThis()
+{
+	return std::static_pointer_cast<Player>(shared_from_this());
 }
 
 void Player::SetNickname(StringView nickname)

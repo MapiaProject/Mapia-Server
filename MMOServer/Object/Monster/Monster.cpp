@@ -106,7 +106,7 @@ void Monster::OnDestroy()
 
 void Monster::OnDamaged(const std::shared_ptr<NetObject> attacker)
 {
-	if (attacker->GetType() == mmo::EObjectType::Player)
+	if (attacker->GetType() == mmo::EObjectType::PLAYER)
 		m_target = std::static_pointer_cast<Player>(attacker);
 }
 
@@ -179,12 +179,19 @@ void Monster::NextDestination()
 	auto [x, y] = GetPosition();
 	m_dir = Random::Range(-1, 1);
 	if (m_dir != 0)
-		for (; map->GetBlock(Vector2DI(x + m_dir, y)) == Block::SpawnArea; x += m_dir);
+	{
+		for (; map->GetBlock(Vector2DI{
+			static_cast<int32>(x + m_dir),
+			static_cast<int32>(y)
+			}) == Block::SpawnArea;
+			x += m_dir
+		);
+	}
 
 	if (x >= 0)
-		m_dest = Random::Range<int>(0, x);
+		m_dest = Random::Range<int32>(0, static_cast<int32>(x));
 	else
-		m_dest = Random::Range<int>(x, 0);
+		m_dest = Random::Range<int32>(static_cast<int32>(x), 0);
 }
 
 void Monster::Attack()
