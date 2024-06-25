@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Player.hpp"
 #include "Storage/GameMap.hpp"
+#include "Object.hpp"
 
 Player::Player() noexcept
 {
@@ -74,6 +75,16 @@ void Player::Airborne() const
 	auto map = GetMap();
 	if (!map)
 		return;
+
+	const Vector2DF range(3, 1.5f);
+	for (const auto& [_, monster] : map->GetMonsters())
+	{
+		auto diff = monster->GetPosition() - GetPosition();
+		if (Math::Abs(diff.x) <= range.x && Math::Abs(diff.y) <= range.y)
+		{
+			monster->Faint(GetPower());
+		}
+	}
 }
 
 std::shared_ptr<Player> Player::SharedThis()

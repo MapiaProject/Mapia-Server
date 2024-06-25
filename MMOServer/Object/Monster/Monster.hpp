@@ -10,7 +10,8 @@ class Monster : public NetObject
 		IDLE,
 		PATROL,
 		FOLLOW,
-		ATTACK
+		ATTACK,
+		FAINT
 	};
 public:
 	Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap> map);
@@ -22,8 +23,6 @@ protected:
 	virtual void OnDamaged(const std::shared_ptr<NetObject> hitter);
 	virtual void ProcessAttack(const std::shared_ptr<NetObject> target);
 public:
-	/* --- Get Set --- */
-
 	/* Movement */
 	void SetAutomove(bool enable);
 	bool IsAutomove() const;
@@ -38,6 +37,8 @@ public:
 	std::shared_ptr<class GameMap> GetMap() const;
 	void SetAttackRange(float range);
 	float GetAttackRange() const;
+public:
+	void Faint(int32 power);
 private:
 	void NextDestination();
 	void Attack();

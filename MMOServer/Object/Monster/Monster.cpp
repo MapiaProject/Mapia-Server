@@ -34,7 +34,7 @@ void Monster::Tick()
 	NetObject::Tick();
 
 	// attack
-	if (auto target = m_target.lock())
+	if (auto target = m_target.lock(); target && m_state != FAINT)
 	{
 		if ((GetPosition() - target->GetPosition()).Length() > m_attackRange)
 		{
@@ -141,6 +141,11 @@ void Monster::SetAttackRange(float range)
 float Monster::GetAttackRange() const
 {
 	return m_attackRange;
+}
+
+void Monster::Faint(int32 power)
+{
+	m_state = FAINT;
 }
 
 bool Monster::IsAutomove() const
