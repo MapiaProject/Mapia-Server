@@ -210,7 +210,6 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     <ClCompile Include="MMOServer\Object\Monster\Monster.cpp" />
     <ClCompile Include="MMOServer\Object\Monster\Slime.cpp" />
     <ClCompile Include="MMOServer\Object\Monster\TurretPlant.cpp" />
-    <ClCompile Include="MMOServer\Object\Monster\Projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MMOServer\Object\Monster\GeminiRobot.hpp" />
@@ -231,7 +230,6 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     <ClInclude Include="MMOServer\Object\Monster\Monster.hpp" />
     <ClInclude Include="MMOServer\Object\Monster\Slime.hpp" />
     <ClInclude Include="MMOServer\Object\Monster\TurretPlant.hpp" />
-    <ClInclude Include="MMOServer\Object\Monster\Projectile.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Common\database\Procedure.sql" />

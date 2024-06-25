@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TurretPlant.hpp"
+#include "Object/Player.hpp"
 #include "Storage/GameMap.hpp"
 
 TurretPlant::TurretPlant(uint64 id, std::shared_ptr<GameMap> map)
@@ -14,6 +15,7 @@ void TurretPlant::BeginPlay()
 {
 	Monster::BeginPlay();
 	SetAutomove(false);
+	m_tick = GetTickCount64();
 }
 
 void TurretPlant::Tick()
@@ -21,7 +23,34 @@ void TurretPlant::Tick()
 	Monster::Tick();
 	if (m_projectile)
 	{
+		if (m_tick >= GetTickCount64())
+		{
+			m_tick = GetTickCount64() + UPDATE_PROJECTILE_TICK;
+			
+			mmo::NotifyMove move;
+			move.objectId = GetId();
+			move.position = Converter::MakeVector(m_projectile->GetPosition());
+			if (auto map = GetMap())
+				map->Broadcast(&move);
+		}
 
+		if ((m_targetPosition - m_projectile->GetPosition()).Length() >= 0.2f)
+		{
+			auto dir = (m_targetPosition - GetPosition()).Normalize();
+			m_position += dir * GetDeltatime();
+		}
+		else
+		{
+			if (auto target = m_target.lock(); target && (target->GetPosition() - GetPosition()).Length() < 0.2f)
+			{
+				mmo::NotifyDamaged damage;
+				damage.damageResult.damage = GetPower();
+				damage.damageResult.objectId = target->GetId();
+				if (auto map = GetMap())
+					map->Broadcast(&damage);
+			}
+			m_projectile = nullptr;
+		}
 	}
 }
 

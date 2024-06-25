@@ -34,6 +34,7 @@ class NetObject :
 	public std::enable_shared_from_this<NetObject>,
 	public GameObject
 {
+	USE_POOL(NetObject)
 public:
 	NetObject();
 	NetObject(uint64 id, mmo::EObjectType type);
