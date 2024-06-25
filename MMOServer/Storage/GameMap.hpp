@@ -24,8 +24,8 @@ public:
 	void SpawnMonster();
 	std::shared_ptr<GameMap> SharedThis();
 public:
-	HashMap<uint64, std::shared_ptr<class Player>> GetPlayers() const;
-	HashMap<uint64, std::shared_ptr<class Monster>> GetMonsters() const;
+	const HashMap<uint64, std::shared_ptr<class Player>>& GetPlayers() const;
+	const HashMap<uint64, std::shared_ptr<class Monster>>& GetMonsters() const;
 public:
 	void HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move);
 	void HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat);
@@ -38,6 +38,5 @@ public:
 private:
 	HashMap<uint64, std::shared_ptr<class Player>> m_players;
 	HashMap<uint64, std::shared_ptr<class Monster>> m_monsters;
-	ConcurrencyHashMap<uint64, std::weak_ptr<NetObject>> m_entities;
 };
 

@@ -38,7 +38,6 @@ void GameMap::Broadcast(Packet* packet, uint64 ignore)
 
 void GameMap::Enter(std::shared_ptr<NetObject> object)
 {
-	m_entities.insert({ object->GetId(), object });
 	auto type = object->GetType();
 	if (type == mmo::PLAYER)
 	{
@@ -58,7 +57,6 @@ void GameMap::Enter(std::shared_ptr<NetObject> object)
 
 void GameMap::Leave(std::shared_ptr<NetObject> object)
 {
-	m_entities[object->GetId()].reset();
 	mmo::NotifyLeaveMap leaveMap;
 	leaveMap.objectId = object->GetId();
 
@@ -135,12 +133,12 @@ std::shared_ptr<GameMap> GameMap::SharedThis()
 	return std::static_pointer_cast<GameMap>(shared_from_this());
 }
 
-HashMap<uint64, std::shared_ptr<class Player>> GameMap::GetPlayers() const
+const HashMap<uint64, std::shared_ptr<Player>>& GameMap::GetPlayers() const
 {
 	return m_players;
 }
 
-HashMap<uint64, std::shared_ptr<class Monster>> GameMap::GetMonsters() const
+const HashMap<uint64, std::shared_ptr<Monster>>& GameMap::GetMonsters() const
 {
 	return m_monsters;
 }
@@ -256,10 +254,12 @@ void GameMap::Tick()
 	Launch<GameTick>(&GameMap::Tick);
 
 	// Execute NetObject's `Update` logic
-	for (const auto&[id, object] : m_entities)
+	for (const auto& [_, object] : m_players)
 	{
-		if (auto entity = object.lock())
-			entity->Tick();
-		else m_entities[id].reset();
+		object->Tick();
+	}
+	for (const auto&[_, object] : m_monsters)
+	{
+		object->Tick();
 	}
 }

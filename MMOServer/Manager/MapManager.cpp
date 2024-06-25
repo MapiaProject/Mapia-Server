@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "MapManager.hpp"
 #include "Session/GameSession.hpp"
-#include "Object/Player.hpp"
+#include "Object/Object.hpp"
 #include "Utility/Converter.hpp"
 
 #include <filesystem>
@@ -82,7 +82,23 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			session->Send(&spawn, true);
 		}
 
-		// notify exist players
+		// send monsters
+		if (!gameMap->GetMonsters().empty())
+		{
+			gen::mmo::NotifySpawn spawn;
+			for (const auto& [_, monster] : gameMap->GetMonsters())
+			{
+				gen::mmo::ObjectInfo info;
+				info.type = monster->GetType();
+				info.objectId = monster->GetId();
+				info.position = Converter::MakeVector(monster->GetPosition());
+				info.remainHp = monster->GetHp();
+				spawn.objects.push_back(info);
+			}
+			session->Send(&spawn, true);
+		}
+
+		// notify to existing players
 		{
 			gen::mmo::NotifySpawn spawn;
 			gen::mmo::ObjectInfo info;
