@@ -29,6 +29,12 @@
 				"Attack",
 				"Parrying"
 			]
+		},
+		{
+			"name": "ESkillType",
+			"list": [
+				"Airborne"
+			]
 		}
 	]
 }

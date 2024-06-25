@@ -31,6 +31,7 @@ public:
 	void HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat);
 	void HandleDamage(std::shared_ptr<Session> session, gen::mmo::AddDamageReq damage);
 	void HandleHitStatus(std::shared_ptr<Session> session, gen::mmo::HitStatus hit);
+	void HandleSkillActivate(std::shared_ptr<Session> session, gen::mmo::SkillActivate skill);
 public:
 	void BeginPlay();
 	void Tick();

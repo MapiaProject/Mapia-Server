@@ -69,6 +69,13 @@ void Player::TryDamage(const std::shared_ptr<NetObject> hitter)
 	OnDamaged(hitter);
 }
 
+void Player::Airborne() const
+{
+	auto map = GetMap();
+	if (!map)
+		return;
+}
+
 std::shared_ptr<Player> Player::SharedThis()
 {
 	return std::static_pointer_cast<Player>(shared_from_this());

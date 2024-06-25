@@ -67,3 +67,11 @@ bool gen::mmo::PacketHandler::HitStatusPacketHandler(TSharedPtr<Session> session
 		map->Launch(&GameMap::HandleHitStatus, session, *packet);
 	return false;
 }
+
+bool gen::mmo::PacketHandler::SkillActivatePacketHandler(TSharedPtr<Session> session, TSharedPtr<SkillActivate> packet)
+{
+	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (auto map = gameSession->GetPlayer()->GetMap())
+		map->Launch(&GameMap::HandleSkillActivate, session, *packet);
+	return false;
+}

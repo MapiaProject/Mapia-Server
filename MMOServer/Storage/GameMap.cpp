@@ -229,6 +229,22 @@ void GameMap::HandleHitStatus(std::shared_ptr<Session> session, gen::mmo::HitSta
 	}
 }
 
+void GameMap::HandleSkillActivate(std::shared_ptr<Session> session, gen::mmo::SkillActivate skill)
+{
+	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (auto player = gameSession->GetPlayer())
+	{
+		switch (skill.type)
+		{
+		case mmo::Airborne:
+			player->Airborne();
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 void GameMap::BeginPlay()
 {
 	if (auto spawnMonster = GetSpawnMonster(); spawnMonster.has_value())

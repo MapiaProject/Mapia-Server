@@ -65,6 +65,15 @@
 						"name": "state"
 					}
 				]
+			},
+			{
+				"name": "SkillActivate",
+				"data": [
+					{
+						"type": "ESkillType",
+						"name": "type"
+					}
+				]
 			}
 		],
 		"server": [
