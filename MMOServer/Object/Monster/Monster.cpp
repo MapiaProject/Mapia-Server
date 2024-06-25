@@ -33,6 +33,11 @@ void Monster::Tick()
 {
 	NetObject::Tick();
 
+	if (m_state == FAINT && m_endFaintTick >= GetTickCount64())
+	{
+		m_state = IDLE;
+	}
+
 	// attack
 	if (auto target = m_target.lock(); target && m_state != FAINT)
 	{
@@ -146,6 +151,7 @@ float Monster::GetAttackRange() const
 void Monster::Faint(int32 power)
 {
 	m_state = FAINT;
+	m_endFaintTick = GetTickCount64() + FAINT_TIME;
 }
 
 bool Monster::IsAutomove() const

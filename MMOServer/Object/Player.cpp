@@ -76,7 +76,7 @@ void Player::Airborne() const
 	if (!map)
 		return;
 
-	const Vector2DF range(3, 1.5f);
+	const Vector2DF range(3, 0.5f);
 	for (const auto& [_, monster] : map->GetMonsters())
 	{
 		auto diff = monster->GetPosition() - GetPosition();

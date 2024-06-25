@@ -13,6 +13,10 @@ class Monster : public NetObject
 		ATTACK,
 		FAINT
 	};
+	enum LogicTick
+	{
+		FAINT_TIME = 800
+	};
 public:
 	Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap> map);
 	virtual ~Monster() noexcept {}
@@ -63,5 +67,7 @@ private:
 
 	/* Follow */
 	std::weak_ptr<class Player> m_target;
+
+	uint64 m_endFaintTick;
 };
 
