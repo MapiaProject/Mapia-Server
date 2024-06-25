@@ -37,11 +37,10 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 	auto myPlayer = gameSession->GetPlayer();
 
 	gen::mmo::EnterMapRes res;
-	res.success = false;
-	if (gameMap != nullptr && myPlayer->GetMap() != gameMap)
+	res.success = gameMap != nullptr && myPlayer->GetMap() != gameMap;
+	session->Send(&res, true);
+	if (res.success)
 	{
-		res.success = true;
-
 		// send my position
 		{
 			gen::mmo::Spawn spawn;
@@ -96,7 +95,6 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 			gameMap->Broadcast(&spawn, myPlayer->GetId());
 		}
 	}
-	session->Send(&res, true);
 }
 
 void MapManager::Initialize()
