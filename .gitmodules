@@ -1,5 +1,5 @@
-[submodule "Common/library/magic_enum"]
-	path = Common/library/magic_enum
+[submodule "Common/Library/magic_enum"]
+	path = Common/Library/magic_enum
 	url = https://github.com/Neargye/magic_enum
 [submodule "Common/Library/rapidjson"]
 	path = Common/Library/rapidjson
