@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);__SERVER__;__SERVER__</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;$(ProjectDir)common\library\magic_enum\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;$(ProjectDir)common\library\magic_enum\include;$(ProjectDir)common\library\SQLiteCpp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -102,7 +102,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Configuration);$(SolutionDir)lib\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SvEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sqlite3.lib;SQLiteCpp.lib;SvEngine.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
@@ -117,7 +117,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);__SERVER__;__SERVER__</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;$(ProjectDir)common\library\magic_enum\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;$(ProjectDir)common\library\magic_enum\include;$(ProjectDir)common\library\SQLiteCpp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -129,7 +129,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Configuration);$(SolutionDir)lib\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SvEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sqlite3.lib;SQLiteCpp.lib;SvEngine.lib;ws2_32.lib;netcpp.lib;tbb12.lib;odbc32.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
@@ -142,7 +142,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);__SERVER__;__SERVER__</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;$(ProjectDir)common\library\magic_enum\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;$(ProjectDir)common\library\magic_enum\include;$(ProjectDir)common\library\SQLiteCpp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -152,7 +152,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Configuration);$(SolutionDir)lib\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SvEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sqlite3.lib;SQLiteCpp.lib;SvEngine.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>cd ../tools/PacketGenerator
@@ -167,7 +167,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);__SERVER__;__SERVER__</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;$(ProjectDir)common\library\magic_enum\include;$(ProjectDir)common\library\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;$(ProjectDir)common\library\magic_enum\include;$(ProjectDir)common\library\SQLiteCpp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -179,14 +179,17 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Configuration);$(SolutionDir)lib\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SvEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sqlite3.lib;SQLiteCpp.lib;SvEngine.lib;ws2_32.lib;netcpp.lib;tbb12.lib;odbc32.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>cd ../tools/PacketGenerator
+      <Command>build.bat
+cd ../tools/PacketGenerator
 python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Source/WOS/Network/']" -n mmo</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MMOServer\Manager\DataManager.cpp" />
+    <ClCompile Include="MMOServer\Storage\Datasheet.cpp" />
     <ClCompile Include="MMOServer\Object\Monster\GeminiRobot.cpp" />
     <ClCompile Include="MMOServer\Utility\Converter.cpp" />
     <ClCompile Include="MMOServer\Storage\GameMap.cpp" />
@@ -205,13 +208,16 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="MMOServer\Object\Player.cpp" />
-    <ClCompile Include="MMOServer\Manager\NetObjectManager.cpp" />
+    <ClCompile Include="MMOServer\Manager\ObjectManager.cpp" />
     <ClCompile Include="MMOServer\Object\NetObject.cpp" />
     <ClCompile Include="MMOServer\Object\Monster\Monster.cpp" />
     <ClCompile Include="MMOServer\Object\Monster\Slime.cpp" />
     <ClCompile Include="MMOServer\Object\Monster\TurretPlant.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MMOServer\Manager\BaseManager.hpp" />
+    <ClInclude Include="MMOServer\Manager\DataManager.hpp" />
+    <ClInclude Include="MMOServer\Storage\Datasheet.hpp" />
     <ClInclude Include="MMOServer\Object\Monster\GeminiRobot.hpp" />
     <ClInclude Include="MMOServer\Object\Object.hpp" />
     <ClInclude Include="MMOServer\Utility\Converter.hpp" />
@@ -225,17 +231,16 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     <ClInclude Include="Main\main.h" />
     <ClInclude Include="Main\PCH\pch.h" />
     <ClInclude Include="MMOServer\Object\Player.hpp" />
-    <ClInclude Include="MMOServer\Manager\NetObjectManager.hpp" />
+    <ClInclude Include="MMOServer\Manager\ObjectManager.hpp" />
     <ClInclude Include="MMOServer\Object\NetObject.hpp" />
     <ClInclude Include="MMOServer\Object\Monster\Monster.hpp" />
     <ClInclude Include="MMOServer\Object\Monster\Slime.hpp" />
     <ClInclude Include="MMOServer\Object\Monster\TurretPlant.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="build.bat" />
     <None Include="Common\Database\Procedure.sql" />
     <None Include="Common\Database\Setup.sql" />
-    <None Include="Common\Datasheets\DropItems.json" />
-    <None Include="Common\Datasheets\Monsters.json" />
     <None Include="common\datasheets\setup.bat" />
     <None Include="Common\Message\Enum.json" />
     <None Include="Common\Message\Protocol.json" />

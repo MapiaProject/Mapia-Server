@@ -1,13 +1,15 @@
 #include "pch.h"
 #include "Manager.hpp"
 
-#include "NetObjectManager.hpp"
+#include "ObjectManager.hpp"
 #include "MapManager.hpp"
+#include "DataManager.hpp"
 
 Manager::Manager()
 {
-	m_netObject = MakeShared<NetObjectManager>();
+	m_object = MakeShared<ObjectManager>();
 	m_map = MakeShared<MapManager>();
+	m_data = MakeShared<DataManager>();
 }
 
 Manager::~Manager()
@@ -16,15 +18,22 @@ Manager::~Manager()
 
 void Manager::Initialize()
 {
+	m_object->Initialize();
 	m_map->Initialize();
+	m_data->Initialize();
 }
 
-std::shared_ptr<NetObjectManager> Manager::Object()
+std::shared_ptr<ObjectManager> Manager::Object()
 {
-	return m_netObject;
+	return m_object;
 }
 
 std::shared_ptr<MapManager> Manager::Map()
 {
 	return m_map;
+}
+
+std::shared_ptr<DataManager> Manager::Data()
+{
+	return m_data;
 }

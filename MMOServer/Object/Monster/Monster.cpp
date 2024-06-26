@@ -111,7 +111,7 @@ void Monster::OnDestroy()
 
 void Monster::OnDamaged(const std::shared_ptr<NetObject> attacker)
 {
-	if (attacker->GetType() == mmo::EObjectType::PLAYER)
+	if (attacker && attacker->GetType() == mmo::EObjectType::PLAYER)
 		m_target = std::static_pointer_cast<Player>(attacker);
 }
 
@@ -150,6 +150,8 @@ float Monster::GetAttackRange() const
 
 void Monster::Faint(int32 power)
 {
+	TakeDamage(nullptr, power);
+
 	m_state = FAINT;
 	m_endFaintTick = GetTickCount64() + FAINT_TIME;
 }

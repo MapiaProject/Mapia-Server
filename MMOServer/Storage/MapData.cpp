@@ -31,7 +31,7 @@ const Deque<Vector<Block>>& MapData::GetDataArray() const
 
 void MapData::Read(StringView filename)
 {
-	auto ini = Ini(TEXT("Common/generated/mapData/") + String(filename));
+	auto ini = Ini { filename };
 	auto section = ini[TEXT("info")];
 
 	/* load map info */

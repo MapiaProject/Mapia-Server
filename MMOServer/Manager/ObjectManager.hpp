@@ -1,11 +1,11 @@
 #pragma once
-#include "Thread/JobSerializer.hpp"
+#include "BaseManager.hpp"
 #include "generated/mmo/Protocol.gen.hpp"
 
-class NetObjectManager : public JobSerializer
+class ObjectManager : public BaseManager<ObjectManager>
 {
 public:
-	NetObjectManager();
+	ObjectManager();
 public:
 	template<class T, class... Args>
 	std::shared_ptr<T> Create(Args&&... args)
@@ -14,6 +14,7 @@ public:
 		m_objects.insert({ m_lastId, object });
 		return object;
 	}
+	void Initialize() override;
 	void RemoveObject(uint64 id);
 	std::shared_ptr<class NetObject> GetObjectById(uint64 id);
 public:

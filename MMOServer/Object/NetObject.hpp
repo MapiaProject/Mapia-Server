@@ -1,7 +1,7 @@
 #pragma once
 
 #include "generated/mmo/Enum.gen.hpp"
-#include "Manager/NetObjectManager.hpp"
+#include "Manager/ObjectManager.hpp"
 
 #define CreateObject(Type, ...) GManager->Object()->Create<Type>(__VA_ARGS__)
 

@@ -1,6 +1,6 @@
 [submodule "Common/Library/magic_enum"]
 	path = Common/Library/magic_enum
 	url = https://github.com/Neargye/magic_enum
-[submodule "Common/Library/rapidjson"]
-	path = Common/Library/rapidjson
-	url = https://github.com/Tencent/rapidjson
+[submodule "Common/Library/SQLiteCpp"]
+	path = Common/Library/SQLiteCpp
+	url = https://github.com/SRombauts/SQLiteCpp

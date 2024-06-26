@@ -6,7 +6,7 @@
 #include "Session/GameSession.hpp"
 #include "Manager/MapManager.hpp"
 
-#include "Manager/NetObjectManager.hpp"
+#include "Manager/ObjectManager.hpp"
 
 GameMap::GameMap(StringView path) : MapData(path)
 {

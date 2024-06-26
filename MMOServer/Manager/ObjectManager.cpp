@@ -1,25 +1,29 @@
 #include "pch.h"
-#include "NetObjectManager.hpp"
+#include "ObjectManager.hpp"
 #include "Session/GameSession.hpp"
 #include "Object/Player.hpp"
 #include "Manager.hpp"
 
-NetObjectManager::NetObjectManager() : m_lastId(0)
+ObjectManager::ObjectManager() : m_lastId(0)
 {
 }
 
-void NetObjectManager::RemoveObject(uint64 id)
+void ObjectManager::Initialize()
+{
+}
+
+void ObjectManager::RemoveObject(uint64 id)
 {
 	if (auto& object = m_objects[id])
 		object = nullptr;
 }
 
-std::shared_ptr<NetObject> NetObjectManager::GetObjectById(uint64 id)
+std::shared_ptr<NetObject> ObjectManager::GetObjectById(uint64 id)
 {
 	return m_objects[id];
 }
 
-void NetObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::EnterGameReq req)
+void ObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::EnterGameReq req)
 {
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
 	const auto& nickname = req.name;
@@ -38,7 +42,7 @@ void NetObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mm
 	gameSession->Send(&res, true);
 }
 
-void NetObjectManager::HandleDirectChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
+void ObjectManager::HandleDirectChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
 {
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
 	for (const auto& [_, object] : m_objects)
@@ -63,7 +67,7 @@ void NetObjectManager::HandleDirectChat(std::shared_ptr<Session> session, gen::m
 	}
 }
 
-void NetObjectManager::HandleAllChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
+void ObjectManager::HandleAllChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
 {
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
 	auto sender = gameSession->GetPlayer();
@@ -76,13 +80,13 @@ void NetObjectManager::HandleAllChat(std::shared_ptr<Session> session, gen::mmo:
 	BroadcastAll(&notifyChat, sender->GetId());
 }
 
-void NetObjectManager::BroadcastAll(Packet* packet, uint64 ignore)
+void ObjectManager::BroadcastAll(Packet* packet, uint64 ignore)
 {
-	for (const auto& obj : m_objects)
+	for (const auto& [_, object] : m_objects)
 	{
-		if (obj.second->GetType() == mmo::EObjectType::PLAYER)
+		if (object->GetType() == mmo::EObjectType::PLAYER)
 		{
-			auto player = std::static_pointer_cast<Player>(obj.second);
+			auto player = std::static_pointer_cast<Player>(object);
 			if (player->GetId() != ignore)
 			{
 				if (auto session = player->GetSession())
