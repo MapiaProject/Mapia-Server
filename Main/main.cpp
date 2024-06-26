@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "Session/GameSession.hpp"
 #include "Session/LogSession.hpp"
 #include "Network/Server.hpp"

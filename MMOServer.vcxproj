@@ -232,11 +232,14 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     <ClInclude Include="MMOServer\Object\Monster\TurretPlant.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Common\database\Procedure.sql" />
-    <None Include="Common\database\Setup.sql" />
-    <None Include="Common\message\Enum.json" />
-    <None Include="Common\message\Protocol.json" />
-    <None Include="Common\message\Struct.json" />
+    <None Include="Common\Database\Procedure.sql" />
+    <None Include="Common\Database\Setup.sql" />
+    <None Include="Common\Datasheets\DropItems.json" />
+    <None Include="Common\Datasheets\Monsters.json" />
+    <None Include="common\datasheets\setup.bat" />
+    <None Include="Common\Message\Enum.json" />
+    <None Include="Common\Message\Protocol.json" />
+    <None Include="Common\Message\Struct.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

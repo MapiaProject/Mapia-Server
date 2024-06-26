@@ -1,0 +1,42 @@
+{
+  "monster": [
+    {
+      "type": "Slime",
+      "id": 1001,
+      "ability": {
+        "hp": 10,
+        "power": 2
+      },
+      "drop": [
+        101,
+        102
+      ]
+    },
+    {
+      "type": "GeminiRobot",
+      "id": 1002,
+      "ability": {
+        "hp": 20,
+        "power": 5
+      },
+      "drop": [
+        103,
+        104,
+        105
+      ]
+    },
+    {
+      "type": "TurretPlant",
+      "id": 1003,
+      "ability": {
+        "hp": 30,
+        "power": 10
+      },
+      "drop": [
+        103,
+        106,
+        107
+      ]
+    }
+  ]
+}
