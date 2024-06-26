@@ -167,7 +167,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);__SERVER__;__SERVER__</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;$(ProjectDir)common\library\magic_enum\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SvEngine\include;$(SolutionDir)lib\netcpp\include;$(ProjectDir)Main\PCH;$(ProjectDir)$(ProjectName);$(ProjectDir);$(ProjectDir)common;$(ProjectDir)common\library\magic_enum\include;$(ProjectDir)common\library\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
