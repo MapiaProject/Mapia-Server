@@ -4,4 +4,6 @@
 int main()
 {
 	WOSServerInstance = new MMOServer;
+	WOSServerInstance->Run();
+	delete WOSServerInstance;
 }

@@ -12,10 +12,20 @@ Manager* GManager;
 
 MMOServer::MMOServer()
 {
-	Console::Log(Category::Netcpp, TEXT("'netcpp' initialized"));
-
 	GEngine = new Engine;
+	GManager = new Manager;
+}
+
+MMOServer::~MMOServer()
+{
+	delete GEngine;
+	delete GManager;
+}
+
+void MMOServer::Run()
+{
 	GEngine->Initialize();
+	GManager->Initialize();
 
 	GEngine->GetDBConnectionPool()->Connect(10, TEXT(
 		"DRIVER={MySQL ODBC 8.3 Unicode Driver};"
@@ -26,8 +36,6 @@ MMOServer::MMOServer()
 		"PASSWORD=reWq0987.;"
 		"OPTION=3;"
 	));
-	GManager = new Manager;
-	GManager->Initialize();
 
 	auto logEndpoint = Endpoint(net::IpAddress::Loopback, 1225);
 	auto serverEndpoint = Endpoint(IpAddress::Loopback, 1004);
@@ -39,13 +47,4 @@ MMOServer::MMOServer()
 	Console::Log(Category::MMOServer, TEXT("MMO Server is running on ") + ToUnicodeString(serverEndpoint.toString()));
 
 	GEngine->ExecuteThread(4, 4);
-
-	// for blocking
-	auto _ = getchar();
-}
-
-MMOServer::~MMOServer()
-{
-	delete GEngine;
-	delete GManager;
 }

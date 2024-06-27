@@ -5,6 +5,8 @@ struct MMOServer final
 {
 	MMOServer();
 	~MMOServer();
+
+	void Run();
 };
 
 static MMOServer* WOSServerInstance;
