@@ -237,13 +237,14 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     <ClInclude Include="MMOServer\Object\Monster\TurretPlant.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="setup.bat" />
+    <None Include="build.bat" />
     <None Include="Common\Database\Procedure.sql" />
     <None Include="Common\Database\Setup.sql" />
     <None Include="common\datasheets\setup.bat" />
     <None Include="Common\Message\Enum.json" />
     <None Include="Common\Message\Protocol.json" />
     <None Include="Common\Message\Struct.json" />
+    <None Include="Common\Database\export.bat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

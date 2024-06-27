@@ -23,7 +23,7 @@ public:
 protected:
 	virtual void BeginPlay();
 	virtual void Tick();
-	virtual void OnDestroy();
+	virtual void OnDestroy(const std::shared_ptr<NetObject>& hitter);
 	virtual void OnDamaged(const std::shared_ptr<NetObject> hitter);
 	virtual void ProcessAttack(const std::shared_ptr<NetObject> target);
 public:

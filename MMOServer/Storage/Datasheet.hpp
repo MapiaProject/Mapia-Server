@@ -1,9 +1,9 @@
 #pragma once
 
-struct MonsterInfo
+struct MonsterData
 {
-	MonsterInfo() = default;
-	MonsterInfo(uint32 id, StringView type, uint32 hp, uint32 power, double attackRange)
+	MonsterData() = default;
+	MonsterData(uint32 id, StringView type, uint32 hp, uint32 power, double attackRange)
 		: id(id), type(type), hp(hp), power(power), attackRange(attackRange)
 	{}
 	int32 id;
@@ -13,23 +13,12 @@ struct MonsterInfo
 	double attackRange;
 };
 
-struct ItemInfo
+struct ItemData
 {
-	ItemInfo() = default;
-	ItemInfo(StringView type, uint32 id, StringView descript)
-		: type(type), id(id), descript(descript)
+	ItemData() = default;
+	ItemData(StringView type, uint32 id)
+		: type(type), id(id)
 	{}
 	String type;
 	uint32 id;
-	String descript;
-};
-
-struct DropInfo
-{
-	DropInfo() = default;
-	DropInfo(uint32 monsterId, uint32 itemId)
-		: monsterId(monsterId), itemId(itemId)
-	{}
-	uint32 monsterId;
-	uint32 itemId;
 };

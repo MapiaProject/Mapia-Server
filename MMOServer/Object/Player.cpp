@@ -27,9 +27,9 @@ void Player::Tick()
 	Console::Debug(Category::Temp, std::to_wstring(GetPosition().x) + TEXT(", ") + std::to_wstring(GetPosition().y));
 }
 
-void Player::OnDestroy()
+void Player::OnDestroy(const std::shared_ptr<NetObject>& object)
 {
-	NetObject::OnDestroy();
+	NetObject::OnDestroy(object);
 	if (auto map = GetMap())
 	{
 		map->Leave(shared_from_this());

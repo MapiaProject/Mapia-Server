@@ -9,18 +9,6 @@
 
 MapManager::MapManager()
 {
-	try {
-		for (auto& iter : std::filesystem::directory_iterator(TEXT("Common/generated/mapData/")))
-		{
-			auto map = MakeShared<GameMap>(String(iter.path()));
-			m_mapData[map->GetName()] = map;
-		}
-	}
-	catch (std::exception e)
-	{
-		Console::Error(Category::MMOServer, TEXT("Can't load map data. please check is map data exists."));
-		exit(0);
-	}
 }
 
 std::shared_ptr<GameMap> MapManager::GetMap(String name)
@@ -114,9 +102,23 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 
 void MapManager::Initialize()
 {
-	for (const auto& [_, map] : m_mapData)
+	try {
+		for (auto& iter : std::filesystem::directory_iterator(TEXT("Common/generated/mapData/")))
+		{
+			auto map = MakeShared<GameMap>(String(iter.path()));
+			m_mapData[map->GetName()] = map;
+		}
+
+		for (const auto& [_, map] : m_mapData)
+		{
+			map->BeginPlay();
+			map->Tick();
+		}
+		Console::Log(Category::MMOServer, TEXT("'MapManager' initialized"));
+	}
+	catch (std::exception e)
 	{
-		map->BeginPlay();
-		map->Tick();
+		Console::Error(Category::MMOServer, TEXT("Can't load map data. please check is map data exists."));
+		exit(0);
 	}
 }

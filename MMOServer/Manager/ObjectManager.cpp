@@ -10,6 +10,7 @@ ObjectManager::ObjectManager() : m_lastId(0)
 
 void ObjectManager::Initialize()
 {
+	Console::Log(Category::MMOServer, TEXT("'ObjectManager' initialized"));
 }
 
 void ObjectManager::RemoveObject(uint64 id)

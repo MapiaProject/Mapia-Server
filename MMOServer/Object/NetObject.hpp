@@ -45,7 +45,7 @@ public:
 public:
 	virtual void BeginPlay() { };
 	virtual void Tick();
-	virtual void OnDestroy();
+	virtual void OnDestroy(const std::shared_ptr<NetObject>& hitter);
 	virtual void OnDamaged(const std::shared_ptr<NetObject>) { };
 public:
 	void TakeDamage(const std::shared_ptr<NetObject>& hitter, int32 damage);

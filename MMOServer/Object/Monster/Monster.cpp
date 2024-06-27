@@ -17,7 +17,7 @@ Monster::Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap
 	m_attackTime = GetTickCount64();
 	m_dest = 0;
 
-	auto info = GManager->Data()->GetMonsterInfo(type);
+	auto info = GManager->Data()->GetMonsterData(type);
 	SetHp(info.hp);
 	SetPower(info.power);
 	SetAttackRange(info.attackRange);
@@ -108,9 +108,18 @@ void Monster::Tick()
 	}
 }
 
-void Monster::OnDestroy()
+void Monster::OnDestroy(const std::shared_ptr<NetObject>& hitter)
 {
-	NetObject::OnDestroy();
+	NetObject::OnDestroy(hitter);
+	if (hitter->GetType() == mmo::PLAYER)
+	{
+		auto player = std::static_pointer_cast<Player>(hitter);
+		for (const auto& dropItem : GManager->Data()->GetDropsData(GetType()))
+		{
+			//player->AddItem(dropItem.id);
+		}
+	}
+
 	if (auto map = GetMap())
 	{
 		map->Leave(shared_from_this());

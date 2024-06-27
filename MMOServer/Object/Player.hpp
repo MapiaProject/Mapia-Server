@@ -16,7 +16,7 @@ public:
 	/* Events */
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
-	virtual void OnDestroy() override;
+	virtual void OnDestroy(const std::shared_ptr<NetObject>&) override;
 	virtual void OnDamaged(const std::shared_ptr<NetObject>) override;
 public:
 	/* Get / Set */

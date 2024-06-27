@@ -20,7 +20,7 @@ void NetObject::Tick()
 	m_lastTickCount = GetTickCount64();
 }
 
-void NetObject::OnDestroy()
+void NetObject::OnDestroy(const std::shared_ptr<NetObject>& hitter)
 {
 	GManager->Object()->RemoveObject(m_objectId);
 }
@@ -31,6 +31,6 @@ void NetObject::TakeDamage(const std::shared_ptr<NetObject>& hitter, int32 damag
 	OnDamaged(hitter);
 	if (m_hp <= 0)
 	{
-		OnDestroy();
+		OnDestroy(hitter);
 	}
 }
