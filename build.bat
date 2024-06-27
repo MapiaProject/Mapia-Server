@@ -1,6 +1,9 @@
-
-call :build Debug
-call :build Release
+IF EXIST "..\lib\bin\Debug\SQLiteCpp.lib" (
+)
+ELSE (
+    call :build Debug
+    call :build Release
+)
 EXIT /B %ERRORLEVEL%
 
 :build

@@ -74,6 +74,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 					info.objectId = player->GetId();
 					info.position = Converter::MakeVector(player->GetPosition());
 					info.name = player->GetNickname();
+					info.remainHp = player->GetHp();
 					spawn.objects.push_back(info);
 				}
 			}
