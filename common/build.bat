@@ -1,9 +1,4 @@
-@rem export to sqlite3 from MySQL
-@rem mysql2sqlite -f Common/Database/datasheet.db -d datadb -u root -p
-@rem @echo off
-
-IF NOT EXIST ".\Common\Database\datasheet.db" del .\Common\Database\datasheet.db
-mysql2sqlite -f .\Common\Database\datasheet.db -d datadb -u root -p
+@echo off
 
 @rem build libraries
 IF NOT EXIST "..\lib\bin\Debug\SQLiteCpp.lib" (
