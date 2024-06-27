@@ -4,7 +4,6 @@
 
 template<class T>
 class BaseManager :
-	public std::enable_shared_from_this<T>,
 	public JobSerializer
 {
 public:

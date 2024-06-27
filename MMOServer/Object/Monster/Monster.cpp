@@ -4,6 +4,9 @@
 #include "Object/Player.hpp"
 #include "Session/GameSession.hpp"
 
+#include "Manager/DataManager.hpp"
+
+
 Monster::Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap> map)
 	: NetObject(id, type),
 	m_map(map), m_enableAutomove(true), m_dir(0), m_target(), m_patrol(true), m_state(PATROL)
@@ -13,6 +16,11 @@ Monster::Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap
 	m_nextMoveTime = GetTickCount64();
 	m_attackTime = GetTickCount64();
 	m_dest = 0;
+
+	auto info = GManager->Data()->GetMonsterInfo(type);
+	SetHp(info.hp);
+	SetPower(info.power);
+	SetAttackRange(info.attackRange);
 }
 
 void Monster::BeginPlay()

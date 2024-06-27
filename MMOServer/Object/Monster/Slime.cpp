@@ -5,9 +5,6 @@
 Slime::Slime(uint64 id, std::shared_ptr<GameMap> map)
 	: Monster(id, mmo::Slime, map)
 {
-	SetHp(10);
-	SetPower(1);
-	SetAttackRange(1);
 }
 
 void Slime::BeginPlay()

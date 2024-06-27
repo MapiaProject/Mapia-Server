@@ -182,8 +182,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
       <AdditionalDependencies>sqlite3.lib;SQLiteCpp.lib;SvEngine.lib;ws2_32.lib;netcpp.lib;tbb12.lib;odbc32.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>build.bat
-cd ../tools/PacketGenerator
+      <Command>cd ../tools/PacketGenerator
 python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Source/WOS/Network/']" -n mmo</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -238,7 +237,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     <ClInclude Include="MMOServer\Object\Monster\TurretPlant.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="build.bat" />
+    <None Include="setup.bat" />
     <None Include="Common\Database\Procedure.sql" />
     <None Include="Common\Database\Setup.sql" />
     <None Include="common\datasheets\setup.bat" />
