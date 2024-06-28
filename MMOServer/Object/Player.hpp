@@ -10,7 +10,6 @@ class Player : public NetObject
 {
 	USE_POOL(Player)
 public:
-	Player() noexcept;
 	Player(uint64 id);
 public:
 	/* Events */
@@ -38,8 +37,13 @@ public:
 private:
 	std::shared_ptr<Player> SharedThis();
 private:
+	uint16 m_level;
+
 	std::weak_ptr<GameSession> m_session;
 	std::weak_ptr<GameMap> m_map;
 	std::weak_ptr<NetObject> m_hitter;
 	String m_nickname;
+	
+	int m_lastPosX;
+	bool m_isLookAtRight;
 };

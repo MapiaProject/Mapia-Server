@@ -21,7 +21,7 @@ void DataManager::Initialize()
 				auto id = stmt.getColumn(0).getInt();
 				MonsterData info(
 					id,
-					ToUnicodeString(stmt.getColumn(1).getString()),
+					stmt.getColumn(1).getString(),
 					stmt.getColumn(2).getInt(),
 					stmt.getColumn(3).getInt(),
 					stmt.getColumn(4).getDouble()
@@ -33,10 +33,10 @@ void DataManager::Initialize()
 			SQLite::Statement stmt(*m_datasheet, "SELECT ptype, id FROM item");
 			while (stmt.executeStep())
 			{
-				auto id = stmt.getColumn(1).getInt();
+				uint32 id = stmt.getColumn(1).getUInt();
 				ItemData info(
 					id,
-					ToUnicodeString(stmt.getColumn(0).getString())
+					stmt.getColumn(0).getString()
 				);
 				m_itemInfoData[id] = info;
 			}
@@ -61,8 +61,7 @@ void DataManager::Initialize()
 	}
 	catch (std::exception&)
 	{
-		Console::Error(Category::MMOServer, TEXT("Can't load datasheet. please check is datasheet exists."));
-		exit(0);
+		Console::Error(Category::MMOServer, TEXT("Can't load datasheet properly. please check datasheet."));
 	}
 
 }
@@ -72,7 +71,7 @@ const MonsterData& DataManager::GetMonsterData(gen::mmo::EObjectType type)
 	return m_monsterInfoData[type];
 }
 
-const Vector<ItemData>& DataManager::GetDropsData(gen::mmo::EObjectType type)
+const List<ItemData>& DataManager::GetDropsData(gen::mmo::EObjectType type)
 {
 	return m_dropInfoData[type];
 }

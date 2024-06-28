@@ -3,28 +3,37 @@
 #include "Storage/GameMap.hpp"
 #include "Object.hpp"
 
-Player::Player() noexcept
-{
-	SetHp(10);
-	SetPower(2);
-	if (auto map = GetMap())
-		map->Leave(shared_from_this());
-}
+#include "Manager/DataManager.hpp"
 
 Player::Player(uint64 id) : NetObject(id, mmo::PLAYER)
 {
 	SetPosition(Vector2DF::Zero());
+	/*m_level = 
+
+	const auto& info = GManager->Data()->GetLevelData(m_level);
+	SetHp(info.hp);
+	SetPower(info.power);*/
 }
 
 void Player::BeginPlay()
 {
 	NetObject::BeginPlay();
+	m_lastPosX = m_position.x;
 }
 
 void Player::Tick()
 {
 	NetObject::Tick();
-	Console::Debug(Category::Temp, std::to_wstring(GetPosition().x) + TEXT(", ") + std::to_wstring(GetPosition().y));
+	auto&& diff = m_position.x - m_lastPosX;
+	if (diff > 0)
+	{
+		m_isLookAtRight = true;
+	}
+	else if (diff < 0)
+	{
+		m_isLookAtRight = false;
+	}
+	m_lastPosX = m_position.x;
 }
 
 void Player::OnDestroy(const std::shared_ptr<NetObject>& object)
@@ -77,10 +86,13 @@ void Player::Airborne() const
 		return;
 
 	const Vector2DF range(3, 0.5f);
+	if (!m_isLookAtRight)
+		range.x = -range.x;
+
 	for (const auto& [_, monster] : map->GetMonsters())
 	{
 		auto diff = monster->GetPosition() - GetPosition();
-		if (Math::Abs(diff.x) <= range.x && Math::Abs(diff.y) <= range.y)
+		if (diff.x <= range.x && Math::Abs(diff.y) <= range.y)
 		{
 			monster->Faint(GetPower());
 		}
