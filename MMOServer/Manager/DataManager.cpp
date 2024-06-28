@@ -18,32 +18,32 @@ void DataManager::Initialize()
 			SQLite::Statement stmt(*m_datasheet, "SELECT id, ptype, hp, power, attackRange FROM monster");
 			while (stmt.executeStep())
 			{
-				auto ptype = ToUnicodeString(stmt.getColumn(1).getString());
+				auto id = stmt.getColumn(0).getInt();
 				MonsterData info(
-					stmt.getColumn(0).getInt(),
-					ptype,
+					id,
+					ToUnicodeString(stmt.getColumn(1).getString()),
 					stmt.getColumn(2).getInt(),
 					stmt.getColumn(3).getInt(),
 					stmt.getColumn(4).getDouble()
 				);
-				m_monsterInfoData[ptype] = info;
+				m_monsterInfoData[id] = info;
 			}
 		}
 		{
 			SQLite::Statement stmt(*m_datasheet, "SELECT ptype, id FROM item");
 			while (stmt.executeStep())
 			{
-				auto ptype = ToUnicodeString(stmt.getColumn(0).getString());
+				auto id = stmt.getColumn(1).getInt();
 				ItemData info(
-					ptype,
-					stmt.getColumn(1).getInt()
+					id,
+					ToUnicodeString(stmt.getColumn(0).getString())
 				);
-				m_itemInfoData[ptype] = info;
+				m_itemInfoData[id] = info;
 			}
 		}
 		{
 			SQLite::Statement stmt(*m_datasheet,
-				"SELECT m.ptype, i.ptype "\
+				"SELECT m.id, i.id "\
 				"FROM drops d "\
 				"INNER JOIN monster m ON "\
 				"d.monsterId = m.id "\
@@ -52,9 +52,9 @@ void DataManager::Initialize()
 			);
 			while (stmt.executeStep())
 			{
-				auto monsterType = ToUnicodeString(stmt.getColumn(0).getString());
-				auto itemType = ToUnicodeString(stmt.getColumn(1).getString());
-				m_dropInfoData[monsterType].push_back(m_itemInfoData[itemType]);
+				auto monsterId = stmt.getColumn(0).getInt();
+				auto itemId = stmt.getColumn(1).getInt();
+				m_dropInfoData[monsterId].push_back(m_itemInfoData[itemId]);
 			}
 		}
 		Console::Log(Category::MMOServer, TEXT("'DataManager' initialized"));
@@ -64,14 +64,15 @@ void DataManager::Initialize()
 		Console::Error(Category::MMOServer, TEXT("Can't load datasheet. please check is datasheet exists."));
 		exit(0);
 	}
+
 }
 
 const MonsterData& DataManager::GetMonsterData(gen::mmo::EObjectType type)
 {
-	return m_monsterInfoData[ToUnicodeString(magic_enum::enum_name(type))];
+	return m_monsterInfoData[type];
 }
 
 const Vector<ItemData>& DataManager::GetDropsData(gen::mmo::EObjectType type)
 {
-	return m_dropInfoData[ToUnicodeString(magic_enum::enum_name(type))];
+	return m_dropInfoData[type];
 }

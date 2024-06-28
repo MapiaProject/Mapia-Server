@@ -16,9 +16,9 @@ struct MonsterData
 struct ItemData
 {
 	ItemData() = default;
-	ItemData(StringView type, uint32 id)
-		: type(type), id(id)
+	ItemData(uint32 id, StringView type)
+		: id(id), type(type)
 	{}
-	String type;
 	uint32 id;
+	String type;
 };

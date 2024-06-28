@@ -17,7 +17,7 @@ Monster::Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap
 	m_attackTime = GetTickCount64();
 	m_dest = 0;
 
-	auto info = GManager->Data()->GetMonsterData(type);
+	const auto& info = GManager->Data()->GetMonsterData(type);
 	SetHp(info.hp);
 	SetPower(info.power);
 	SetAttackRange(info.attackRange);

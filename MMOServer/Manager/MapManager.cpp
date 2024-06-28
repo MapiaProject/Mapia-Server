@@ -3,6 +3,7 @@
 #include "Session/GameSession.hpp"
 #include "Object/Object.hpp"
 #include "Utility/Converter.hpp"
+#include "Storage/GameMap.hpp"
 
 #include <filesystem>
 
@@ -19,7 +20,7 @@ std::shared_ptr<GameMap> MapManager::GetMap(String name)
 void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMapReq packet)
 {
 	auto gameSession = std::static_pointer_cast<GameSession>(session);
-	auto gameMap = m_mapData[packet.mapName];
+	const auto& gameMap = m_mapData[packet.mapName];
 	auto myPlayer = gameSession->GetPlayer();
 
 	gen::mmo::EnterMapRes res;
@@ -83,6 +84,7 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 				spawn.objects.push_back(info);
 			}
 			session->Send(&spawn, true);
+			Console::Warning(Category::Temp, TEXT("------ MONSTER -----"));
 		}
 
 		// notify to existing players

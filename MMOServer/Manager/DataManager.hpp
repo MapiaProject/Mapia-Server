@@ -15,8 +15,8 @@ public:
 	const Vector<ItemData>& GetDropsData(gen::mmo::EObjectType type);
 private:
 	std::unique_ptr<SQLite::Database> m_datasheet;
-	ConcurrencyHashMap<String, MonsterData> m_monsterInfoData;
-	ConcurrencyHashMap<String, ItemData> m_itemInfoData;
-	ConcurrencyHashMap<String, Vector<ItemData>> m_dropInfoData;
+	ConcurrencyHashMap<uint32, MonsterData> m_monsterInfoData;
+	ConcurrencyHashMap<uint32, ItemData> m_itemInfoData;
+	ConcurrencyHashMap<uint32, Vector<ItemData>> m_dropInfoData;
 };
 
