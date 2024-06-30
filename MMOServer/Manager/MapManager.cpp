@@ -84,7 +84,6 @@ void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMa
 				spawn.objects.push_back(info);
 			}
 			session->Send(&spawn, true);
-			Console::Warning(Category::Temp, TEXT("------ MONSTER -----"));
 		}
 
 		// notify to existing players

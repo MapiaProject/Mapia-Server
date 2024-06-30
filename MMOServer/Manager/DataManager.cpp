@@ -14,6 +14,8 @@ void DataManager::Initialize()
 	try
 	{
 		m_datasheet = std::make_unique<SQLite::Database>("Common/Database/datasheet.db");
+		
+		// Load monster data
 		{
 			SQLite::Statement stmt(*m_datasheet, "SELECT id, ptype, hp, power, attackRange FROM monster");
 			while (stmt.executeStep())
@@ -29,6 +31,7 @@ void DataManager::Initialize()
 				m_monsterInfoData[id] = info;
 			}
 		}
+		// Load item data
 		{
 			SQLite::Statement stmt(*m_datasheet, "SELECT ptype, id FROM item");
 			while (stmt.executeStep())
@@ -41,15 +44,9 @@ void DataManager::Initialize()
 				m_itemInfoData[id] = info;
 			}
 		}
+		// Load drop data
 		{
-			SQLite::Statement stmt(*m_datasheet,
-				"SELECT m.id, i.id "\
-				"FROM drops d "\
-				"INNER JOIN monster m ON "\
-				"d.monsterId = m.id "\
-				"INNER JOIN item i ON "\
-				"d.itemId = i.id"
-			);
+			SQLite::Statement stmt(*m_datasheet, "SELECT monsterId, itemId FROM drops");
 			while (stmt.executeStep())
 			{
 				auto monsterId = stmt.getColumn(0).getInt();

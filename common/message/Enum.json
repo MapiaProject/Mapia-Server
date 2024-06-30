@@ -35,6 +35,18 @@
 			"list": [
 				"Airborne"
 			]
+		},
+		{
+			"name": "EItemType",
+			"list": [
+				"NanoMachine",
+				"SlimeCore",
+				"CircuitBoard",
+				"BatteryPack",
+				"DisplayPart",
+				"SteelFiber",
+				"BioChip"
+			]
 		}
 	]
 }

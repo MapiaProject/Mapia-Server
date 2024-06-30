@@ -169,6 +169,15 @@
 						"name": "target"
 					}
 				]
+			},
+			{
+				"name": "ObtainItem",
+				"data": [
+					{
+						"type": "list|ItemInfo",
+						"name": "items"
+					}
+				]
 			}
 		]
 	}

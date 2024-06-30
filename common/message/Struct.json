@@ -70,6 +70,19 @@
 					"name": "damage"
 				}
 			]
+		},
+		{
+			"name": "ItemInfo",
+			"data": [
+				{
+					"type": "EItemType",
+					"name": "type"
+				},
+				{
+					"type": "uint16",
+					"name": "amount"
+				}
+			]
 		}
 	]
 }

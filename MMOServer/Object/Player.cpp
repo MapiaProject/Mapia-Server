@@ -86,12 +86,11 @@ void Player::Airborne() const
 		return;
 
 	const Vector2DF range(3, 0.5f);
-	if (!m_isLookAtRight)
-		range.x = -range.x;
-
 	for (const auto& [_, monster] : map->GetMonsters())
 	{
 		auto diff = monster->GetPosition() - GetPosition();
+		if (!m_isLookAtRight)
+			diff.x = -diff.x;
 		if (diff.x <= range.x && Math::Abs(diff.y) <= range.y)
 		{
 			monster->Faint(GetPower());
