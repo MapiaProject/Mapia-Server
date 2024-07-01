@@ -18,9 +18,9 @@ Manager::~Manager()
 
 void Manager::Initialize()
 {
+	m_data->Initialize();
 	m_object->Initialize();
 	m_map->Initialize();
-	m_data->Initialize();
 }
 
 std::shared_ptr<ObjectManager> Manager::Object()

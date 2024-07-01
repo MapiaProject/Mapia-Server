@@ -10,6 +10,7 @@ ObjectManager::ObjectManager() : m_lastId(0)
 
 void ObjectManager::Initialize()
 {
+	m_lastId = 0;
 	Console::Log(Category::MMOServer, TEXT("'ObjectManager' initialized"));
 }
 
@@ -36,9 +37,9 @@ void ObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::
 	{
 		auto player = Create<Player>();
 		player->SetNickname(nickname);
-		gameSession->SetPlayer(player);
-
 		player->SetSession(gameSession);
+		player->BeginPlay();
+		gameSession->SetPlayer(player);
 	}
 	gameSession->Send(&res, true);
 }

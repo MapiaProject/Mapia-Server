@@ -8,6 +8,8 @@
 Player::Player(uint64 id) : NetObject(id, mmo::PLAYER)
 {
 	SetPosition(Vector2DF::Zero());
+	m_airborne = GManager->Data()->GetSkillData(mmo::ESkillType::Airborne);
+
 	/*m_level = 
 
 	const auto& info = GManager->Data()->GetLevelData(m_level);
@@ -19,6 +21,7 @@ void Player::BeginPlay()
 {
 	NetObject::BeginPlay();
 	m_lastPosX = m_position.x;
+	m_isLookAtRight = true;
 }
 
 void Player::Tick()
@@ -85,15 +88,14 @@ void Player::Airborne() const
 	if (!map)
 		return;
 
-	const Vector2DF range(3, 0.5f);
 	for (const auto& [_, monster] : map->GetMonsters())
 	{
 		auto diff = monster->GetPosition() - GetPosition();
 		if (!m_isLookAtRight)
 			diff.x = -diff.x;
-		if (diff.x <= range.x && Math::Abs(diff.y) <= range.y)
+		if (diff.x <= m_airborne.range.x && Math::Abs(diff.y) <= m_airborne.range.y)
 		{
-			monster->Faint(GetPower());
+			monster->Faint(m_airborne.damage);
 		}
 	}
 }

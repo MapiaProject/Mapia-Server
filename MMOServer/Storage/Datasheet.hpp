@@ -7,8 +7,8 @@ using namespace gen;
 struct MonsterData
 {
 	MonsterData() = default;
-	MonsterData(uint32 id, std::string_view type, uint32 hp, uint32 power, double attackRange)
-		: id(id), type(*magic_enum::enum_cast<mmo::EObjectType>(type)), hp(hp), power(power), attackRange(attackRange)
+	MonsterData(uint32 id, mmo::EObjectType type, uint32 hp, uint32 power, double attackRange)
+		: id(id), type(type), hp(hp), power(power), attackRange(attackRange)
 	{}
 	int32 id;
 	mmo::EObjectType type;
@@ -20,8 +20,8 @@ struct MonsterData
 struct ItemData
 {
 	ItemData() = default;
-	ItemData(uint32 id, std::string_view type)
-		: id(id), type(*magic_enum::enum_cast<mmo::EItemType>(type))
+	ItemData(uint32 id, mmo::EItemType type)
+		: id(id), type(type)
 	{}
 	uint32 id;
 	mmo::EItemType type;
@@ -30,8 +30,8 @@ struct ItemData
 struct SkillData
 {
 	SkillData() = default;
-	SkillData(uint32 id, std::string_view type, uint32 damage, Vector2DF range)
-		: id(id), type(*magic_enum::enum_cast<mmo::ESkillType>(type)), damage(damage), range(range)
+	SkillData(uint32 id, mmo::ESkillType type, uint32 damage, Vector2DF range)
+		: id(id), type(type), damage(damage), range(range)
 	{}
 	uint32 id;
 	mmo::ESkillType type;

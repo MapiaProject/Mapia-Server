@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NetObject.hpp"
+#include "Storage/Datasheet.hpp"
 #include "generated/mmo/Protocol.gen.hpp"
 
 class GameSession;
@@ -46,4 +47,6 @@ private:
 	
 	int m_lastPosX;
 	bool m_isLookAtRight;
+
+	SkillData m_airborne;
 };
