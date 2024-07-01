@@ -114,16 +114,22 @@ void Monster::OnDestroy(const std::shared_ptr<NetObject>& hitter)
 	if (hitter->GetType() == mmo::PLAYER)
 	{
 		auto player = std::static_pointer_cast<Player>(hitter);
-		for (const auto& dropItem : GManager->Data()->GetDropsData(GetType()))
-		{
-			//player->AddItem(dropItem.id);
-		}
+		const auto& dropItems = GManager->Data()->GetDropsData(GetType());
+		player->ObtainItem(dropItems);
+
+		mmo::ObtainItem obtain;
+		Vector<mmo::ItemInfo> info;
+		std::transform(dropItems.begin(), dropItems.end(), std::back_inserter(info), [](const auto& drop) {
+			mmo::ItemInfo info;
+			info.type = drop.type;
+			return info;
+		});
+		obtain.items = info;
+		player->GetSession()->Send(&obtain);
 	}
 
 	if (auto map = GetMap())
-	{
 		map->Leave(shared_from_this());
-	}
 }
 
 void Monster::OnDamaged(const std::shared_ptr<NetObject> attacker)

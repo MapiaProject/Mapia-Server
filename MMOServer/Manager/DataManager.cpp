@@ -93,7 +93,7 @@ const MonsterData& DataManager::GetMonsterData(gen::mmo::EObjectType type)
 	return m_monsterData[type];
 }
 
-const List<ItemData>& DataManager::GetDropsData(gen::mmo::EObjectType type)
+const Vector<ItemData>& DataManager::GetDropsData(gen::mmo::EObjectType type)
 {
 	return m_dropData[type];
 }

@@ -12,13 +12,13 @@ public:
 	void Initialize() override;
 public:
 	const MonsterData& GetMonsterData(gen::mmo::EObjectType type);
-	const List<ItemData>& GetDropsData(gen::mmo::EObjectType type);
+	const Vector<ItemData>& GetDropsData(gen::mmo::EObjectType type);
 	const SkillData& GetSkillData(gen::mmo::ESkillType type);
 private:
 	std::unique_ptr<SQLite::Database> m_datasheet;
 	ConcurrencyHashMap<gen::mmo::EObjectType, MonsterData> m_monsterData;
 	ConcurrencyHashMap<gen::mmo::EItemType, ItemData> m_itemData;
-	ConcurrencyHashMap<gen::mmo::EObjectType, List<ItemData>> m_dropData;
+	ConcurrencyHashMap<gen::mmo::EObjectType, Vector<ItemData>> m_dropData;
 	ConcurrencyHashMap<gen::mmo::ESkillType, SkillData> m_skillData;
 };
 

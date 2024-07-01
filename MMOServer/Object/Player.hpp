@@ -7,6 +7,14 @@
 class GameSession;
 class GameMap;
 
+class Inventory
+{
+public:
+	Inventory() = default;
+public:
+	List<ItemData> items;
+};
+
 class Player : public NetObject
 {
 	USE_POOL(Player)
@@ -32,6 +40,8 @@ public:
 	void LeaveMap();
 
 	void TryDamage(const std::shared_ptr<NetObject> hitter);
+
+	void ObtainItem(Vector<ItemData> item);
 public:
 	/* Skills */
 	void Airborne() const;

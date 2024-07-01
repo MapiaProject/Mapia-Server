@@ -82,6 +82,11 @@ void Player::TryDamage(const std::shared_ptr<NetObject> hitter)
 	OnDamaged(hitter);
 }
 
+void Player::ObtainItem(Vector<ItemData> item)
+{
+
+}
+
 void Player::Airborne() const
 {
 	auto map = GetMap();
