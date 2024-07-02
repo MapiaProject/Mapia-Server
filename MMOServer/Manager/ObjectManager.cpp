@@ -69,6 +69,7 @@ void ObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::
 		}
 		else
 		{
+				
 		}
 	}
 	gameSession->Send(&res, true);
