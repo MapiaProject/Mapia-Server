@@ -2,7 +2,7 @@
 #include "MapData.hpp"
 
 #include "Util/Parser/Ini.hpp"
-#include "magic_enum/magic_enum.hpp"
+#include "magic_enum.hpp"
 #include <ranges>
 
 MapData::MapData() : m_size(0, 0)

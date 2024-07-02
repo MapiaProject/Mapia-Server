@@ -1,5 +1,5 @@
 #pragma once
-#include "magic_enum/magic_enum.hpp"
+#include "magic_enum.hpp"
 #include "generated/mmo/Enum.gen.hpp"
 
 using namespace gen;
