@@ -1,5 +1,5 @@
 #pragma once
-#include "magic_enum.hpp"
+#include "magic_enum/magic_enum.hpp"
 #include "generated/mmo/Enum.gen.hpp"
 
 using namespace gen;
@@ -37,4 +37,15 @@ struct SkillData
 	mmo::ESkillType type;
 	uint32 damage;
 	Vector2DF range;
+};
+
+struct StatData
+{
+	StatData() = default;
+	StatData(uint32 level, uint32 power, uint32 health)
+		: level(level), power(power), health(health)
+	{}
+	uint32 level;
+	uint32 power;
+	uint32 health;
 };

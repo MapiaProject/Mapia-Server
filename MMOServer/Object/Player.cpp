@@ -5,16 +5,14 @@
 
 #include "Manager/DataManager.hpp"
 
-Player::Player(uint64 id) : NetObject(id, mmo::PLAYER)
+Player::Player(uint64 id, uint32 level) : NetObject(id, mmo::PLAYER), m_level(level)
 {
 	SetPosition(Vector2DF::Zero());
 	m_airborne = GManager->Data()->GetSkillData(mmo::ESkillType::Airborne);
 
-	/*m_level = 
-
-	const auto& info = GManager->Data()->GetLevelData(m_level);
-	SetHp(info.hp);
-	SetPower(info.power);*/
+	const auto& info = GManager->Data()->GetStatData(m_level);
+	SetHp(info.health);
+	SetPower(info.power);
 }
 
 void Player::BeginPlay()
@@ -82,9 +80,12 @@ void Player::TryDamage(const std::shared_ptr<NetObject> hitter)
 	OnDamaged(hitter);
 }
 
-void Player::ObtainItem(Vector<ItemData> item)
+void Player::ObtainItem(Vector<ItemData> items)
 {
-
+	for (const auto& item : items)
+	{
+		m_inventory.items[item.type]++;
+	}
 }
 
 void Player::Airborne() const

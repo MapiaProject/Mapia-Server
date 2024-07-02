@@ -79,6 +79,20 @@ void DataManager::Initialize()
 				m_skillData[type] = data;
 			}
 		}
+		// Load stat data
+		{
+			SQLite::Statement stmt(*m_datasheet, "SELECT clevel, power, health FROM stats");
+			while (stmt.executeStep())
+			{
+				auto level = stmt.getColumn(0).getUInt();
+				StatData data(
+					level,
+					stmt.getColumn(1).getUInt(),
+					stmt.getColumn(2).getUInt()
+				);
+				m_statData[level] = data;
+			}
+		}
 		Console::Log(Category::MMOServer, TEXT("'DataManager' initialized"));
 	}
 	catch (std::exception&)
@@ -101,4 +115,9 @@ const Vector<ItemData>& DataManager::GetDropsData(gen::mmo::EObjectType type)
 const SkillData& DataManager::GetSkillData(gen::mmo::ESkillType type)
 {
 	return m_skillData[type];
+}
+
+const StatData& DataManager::GetStatData(uint32 level)
+{
+	return m_statData[level];
 }

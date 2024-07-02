@@ -145,6 +145,7 @@ void Monster::ProcessAttack(const std::shared_ptr<NetObject> target)
 
 	const auto& player = std::static_pointer_cast<Player>(target);
 	player->TryDamage(shared_from_this());
+
 	mmo::TakeAttack attack;
 	attack.target = player->GetId();
 	if (auto session = player->GetSession())

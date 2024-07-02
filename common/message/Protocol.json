@@ -83,6 +83,10 @@
 					{
 						"type": "bool",
 						"name": "success"
+					},
+					{
+						"type": "uint32",
+						"name": "level"
 					}
 				]
 			},

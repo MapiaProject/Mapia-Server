@@ -7,19 +7,17 @@
 class GameSession;
 class GameMap;
 
-class Inventory
+struct Inventory
 {
-public:
 	Inventory() = default;
-public:
-	List<ItemData> items;
+	ConcurrencyHashMap<mmo::EItemType, uint32> items;
 };
 
 class Player : public NetObject
 {
 	USE_POOL(Player)
 public:
-	Player(uint64 id);
+	Player(uint64 id, uint32 level);
 public:
 	/* Events */
 	virtual void BeginPlay() override;
@@ -34,7 +32,7 @@ public:
 	std::shared_ptr<GameMap> GetMap() const;
 	String GetNickname() const;
 	std::shared_ptr<NetObject> GetHitter();
-public:
+public: 
 	/* Interactions */
 	void EnterMap(std::shared_ptr<GameMap> gameMap);
 	void LeaveMap();
@@ -48,6 +46,7 @@ public:
 private:
 	std::shared_ptr<Player> SharedThis();
 private:
+	Inventory m_inventory;
 	uint16 m_level;
 
 	std::weak_ptr<GameSession> m_session;

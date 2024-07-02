@@ -4,6 +4,9 @@
 #include "Object/Player.hpp"
 #include "Manager.hpp"
 
+#include "Database/DBConnectionPool.hpp"
+#include "Database/Statement.hpp"
+
 ObjectManager::ObjectManager() : m_lastId(0)
 {
 }
@@ -32,14 +35,41 @@ void ObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::
 
 	// send enter game success or failure
 	gen::mmo::EnterGameRes res;
-	res.success = true;
+	res.success = gameSession->GetPlayer() == nullptr;
 	if (res.success)
 	{
-		auto player = Create<Player>();
-		player->SetNickname(nickname);
-		player->SetSession(gameSession);
-		player->BeginPlay();
-		gameSession->SetPlayer(player);
+		auto conn = GEngine->GetDBConnectionPool()->Pop();
+		if (conn)
+		{
+			uint32 level = 0;
+			auto stmt = conn->CreateStatement<1, 1>(TEXT("SELECT clevel FROM usercharacter WHERE nickname = ?"));
+			stmt.SetParameter(0, req.name.c_str());
+			stmt.Bind(0, reinterpret_cast<int32&>(level));
+			if (!stmt.ExecuteQuery())
+				Console::Error(Category::Database, TEXT("Invalid SQL syntax"));
+			stmt.Next();
+			if (level == 0)
+			{
+				level = 1;
+				auto stmt = conn->CreateStatement<1, 0>(TEXT("INSERT INTO usercharacter VALUES(?, 1)"));
+				stmt.SetParameter(0, req.name.c_str());
+				if (!stmt.ExecuteQuery())
+					Console::Error(Category::Database, TEXT("Already existing row"));
+			}
+
+			res.level = level;
+
+			auto player = Create<Player>(level);
+			player->SetNickname(nickname);
+			player->SetSession(gameSession);
+			player->BeginPlay();
+			gameSession->SetPlayer(player);
+
+			GEngine->GetDBConnectionPool()->Push(conn);
+		}
+		else
+		{
+		}
 	}
 	gameSession->Send(&res, true);
 }
