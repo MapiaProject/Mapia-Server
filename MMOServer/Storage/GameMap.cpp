@@ -36,7 +36,7 @@ void GameMap::Broadcast(Packet* packet, uint64 ignore)
 	}
 }
 
-void GameMap::Enter(std::shared_ptr<NetObject> object)
+void GameMap::Enter(std::shared_ptr<GameObject> object)
 {
 	auto type = object->GetType();
 	if (type == mmo::PLAYER)
@@ -55,7 +55,7 @@ void GameMap::Enter(std::shared_ptr<NetObject> object)
 	}
 }
 
-void GameMap::Leave(std::shared_ptr<NetObject> object)
+void GameMap::Leave(std::shared_ptr<GameObject> object)
 {
 	mmo::NotifyLeaveMap leaveMap;
 	leaveMap.objectId = object->GetId();
@@ -253,7 +253,7 @@ void GameMap::Tick()
 {
 	Launch<GameTick>(&GameMap::Tick);
 
-	// Execute NetObject's `Update` logic
+	// Execute NetObject's `Tick` logic
 	for (const auto& [_, object] : m_players)
 	{
 		object->Tick();

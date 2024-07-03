@@ -13,11 +13,11 @@ public:
 private:
 	void BeginPlay() override;
 	void Tick() override;
-	void ProcessAttack(const std::shared_ptr<NetObject>) override;
+	void ProcessAttack(const std::shared_ptr<GameObject>) override;
 private:
 	uint64 m_tick;
 	std::weak_ptr<class Player> m_target;
 	Vector2DF m_targetPosition;
-	std::shared_ptr<NetObject> m_projectile;
+	std::shared_ptr<GameObject> m_projectile;
 };
 

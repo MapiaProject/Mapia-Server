@@ -2,7 +2,7 @@
 #include "BaseManager.hpp"
 #include "generated/mmo/Protocol.gen.hpp"
 
-class MapManager : public BaseManager<MapManager>
+class MapManager : public BaseManager
 {
 public:
 	MapManager();

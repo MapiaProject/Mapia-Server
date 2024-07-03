@@ -1,7 +1,7 @@
 #pragma once
-#include "Object/NetObject.hpp"
+#include "Object/GameObject.hpp"
 
-class Monster : public NetObject
+class Monster : public GameObject
 {
 	friend class GameMap;
 
@@ -23,9 +23,9 @@ public:
 protected:
 	virtual void BeginPlay();
 	virtual void Tick();
-	virtual void OnDestroy(const std::shared_ptr<NetObject>& hitter);
-	virtual void OnDamaged(const std::shared_ptr<NetObject> hitter);
-	virtual void ProcessAttack(const std::shared_ptr<NetObject> target);
+	virtual void OnDestroy(const std::shared_ptr<GameObject>& hitter);
+	virtual void OnDamaged(const std::shared_ptr<GameObject> hitter);
+	virtual void ProcessAttack(const std::shared_ptr<GameObject> target);
 public:
 	/* Movement */
 	void SetAutomove(bool enable);

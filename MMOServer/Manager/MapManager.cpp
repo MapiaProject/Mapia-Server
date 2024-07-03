@@ -120,6 +120,5 @@ void MapManager::Initialize()
 	catch (std::exception e)
 	{
 		Console::Error(Category::MMOServer, TEXT("Can't load map data. please check is map data exists."));
-		exit(0);
 	}
 }

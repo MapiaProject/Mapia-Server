@@ -4,7 +4,7 @@
 #include "Storage/Datasheet.hpp"
 #include "generated/mmo/Enum.gen.hpp"
 
-class DataManager : public BaseManager<DataManager>
+class DataManager : public BaseManager
 {
 public:
 	DataManager();

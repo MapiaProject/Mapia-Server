@@ -8,7 +8,7 @@
 
 
 Monster::Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap> map)
-	: NetObject(id, type),
+	: GameObject(id, type),
 	m_map(map), m_enableAutomove(true), m_dir(0), m_target(), m_patrol(true), m_state(PATROL)
 {
 	SetPosition(Vector2DF::Zero());
@@ -108,7 +108,7 @@ void Monster::Tick()
 	}
 }
 
-void Monster::OnDestroy(const std::shared_ptr<NetObject>& hitter)
+void Monster::OnDestroy(const std::shared_ptr<GameObject>& hitter)
 {
 	NetObject::OnDestroy(hitter);
 	if (hitter->GetType() == mmo::PLAYER)
@@ -132,13 +132,13 @@ void Monster::OnDestroy(const std::shared_ptr<NetObject>& hitter)
 		map->Leave(shared_from_this());
 }
 
-void Monster::OnDamaged(const std::shared_ptr<NetObject> attacker)
+void Monster::OnDamaged(const std::shared_ptr<GameObject> attacker)
 {
 	if (attacker && attacker->GetType() == mmo::EObjectType::PLAYER)
 		m_target = std::static_pointer_cast<Player>(attacker);
 }
 
-void Monster::ProcessAttack(const std::shared_ptr<NetObject> target)
+void Monster::ProcessAttack(const std::shared_ptr<GameObject> target)
 {
 	if (!target)
 		return;

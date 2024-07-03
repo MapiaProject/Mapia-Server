@@ -72,7 +72,7 @@ void MapData::Read(StringView filename)
 	/* ------------- */
 }
 
-std::optional<Block> MapData::GetBlock(Vector2DI position)
+std::optional<Block> MapData::GetBlock(Vector2DI position) const
 {
 	if (position.x < 0 || position.y < 0 ||
 		position.x >= m_size.x || position.y >= m_size.y)

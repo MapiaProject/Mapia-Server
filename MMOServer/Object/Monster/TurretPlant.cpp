@@ -59,14 +59,14 @@ void TurretPlant::Tick()
 	}
 }
 
-void TurretPlant::ProcessAttack(const std::shared_ptr<NetObject> target)
+void TurretPlant::ProcessAttack(const std::shared_ptr<GameObject> target)
 {
 	if (auto map = GetMap(); map && !m_projectile)
 	{
 		m_target = std::static_pointer_cast<Player>(target);
 		m_targetPosition = target->GetPosition();
 
-		m_projectile = CreateObject(NetObject, mmo::Projectile);
+		m_projectile = CreateObject(GameObject, mmo::Projectile);
 		m_projectile->SetPosition(GetPosition());
 
 		mmo::NotifySpawn spawn;

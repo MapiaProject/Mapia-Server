@@ -18,7 +18,7 @@ void Slime::Tick()
 	Monster::Tick();
 }
 
-void Slime::ProcessAttack(const std::shared_ptr<NetObject> target)
+void Slime::ProcessAttack(const std::shared_ptr<GameObject> target)
 {
 	Monster::ProcessAttack(target);
 }

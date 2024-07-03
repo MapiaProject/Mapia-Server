@@ -4,13 +4,13 @@
 
 #include "generated/mmo/ServerPacketHandler.gen.hpp"
 
-class NetObject;
+class GameObject;
 
 class GameMap : public JobSerializer, public MapData
 {
 	enum
 	{
-		GameTick = 42, // for 30fps tick rate
+		GameTick = 33, // for 30fps tick rate
 		SpawnTick = 12000
 	};	
 public:
@@ -19,8 +19,8 @@ public:
 public:
 	void Broadcast(std::span<char> buffer, uint64 ignore = 0);
 	void Broadcast(Packet* packet, uint64 ignore = 0);
-	void Enter(std::shared_ptr<NetObject> object);
-	void Leave(std::shared_ptr<NetObject> object);
+	void Enter(std::shared_ptr<GameObject> object);
+	void Leave(std::shared_ptr<GameObject> object);
 	void SpawnMonster();
 	std::shared_ptr<GameMap> SharedThis();
 public:

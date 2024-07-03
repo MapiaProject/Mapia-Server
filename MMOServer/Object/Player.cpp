@@ -5,7 +5,7 @@
 
 #include "Manager/DataManager.hpp"
 
-Player::Player(uint64 id, uint32 level) : NetObject(id, mmo::PLAYER), m_level(level)
+Player::Player(uint64 id, uint32 level) : GameObject(id, mmo::PLAYER), m_level(level)
 {
 	SetPosition(Vector2DF::Zero());
 	m_airborne = GManager->Data()->GetSkillData(mmo::ESkillType::Airborne);
@@ -37,7 +37,7 @@ void Player::Tick()
 	m_lastPosX = m_position.x;
 }
 
-void Player::OnDestroy(const std::shared_ptr<NetObject>& object)
+void Player::OnDestroy(const std::shared_ptr<GameObject>& object)
 {
 	NetObject::OnDestroy(object);
 	if (auto map = GetMap())
@@ -46,7 +46,7 @@ void Player::OnDestroy(const std::shared_ptr<NetObject>& object)
 	}
 }
 
-void Player::OnDamaged(const std::shared_ptr<NetObject> hitter)
+void Player::OnDamaged(const std::shared_ptr<GameObject> hitter)
 {
 	m_hitter = hitter;
 }
@@ -75,7 +75,7 @@ void Player::LeaveMap()
 	}
 }
 
-void Player::TryDamage(const std::shared_ptr<NetObject> hitter)
+void Player::TryDamage(const std::shared_ptr<GameObject> hitter)
 {
 	OnDamaged(hitter);
 }
@@ -131,7 +131,7 @@ String Player::GetNickname() const
 	return m_nickname;
 }
 
-std::shared_ptr<NetObject> Player::GetHitter()
+std::shared_ptr<GameObject> Player::GetHitter()
 {
 	return m_hitter.lock();
 }

@@ -23,7 +23,7 @@ void ObjectManager::RemoveObject(uint64 id)
 		object = nullptr;
 }
 
-std::shared_ptr<NetObject> ObjectManager::GetObjectById(uint64 id)
+std::shared_ptr<GameObject> ObjectManager::GetObjectById(uint64 id)
 {
 	return m_objects[id];
 }

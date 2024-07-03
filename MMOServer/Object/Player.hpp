@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NetObject.hpp"
+#include "GameObject.hpp"
 #include "Storage/Datasheet.hpp"
 #include "generated/mmo/Protocol.gen.hpp"
 
@@ -13,7 +13,7 @@ struct Inventory
 	ConcurrencyHashMap<mmo::EItemType, uint32> items;
 };
 
-class Player : public NetObject
+class Player : public GameObject
 {
 	USE_POOL(Player)
 public:
@@ -22,8 +22,8 @@ public:
 	/* Events */
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
-	virtual void OnDestroy(const std::shared_ptr<NetObject>&) override;
-	virtual void OnDamaged(const std::shared_ptr<NetObject>) override;
+	virtual void OnDestroy(const std::shared_ptr<GameObject>&) override;
+	virtual void OnDamaged(const std::shared_ptr<GameObject>) override;
 public:
 	/* Get / Set */
 	void SetSession(std::shared_ptr<GameSession>);
@@ -31,13 +31,13 @@ public:
 	std::shared_ptr<GameSession> GetSession();
 	std::shared_ptr<GameMap> GetMap() const;
 	String GetNickname() const;
-	std::shared_ptr<NetObject> GetHitter();
+	std::shared_ptr<GameObject> GetHitter();
 public: 
 	/* Interactions */
 	void EnterMap(std::shared_ptr<GameMap> gameMap);
 	void LeaveMap();
 
-	void TryDamage(const std::shared_ptr<NetObject> hitter);
+	void TryDamage(const std::shared_ptr<GameObject> hitter);
 
 	void ObtainItem(Vector<ItemData> item);
 public:
@@ -51,7 +51,7 @@ private:
 
 	std::weak_ptr<GameSession> m_session;
 	std::weak_ptr<GameMap> m_map;
-	std::weak_ptr<NetObject> m_hitter;
+	std::weak_ptr<GameObject> m_hitter;
 	String m_nickname;
 	
 	int m_lastPosX;

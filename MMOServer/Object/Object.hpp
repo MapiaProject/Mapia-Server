@@ -1,5 +1,5 @@
 #pragma once
-#include "NetObject.hpp"
+#include "GameObject.hpp"
 #include "Player.hpp"
 #include "Monster/Monster.hpp"
 

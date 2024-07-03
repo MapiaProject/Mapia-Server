@@ -2,7 +2,6 @@
 #include "Thread/JobSerializer.hpp"
 #include <memory>
 
-template<class T>
 class BaseManager :
 	public JobSerializer
 {

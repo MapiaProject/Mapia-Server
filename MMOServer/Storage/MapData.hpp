@@ -31,7 +31,7 @@ public:
 	Vector2DI GetSize() const;
 	const Deque<Vector<Block>>& GetDataArray() const;
 	void Read(StringView filename);
-	std::optional<Block> GetBlock(Vector2DI position);
+	std::optional<Block> GetBlock(Vector2DI position) const;
 	Vector<Vector2DI> GetBlocks(Block block);
 	std::optional<mmo::EObjectType> GetSpawnMonster() const;
 protected:

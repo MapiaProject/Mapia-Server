@@ -192,6 +192,7 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MMOServer\Manager\DBManager.cpp" />
     <ClCompile Include="MMOServer\Manager\DataManager.cpp" />
     <ClCompile Include="MMOServer\Storage\Datasheet.cpp" />
     <ClCompile Include="MMOServer\Object\Monster\GeminiRobot.cpp" />
@@ -213,12 +214,13 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     </ClCompile>
     <ClCompile Include="MMOServer\Object\Player.cpp" />
     <ClCompile Include="MMOServer\Manager\ObjectManager.cpp" />
-    <ClCompile Include="MMOServer\Object\NetObject.cpp" />
+    <ClCompile Include="MMOServer\Object\GameObject.cpp" />
     <ClCompile Include="MMOServer\Object\Monster\Monster.cpp" />
     <ClCompile Include="MMOServer\Object\Monster\Slime.cpp" />
     <ClCompile Include="MMOServer\Object\Monster\TurretPlant.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MMOServer\Manager\DBManager.hpp" />
     <ClInclude Include="MMOServer\Manager\BaseManager.hpp" />
     <ClInclude Include="MMOServer\Manager\DataManager.hpp" />
     <ClInclude Include="MMOServer\Storage\Datasheet.hpp" />
@@ -236,13 +238,12 @@ python execute.py -s ../../$(ProjectName)/Common/ -c "['../../../WOS-Client/Sour
     <ClInclude Include="Main\PCH\pch.h" />
     <ClInclude Include="MMOServer\Object\Player.hpp" />
     <ClInclude Include="MMOServer\Manager\ObjectManager.hpp" />
-    <ClInclude Include="MMOServer\Object\NetObject.hpp" />
+    <ClInclude Include="MMOServer\Object\GameObject.hpp" />
     <ClInclude Include="MMOServer\Object\Monster\Monster.hpp" />
     <ClInclude Include="MMOServer\Object\Monster\Slime.hpp" />
     <ClInclude Include="MMOServer\Object\Monster\TurretPlant.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="build.bat" />
     <None Include="Common\Database\Procedure.sql" />
     <None Include="Common\Database\Setup.sql" />
     <None Include="Common\Database\TableScheme.sql" />

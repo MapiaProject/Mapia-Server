@@ -2,7 +2,7 @@
 #include "BaseManager.hpp"
 #include "generated/mmo/Protocol.gen.hpp"
 
-class ObjectManager : public BaseManager<ObjectManager>
+class ObjectManager : public BaseManager
 {
 public:
 	ObjectManager();
@@ -16,7 +16,7 @@ public:
 	}
 	void Initialize() override;
 	void RemoveObject(uint64 id);
-	std::shared_ptr<class NetObject> GetObjectById(uint64 id);
+	std::shared_ptr<class GameObject> GetObjectById(uint64 id);
 public:
 	void HandleEnterGame(std::shared_ptr<class Session> session, gen::mmo::EnterGameReq req);
 	void HandleDirectChat(std::shared_ptr<class Session> session, gen::mmo::Chat chat);
@@ -25,6 +25,6 @@ private:
 	void BroadcastAll(Packet* packet, uint64 ignore = 0);
 private:
 	std::atomic<uint64> m_lastId;
-	ConcurrencyHashMap<uint64, std::shared_ptr<class NetObject>> m_objects;
+	ConcurrencyHashMap<uint64, std::shared_ptr<class GameObject>> m_objects;
 };
 
