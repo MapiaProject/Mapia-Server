@@ -3,6 +3,8 @@
 #include "Storage/GameMap.hpp"
 #include "Object.hpp"
 
+#include "format"
+
 #include "Manager/DataManager.hpp"
 #include "Manager/DBManager.hpp"
 
@@ -90,7 +92,8 @@ void Player::ObtainItem(Vector<ItemData> items)
 void Player::AddExp(uint32 exp)
 {
 	m_curExp += exp;
-	GManager->Database()->ExecuteQuery(std::format(TEXT("CALL SP_AddExp({}, {})", m_nickname, exp)));
+	
+	GManager->Database()->CallProcedure(TEXT("SP_AddExp"), m_nickname, exp);
 
 	const auto& requireExp = GManager->Data()->GetRequireExp(m_level + 1);
 	if (requireExp != 0 && m_curExp >= requireExp)
@@ -98,7 +101,7 @@ void Player::AddExp(uint32 exp)
 		m_curExp -= requireExp;
 		m_level++;
 		UpdateStat();
-		GManager->Database()->ExecuteQuery(std::format(TEXT("CALL SP_LevelUp({})", m_nickname)));
+		GManager->Database()->CallProcedure(TEXT("SP_LevelUp"), m_nickname, m_curExp);
 	}
 }
 

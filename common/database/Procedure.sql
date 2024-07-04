@@ -12,10 +12,11 @@ END $$
 
 DROP PROCEDURE IF EXISTS SP_LevelUp $$
 CREATE PROCEDURE SP_LevelUp(
-	IN nickname VARCHAR(32)
+	IN nickname VARCHAR(32),
+	IN curExp INTEGER
 )
 BEGIN
-	UPDATE UserCharacter SET exp = 0, clevel = clevel + 1 WHERE nickname = nickname;
+	UPDATE UserCharacter SET exp = curExp, clevel = clevel + 1 WHERE nickname = nickname;
 END $$
 DELIMITER ;
 
