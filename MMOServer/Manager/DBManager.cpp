@@ -26,3 +26,21 @@ void DBManager::Initialize()
 	}
 	Console::Log(Category::MMOServer, TEXT("'DBManager' initialized"));
 }
+
+DBConnection* DBManager::GetConnection()
+{
+	auto conn = GEngine->GetDBConnectionPool()->Pop();
+	if (!conn)
+	{
+		m_connections *= 2;
+		GEngine->GetDBConnectionPool()->Connect(m_connections, s_connectionStr);
+		conn = GEngine->GetDBConnectionPool()->Pop();
+	}
+	return conn;
+}
+
+void DBManager::ExecuteQuery(StringView sql)
+{
+	auto conn = GetConnection();
+	conn->Execute(sql.data());
+}

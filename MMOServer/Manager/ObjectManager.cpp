@@ -44,13 +44,13 @@ void ObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::
 		stmt.SetParameter(0, req.name.c_str());
 		stmt.Bind(0, reinterpret_cast<int32&>(level));
 		stmt.Bind(1, reinterpret_cast<int32&>(exp));
-		if (!stmt.ExecuteQuery() || !stmt.Next())
+		if (!stmt.ExecuteQuery())
 			Console::Error(Category::Database, TEXT("Invalid SQL syntax"));
-	
+		stmt.Next();
 		if (level == 0)
 		{
 			level = 1;
-			auto stmt = GManager->Database()->CreateStatement<1, 0>(TEXT("INSERT INTO usercharacter VALUES(?, 1)"));
+			auto stmt = GManager->Database()->CreateStatement<1, 0>(TEXT("INSERT INTO usercharacter VALUES(?, 1, 0)"));
 			stmt.SetParameter(0, req.name.c_str());
 			if (!stmt.ExecuteQuery())
 				Console::Error(Category::Database, TEXT("Already existing row"));

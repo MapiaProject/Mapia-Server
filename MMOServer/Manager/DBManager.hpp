@@ -8,15 +8,15 @@ public:
 	DBManager();
 public:
 	void Initialize() override;
+
+	class DBConnection* GetConnection();
+
+	void ExecuteQuery(StringView sql);
+
 	template<int32 param, int32 column>
 	Statement<param, column> CreateStatement(StringView sql)
 	{
-		auto conn = GEngine->GetDBConnectionPool()->Pop();
-		if (!conn)
-		{
-			m_connections *= 2;
-			GEngine->GetDBConnectionPool()->Connect(m_connections, s_connectionStr);
-		}
+		auto conn = GetConnection();
 		return conn->CreateStatement<param, column>(sql.data());
 	}
 private:

@@ -4,15 +4,14 @@
 #include "Object.hpp"
 
 #include "Manager/DataManager.hpp"
+#include "Manager/DBManager.hpp"
 
 Player::Player(uint64 id, uint32 level, uint32 exp) : GameObject(id, mmo::PLAYER), m_level(level), m_curExp(exp)
 {
 	SetPosition(Vector2DF::Zero());
 	m_airborne = GManager->Data()->GetSkillData(mmo::ESkillType::Airborne);
 
-	const auto& info = GManager->Data()->GetStatData(m_level);
-	SetHp(info.health);
-	SetPower(info.power);
+	UpdateStat();
 }
 
 void Player::BeginPlay()
@@ -91,6 +90,16 @@ void Player::ObtainItem(Vector<ItemData> items)
 void Player::AddExp(uint32 exp)
 {
 	m_curExp += exp;
+	GManager->Database()->ExecuteQuery(std::format(TEXT("CALL SP_AddExp({}, {})", m_nickname, exp)));
+
+	const auto& requireExp = GManager->Data()->GetRequireExp(m_level + 1);
+	if (requireExp != 0 && m_curExp >= requireExp)
+	{
+		m_curExp -= requireExp;
+		m_level++;
+		UpdateStat();
+		GManager->Database()->ExecuteQuery(std::format(TEXT("CALL SP_LevelUp({})", m_nickname)));
+	}
 }
 
 void Player::Airborne() const
@@ -114,6 +123,13 @@ void Player::Airborne() const
 std::shared_ptr<Player> Player::SharedThis()
 {
 	return std::static_pointer_cast<Player>(shared_from_this());
+}
+
+void Player::UpdateStat()
+{
+	const auto& info = GManager->Data()->GetStatData(m_level);
+	SetHp(info.health);
+	SetPower(info.power);
 }
 
 void Player::SetNickname(StringView nickname)

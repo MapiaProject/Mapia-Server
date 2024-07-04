@@ -46,6 +46,7 @@ public:
 	void Airborne() const;
 private:
 	std::shared_ptr<Player> SharedThis();
+	void UpdateStat();
 private:
 	Inventory m_inventory;
 	uint16 m_level;
