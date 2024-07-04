@@ -17,16 +17,17 @@ void DataManager::Initialize()
 		
 		// Load monster data
 		{
-			SQLite::Statement stmt(*m_datasheet, "SELECT id, ptype, hp, power, attackRange FROM monster");
+			SQLite::Statement stmt(*m_datasheet, "SELECT id, ptype, hp, power, attackRange, exp FROM monster");
 			while (stmt.executeStep())
 			{
 				auto type = *magic_enum::enum_cast<mmo::EObjectType>(stmt.getColumn(1).getString());
 				MonsterData data(
-					stmt.getColumn(0).getInt(),
+					stmt.getColumn(0).getUInt(),
 					type,
-					stmt.getColumn(2).getInt(),
-					stmt.getColumn(3).getInt(),
-					stmt.getColumn(4).getDouble()
+					stmt.getColumn(2).getUInt(),
+					stmt.getColumn(3).getUInt(),
+					stmt.getColumn(4).getDouble(),
+					stmt.getColumn(5).getUInt()
 				);
 				m_monsterData[type] = data;
 			}
@@ -79,6 +80,16 @@ void DataManager::Initialize()
 				m_skillData[type] = data;
 			}
 		}
+		// Load require exp
+		{
+			SQLite::Statement stmt(*m_datasheet, "SELECT clevel, exp FROM levelup");
+			while (stmt.executeStep())
+			{
+				auto level = stmt.getColumn(0).getUInt();
+				uint32 exp = stmt.getColumn(1).getUInt();
+				m_levelUpExp[level] = exp;
+			}
+		}
 		// Load stat data
 		{
 			SQLite::Statement stmt(*m_datasheet, "SELECT clevel, power, health FROM stats");
@@ -115,6 +126,11 @@ const Vector<ItemData>& DataManager::GetDropsData(gen::mmo::EObjectType type)
 const SkillData& DataManager::GetSkillData(gen::mmo::ESkillType type)
 {
 	return m_skillData[type];
+}
+
+const uint32& DataManager::GetRequireExp(uint32 level)
+{
+	return m_levelUpExp[level];
 }
 
 const StatData& DataManager::GetStatData(uint32 level)

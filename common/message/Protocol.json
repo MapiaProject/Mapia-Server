@@ -87,6 +87,10 @@
 					{
 						"type": "uint32",
 						"name": "level"
+					},
+					{
+						"type": "uint32",
+						"name": "exp"
 					}
 				]
 			},

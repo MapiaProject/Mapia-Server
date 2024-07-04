@@ -4,7 +4,7 @@
 #include "Object/Player.hpp"
 #include "Manager.hpp"
 
-#include "Database/DBConnectionPool.hpp"
+#include "Manager/DBManager.hpp"
 #include "Database/Statement.hpp"
 
 ObjectManager::ObjectManager() : m_lastId(0)
@@ -38,39 +38,32 @@ void ObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::
 	res.success = gameSession->GetPlayer() == nullptr;
 	if (res.success)
 	{
-		auto conn = GEngine->GetDBConnectionPool()->Pop();
-		if (conn)
+		uint32 level = 0;
+		uint32 exp = 0;
+		auto stmt = GManager->Database()->CreateStatement<1, 2>(TEXT("SELECT clevel, exp FROM usercharacter WHERE nickname = ?"));
+		stmt.SetParameter(0, req.name.c_str());
+		stmt.Bind(0, reinterpret_cast<int32&>(level));
+		stmt.Bind(1, reinterpret_cast<int32&>(exp));
+		if (!stmt.ExecuteQuery() || !stmt.Next())
+			Console::Error(Category::Database, TEXT("Invalid SQL syntax"));
+	
+		if (level == 0)
 		{
-			uint32 level = 0;
-			auto stmt = conn->CreateStatement<1, 1>(TEXT("SELECT clevel FROM usercharacter WHERE nickname = ?"));
+			level = 1;
+			auto stmt = GManager->Database()->CreateStatement<1, 0>(TEXT("INSERT INTO usercharacter VALUES(?, 1)"));
 			stmt.SetParameter(0, req.name.c_str());
-			stmt.Bind(0, reinterpret_cast<int32&>(level));
 			if (!stmt.ExecuteQuery())
-				Console::Error(Category::Database, TEXT("Invalid SQL syntax"));
-			stmt.Next();
-			if (level == 0)
-			{
-				level = 1;
-				auto stmt = conn->CreateStatement<1, 0>(TEXT("INSERT INTO usercharacter VALUES(?, 1)"));
-				stmt.SetParameter(0, req.name.c_str());
-				if (!stmt.ExecuteQuery())
-					Console::Error(Category::Database, TEXT("Already existing row"));
-			}
-
-			res.level = level;
-
-			auto player = Create<Player>(level);
-			player->SetNickname(nickname);
-			player->SetSession(gameSession);
-			player->BeginPlay();
-			gameSession->SetPlayer(player);
-
-			GEngine->GetDBConnectionPool()->Push(conn);
+				Console::Error(Category::Database, TEXT("Already existing row"));
 		}
-		else
-		{
-				
-		}
+
+		res.level = level;
+		res.exp = exp;
+
+		auto player = Create<Player>(level, exp);
+		player->SetNickname(nickname);
+		player->SetSession(gameSession);
+		player->BeginPlay();
+		gameSession->SetPlayer(player);
 	}
 	gameSession->Send(&res, true);
 }

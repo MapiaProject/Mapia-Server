@@ -7,14 +7,15 @@ using namespace gen;
 struct MonsterData
 {
 	MonsterData() = default;
-	MonsterData(uint32 id, mmo::EObjectType type, uint32 hp, uint32 power, double attackRange)
-		: id(id), type(type), hp(hp), power(power), attackRange(attackRange)
+	MonsterData(uint32 id, mmo::EObjectType type, uint32 hp, uint32 power, double attackRange, uint32 exp)
+		: id(id), type(type), hp(hp), power(power), attackRange(attackRange), exp(exp)
 	{}
-	int32 id;
+	uint32 id;
 	mmo::EObjectType type;
-	int32 hp;
-	int32 power;
+	uint32 hp;
+	uint32 power;
 	double attackRange;
+	uint32 exp;
 };
 
 struct ItemData

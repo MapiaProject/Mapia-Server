@@ -21,6 +21,7 @@ Monster::Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap
 	SetHp(info.hp);
 	SetPower(info.power);
 	SetAttackRange(info.attackRange);
+	SetExp(info.exp);
 }
 
 void Monster::BeginPlay()
@@ -116,6 +117,7 @@ void Monster::OnDestroy(const std::shared_ptr<GameObject>& hitter)
 		auto player = std::static_pointer_cast<Player>(hitter);
 		const auto& dropItems = GManager->Data()->GetDropsData(GetType());
 		player->ObtainItem(dropItems);
+		player->AddExp(GetExp());
 
 		mmo::ObtainItem obtain;
 		Vector<mmo::ItemInfo> info;
@@ -170,6 +172,16 @@ void Monster::SetAttackRange(float range)
 float Monster::GetAttackRange() const
 {
 	return m_attackRange;
+}
+
+void Monster::SetExp(uint32 exp)
+{
+	m_exp = exp;
+}
+
+uint32 Monster::GetExp() const
+{
+	return m_exp;
 }
 
 void Monster::Faint(int32 power)

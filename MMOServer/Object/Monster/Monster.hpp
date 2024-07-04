@@ -39,8 +39,12 @@ public:
 
 	/* Functional */
 	std::shared_ptr<class GameMap> GetMap() const;
+
+	/* Data */
 	void SetAttackRange(float range);
 	float GetAttackRange() const;
+	void SetExp(uint32 exp);
+	uint32 GetExp() const;
 public:
 	void Faint(int32 power);
 private:
@@ -58,7 +62,9 @@ private:
 	std::weak_ptr<class GameMap> m_map;
 	bool m_enableAutomove;
 	State m_state;
+
 	float m_attackRange;
+	uint32 m_exp;
 
 	/* patrol data */
 	bool m_patrol;

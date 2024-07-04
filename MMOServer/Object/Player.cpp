@@ -5,7 +5,7 @@
 
 #include "Manager/DataManager.hpp"
 
-Player::Player(uint64 id, uint32 level) : GameObject(id, mmo::PLAYER), m_level(level)
+Player::Player(uint64 id, uint32 level, uint32 exp) : GameObject(id, mmo::PLAYER), m_level(level), m_curExp(exp)
 {
 	SetPosition(Vector2DF::Zero());
 	m_airborne = GManager->Data()->GetSkillData(mmo::ESkillType::Airborne);
@@ -86,6 +86,11 @@ void Player::ObtainItem(Vector<ItemData> items)
 	{
 		m_inventory.items[item.type]++;
 	}
+}
+
+void Player::AddExp(uint32 exp)
+{
+	m_curExp += exp;
 }
 
 void Player::Airborne() const

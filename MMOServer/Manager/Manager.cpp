@@ -4,12 +4,14 @@
 #include "ObjectManager.hpp"
 #include "MapManager.hpp"
 #include "DataManager.hpp"
+#include "DBManager.hpp"
 
 Manager::Manager()
 {
 	m_object = MakeShared<ObjectManager>();
 	m_map = MakeShared<MapManager>();
 	m_data = MakeShared<DataManager>();
+	m_db = MakeShared<DBManager>();
 }
 
 Manager::~Manager()
@@ -21,6 +23,7 @@ void Manager::Initialize()
 	m_data->Initialize();
 	m_object->Initialize();
 	m_map->Initialize();
+	m_db->Initialize();
 }
 
 std::shared_ptr<ObjectManager> Manager::Object()
@@ -36,4 +39,9 @@ std::shared_ptr<MapManager> Manager::Map()
 std::shared_ptr<DataManager> Manager::Data()
 {
 	return m_data;
+}
+
+std::shared_ptr<DBManager> Manager::Database()
+{
+	return m_db;
 }

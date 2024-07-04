@@ -17,7 +17,7 @@ class Player : public GameObject
 {
 	USE_POOL(Player)
 public:
-	Player(uint64 id, uint32 level);
+	Player(uint64 id, uint32 level, uint32 exp);
 public:
 	/* Events */
 	virtual void BeginPlay() override;
@@ -40,6 +40,7 @@ public:
 	void TryDamage(const std::shared_ptr<GameObject> hitter);
 
 	void ObtainItem(Vector<ItemData> item);
+	void AddExp(uint32 exp);
 public:
 	/* Skills */
 	void Airborne() const;
@@ -48,6 +49,7 @@ private:
 private:
 	Inventory m_inventory;
 	uint16 m_level;
+	uint32 m_curExp;
 
 	std::weak_ptr<GameSession> m_session;
 	std::weak_ptr<GameMap> m_map;

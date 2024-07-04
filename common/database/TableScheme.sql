@@ -1,7 +1,6 @@
-USE GAMEDB;
+USE GameDB;
 
-CREATE TABLE `usercharacter`(
-	`nickname` varchar(32) NOT NULL,
-	`clevel` int NOT NULL,
-	PRIMARY KEY (`nickname`)
+CREATE TABLE UserCharacter(
+	nickname varchar(32) NOT NULL PRIMARY KEY,
+	clevel int NOT NULL,
 );

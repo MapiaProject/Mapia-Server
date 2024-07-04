@@ -27,16 +27,6 @@ void MMOServer::Run()
 	GEngine->Initialize();
 	GManager->Initialize();
 
-	GEngine->GetDBConnectionPool()->Connect(10, TEXT(
-		"DRIVER={MySQL ODBC 8.3 Unicode Driver};"
-		"SERVER=localhost;"
-		"PORT=3306;"
-		"DATABASE=GameDB;"
-		"USER=GameAdmin;"
-		"PASSWORD=reWq0987.;"
-		"OPTION=3;"
-	));
-
 	auto logEndpoint = Endpoint(net::IpAddress::Loopback, 1225);
 	auto serverEndpoint = Endpoint(IpAddress::Loopback, 1004);
 	auto server = Server::Open<GameSession>();

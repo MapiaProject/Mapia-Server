@@ -14,6 +14,7 @@ public:
 	const MonsterData& GetMonsterData(gen::mmo::EObjectType type);
 	const Vector<ItemData>& GetDropsData(gen::mmo::EObjectType type);
 	const SkillData& GetSkillData(gen::mmo::ESkillType type);
+	const uint32& GetRequireExp(uint32 level);
 	const StatData& GetStatData(uint32 level);
 private:
 	std::unique_ptr<SQLite::Database> m_datasheet;
@@ -21,6 +22,7 @@ private:
 	ConcurrencyHashMap<gen::mmo::EItemType, ItemData> m_itemData;
 	ConcurrencyHashMap<gen::mmo::EObjectType, Vector<ItemData>> m_dropData;
 	ConcurrencyHashMap<gen::mmo::ESkillType, SkillData> m_skillData;
+	ConcurrencyHashMap<uint32, uint32> m_levelUpExp;
 	ConcurrencyHashMap<uint32, StatData> m_statData;
 };
 
