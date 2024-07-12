@@ -4,10 +4,10 @@ DELIMITER $$
 
 DROP PROCEDURE IF EXISTS SP_GetUserByName $$
 CREATE PROCEDURE SP_GetUserByName(
-	IN nickname VARCHAR(32)
+	IN find VARCHAR(32)
 )
 BEGIN
-	SELECT clevel, exp FROM usercharacter uc WHERE uc.nickname = nickanme;
+	SELECT clevel, exp FROM usercharacter WHERE nickname = find;
 END $$
 
 DROP PROCEDURE IF EXISTS SP_CreateUser $$

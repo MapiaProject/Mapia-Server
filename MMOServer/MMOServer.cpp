@@ -30,6 +30,9 @@ void MMOServer::Run()
 	GDatabase->Initialize();
 	GManager->Initialize();
 
+	GDatabase->SetDatabaseProfile(TEXT("GameAdmin"), TEXT("reWq0987."), TEXT("GameDB"));
+	GDatabase->CreateConnection();
+
 	auto logEndpoint = Endpoint(net::IpAddress::Loopback, 1225);
 	auto serverEndpoint = Endpoint(IpAddress::Loopback, 1004);
 	auto server = Server::Open<GameSession>();
