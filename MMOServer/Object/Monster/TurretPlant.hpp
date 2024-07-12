@@ -9,7 +9,7 @@ class TurretPlant : public Monster
 		UPDATE_PROJECTILE_TICK = 50
 	};
 public:
-	TurretPlant(uint64 id, std::shared_ptr<class GameMap> map);
+	TurretPlant(uint64 id, class GameMap* map);
 private:
 	void BeginPlay() override;
 	void Tick() override;

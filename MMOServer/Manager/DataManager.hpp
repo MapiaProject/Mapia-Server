@@ -4,7 +4,7 @@
 #include "Storage/Datasheet.hpp"
 #include "generated/mmo/Enum.gen.hpp"
 
-class DataManager : public BaseManager
+class DataManager : public BaseManager<DataManager>
 {
 public:
 	DataManager();
@@ -18,11 +18,11 @@ public:
 	const StatData& GetStatData(uint32 level);
 private:
 	std::unique_ptr<SQLite::Database> m_datasheet;
-	ConcurrencyHashMap<gen::mmo::EObjectType, MonsterData> m_monsterData;
-	ConcurrencyHashMap<gen::mmo::EItemType, ItemData> m_itemData;
-	ConcurrencyHashMap<gen::mmo::EObjectType, Vector<ItemData>> m_dropData;
-	ConcurrencyHashMap<gen::mmo::ESkillType, SkillData> m_skillData;
-	ConcurrencyHashMap<uint32, uint32> m_levelUpExp;
-	ConcurrencyHashMap<uint32, StatData> m_statData;
+	HashMap<gen::mmo::EObjectType, MonsterData> m_monsterData;
+	HashMap<gen::mmo::EItemType, ItemData> m_itemData;
+	HashMap<gen::mmo::EObjectType, Vector<ItemData>> m_dropData;
+	HashMap<gen::mmo::ESkillType, SkillData> m_skillData;
+	HashMap<uint32, uint32> m_levelUpExp;
+	HashMap<uint32, StatData> m_statData;
 };
 

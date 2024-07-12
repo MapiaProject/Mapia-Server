@@ -7,7 +7,7 @@
 #include "Manager/DataManager.hpp"
 
 
-Monster::Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap> map)
+Monster::Monster(uint64 id, mmo::EObjectType type, GameMap* map)
 	: GameObject(id, type),
 	m_map(map), m_enableAutomove(true), m_dir(0), m_target(), m_patrol(true), m_state(PATROL)
 {
@@ -159,9 +159,9 @@ void Monster::SetAutomove(bool enable)
 	m_enableAutomove = enable;
 }
 
-std::shared_ptr<GameMap> Monster::GetMap() const
+GameMap* Monster::GetMap() const
 {
-	return m_map.lock();
+	return m_map;
 }
 
 void Monster::SetAttackRange(float range)
@@ -219,9 +219,7 @@ void Monster::SetMoveTick(uint64 tick)
 
 void Monster::NextDestination()
 {
-	auto map = m_map.lock();
-	if (!map)
-		return;
+	if (!m_map) return;
 
 	m_state = PATROL;
 
@@ -229,7 +227,7 @@ void Monster::NextDestination()
 	m_dir = Random::Range(-1, 1);
 	if (m_dir != 0)
 	{
-		for (; map->GetBlock(Vector2DI{
+		for (; m_map->GetBlock(Vector2DI{
 			static_cast<int32>(x + m_dir),
 			static_cast<int32>(y)
 			}) == Block::SpawnArea;

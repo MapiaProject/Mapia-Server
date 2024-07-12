@@ -3,7 +3,7 @@
 #include "Object/Player.hpp"
 #include "Storage/GameMap.hpp"
 
-TurretPlant::TurretPlant(uint64 id, std::shared_ptr<GameMap> map)
+TurretPlant::TurretPlant(uint64 id, GameMap* map)
 	: Monster(id, mmo::TurretPlant, map)
 {
 }

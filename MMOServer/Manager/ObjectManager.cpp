@@ -4,9 +4,6 @@
 #include "Object/Player.hpp"
 #include "Manager.hpp"
 
-#include "Manager/DBManager.hpp"
-#include "Database/Statement.hpp"
-
 ObjectManager::ObjectManager() : m_lastId(0)
 {
 }
@@ -28,64 +25,70 @@ std::shared_ptr<GameObject> ObjectManager::GetObjectById(uint64 id)
 	return m_objects[id];
 }
 
-void ObjectManager::HandleEnterGame(std::shared_ptr<Session> session, gen::mmo::EnterGameReq req)
+void ObjectManager::HandleEnterGame(Session* session, std::shared_ptr<gen::mmo::EnterGameReq> req)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
-	const auto& nickname = req.name;
+		if (!session) return;
+
+	auto gameSession = static_cast<GameSession*>(session);
+	const auto& nickname = req->name;
 
 	// send enter game success or failure
-	gen::mmo::EnterGameRes res;
-	res.success = gameSession->GetPlayer() == nullptr;
-	if (res.success)
+	auto success = gameSession->GetPlayer() == nullptr;
+	if (success)
 	{
-		uint32 level = 0;
-		uint32 exp = 0;
-		auto stmt = GManager->Database()->CreateStatement<1, 2>(TEXT("SELECT clevel, exp FROM usercharacter WHERE nickname = ?"));
-		stmt.SetParameter(0, req.name.c_str());
-		stmt.Bind(0, reinterpret_cast<int32&>(level));
-		stmt.Bind(1, reinterpret_cast<int32&>(exp));
-		if (!stmt.ExecuteQuery())
-			Console::Error(Category::Database, TEXT("Invalid SQL syntax"));
-		stmt.Next();
-		if (level == 0)
-		{
-			level = 1;
-			auto stmt = GManager->Database()->CreateStatement<1, 0>(TEXT("INSERT INTO usercharacter VALUES(?, 1, 0)"));
-			stmt.SetParameter(0, req.name.c_str());
-			if (!stmt.ExecuteQuery())
-				Console::Error(Category::Database, TEXT("Already existing row"));
-		}
+		auto pstmt = GDatabase->CallProcedure("SP_GetUserByName", ToAnsiString(req->name));
+		pstmt->AsyncQuery([=, request=*req](std::shared_ptr<sql::ResultSet> rs) {
+			gen::mmo::EnterGameRes res;
+			res.success = success;
 
-		res.level = level;
-		res.exp = exp;
+			uint32 level = rs->getUInt(0);
+			uint32 exp = rs->getUInt(1);
+			if (level == 0)
+			{
+				level = 1;
+				auto pstmt = GDatabase->CallProcedure("SP_CreateUser", ToAnsiString(request.name));
+				pstmt->AsyncExecute();
+			}
+			res.level = level;
+			res.exp = exp;
 
-		auto player = Create<Player>(level, exp);
-		player->SetNickname(nickname);
-		player->SetSession(gameSession);
-		player->BeginPlay();
-		gameSession->SetPlayer(player);
+			auto player = Create<Player>(level, exp);
+			player->SetNickname(nickname);
+			player->SetSession(gameSession);
+			player->BeginPlay();
+			gameSession->SetPlayer(player);
+
+			gameSession->Send(&res);
+		});
 	}
-	gameSession->Send(&res, true);
+	else
+	{
+		mmo::EnterGameRes res;
+		res.success = false;
+		gameSession->Send(&res);
+	}
 }
 
-void ObjectManager::HandleDirectChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
+void ObjectManager::HandleDirectChat(Session* session, std::shared_ptr<gen::mmo::Chat> chat)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (!session) return;
+
+	auto gameSession = static_cast<GameSession*>(session);
 	for (const auto& [_, object] : m_objects)
 	{
 		if (object->GetType() == mmo::EObjectType::PLAYER)
 		{
 			if (auto player = std::static_pointer_cast<Player>(object))
 			{
-				if (player->GetNickname() == chat.targetName)
+				if (player->GetNickname() == chat->targetName)
 				{
 					gen::mmo::NotifyChat notifyChat;
 					notifyChat.type = mmo::EChatType::Direct;
 					notifyChat.senderName = gameSession->GetPlayer()->GetNickname();
-					notifyChat.message = chat.message;
+					notifyChat.message = chat->message;
 
 					if (auto targetSession = player->GetSession())
-						targetSession->Send(&notifyChat, true);
+						targetSession->Send(&notifyChat);
 					break;
 				}
 			}
@@ -93,15 +96,17 @@ void ObjectManager::HandleDirectChat(std::shared_ptr<Session> session, gen::mmo:
 	}
 }
 
-void ObjectManager::HandleAllChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
+void ObjectManager::HandleAllChat(Session* session, std::shared_ptr<gen::mmo::Chat> chat)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (!session) return;
+
+	auto gameSession = static_cast<GameSession*>(session);
 	auto sender = gameSession->GetPlayer();
 
 	gen::mmo::NotifyChat notifyChat;
 	notifyChat.type = mmo::EChatType::All;
 	notifyChat.senderName = sender->GetNickname();
-	notifyChat.message = chat.message;
+	notifyChat.message = chat->message;
 
 	BroadcastAll(&notifyChat, sender->GetId());
 }

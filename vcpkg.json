@@ -1,6 +1,5 @@
 {
   "dependencies": [
-    "tbb",
     "magic-enum",
     "sqlitecpp"
   ]

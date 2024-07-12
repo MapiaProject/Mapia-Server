@@ -2,14 +2,14 @@
 #include "BaseManager.hpp"
 #include "generated/mmo/Protocol.gen.hpp"
 
-class MapManager : public BaseManager
+class MapManager : public BaseManager<MapManager>
 {
 public:
 	MapManager();
 public:
 	std::shared_ptr<class GameMap> GetMap(String name);
 public:
-	void HandleEnter(std::shared_ptr<class Session> session, gen::mmo::EnterMapReq packet);
+	void HandleEnter(class Session* session, std::shared_ptr<gen::mmo::EnterMapReq> packet);
 public:
 	void Initialize() override;
 private:

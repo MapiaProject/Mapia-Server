@@ -78,7 +78,7 @@ void GameMap::SpawnMonster()
 	if (!spawnMonster.has_value())
 		return;
 
-	Launch<SpawnTick>(&GameMap::SpawnMonster);
+	Run(SpawnTick, &GameMap::SpawnMonster);
 
 	const auto spawnArea = GetBlocks(Block::SpawnArea);
 	auto count = m_monsters.size();
@@ -94,13 +94,13 @@ void GameMap::SpawnMonster()
 			switch (spawnMonster.value())
 			{
 			case mmo::Slime:
-				monster = GManager->Object()->Create<Slime>(SharedThis());
+				monster = GManager->Object()->Create<Slime>(this);
 				break;
 			case mmo::TurretPlant:
-				monster = GManager->Object()->Create<TurretPlant>(SharedThis());
+				monster = GManager->Object()->Create<TurretPlant>(this);
 				break;
 			case mmo::GeminiRobot:
-				monster = GManager->Object()->Create<GeminiRobot>(SharedThis());
+				monster = GManager->Object()->Create<GeminiRobot>(this);
 				break;
 			default:
 				break;
@@ -128,11 +128,6 @@ void GameMap::SpawnMonster()
 	}
 }
 
-std::shared_ptr<GameMap> GameMap::SharedThis()
-{
-	return std::static_pointer_cast<GameMap>(shared_from_this());
-}
-
 const HashMap<uint64, std::shared_ptr<Player>>& GameMap::GetPlayers() const
 {
 	return m_players;
@@ -143,17 +138,19 @@ const HashMap<uint64, std::shared_ptr<Monster>>& GameMap::GetMonsters() const
 	return m_monsters;
 }
 
-void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
+void GameMap::HandleMove(Session* session, std::shared_ptr<gen::mmo::Move> move)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (!session) return;
+
+	auto gameSession = static_cast<GameSession*>(session);
 	auto player = gameSession->GetPlayer();
 
 	gen::mmo::NotifyMove syncMove;
 	syncMove.objectId = player->GetId();
 	auto prevPos = player->GetPosition();
 	auto block = GetBlock(Vector2DI{
-		static_cast<int32>(std::round(move.position.x)),
-		static_cast<int32>(std::round(move.position.y))
+		static_cast<int32>(std::round(move->position.x)),
+		static_cast<int32>(std::round(move->position.y))
 	});
 	if (!block.has_value())
 	{
@@ -173,7 +170,7 @@ void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 			Broadcast(&syncMove);
 			break;
 		default:
-			syncMove.position = move.position;
+			syncMove.position = move->position;
 			player->SetPosition(Converter::MakeVector<float>(syncMove.position));
 			Broadcast(&syncMove);
 			break;
@@ -181,26 +178,28 @@ void GameMap::HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move)
 	}
 }
 
-void GameMap::HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat)
+void GameMap::HandleLocalChat(Session* session, std::shared_ptr<gen::mmo::Chat> chat)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (!session) return;
+
+	auto gameSession = static_cast<GameSession*>(session);
 	auto sender = gameSession->GetPlayer();
 
 	gen::mmo::NotifyChat notifyChat;
 	notifyChat.type = mmo::EChatType::Local;
 	notifyChat.senderName = sender->GetNickname();
-	notifyChat.message = chat.message;
+	notifyChat.message = chat->message;
 
 	Broadcast(&notifyChat, sender->GetId());
 }
 
-void GameMap::HandleDamage(std::shared_ptr<Session> session, mmo::AddDamageReq damage)
+void GameMap::HandleDamage(Session* session, std::shared_ptr<gen::mmo::AddDamageReq> damage)
 {
-	const auto& object = GManager->Object()->GetObjectById(damage.damageInfo.objectId);
+	const auto& object = GManager->Object()->GetObjectById(damage->damageInfo.objectId);
 	if (object)
 	{
 		mmo::NotifyDamaged notify;
-		object->TakeDamage(object, damage.damageInfo.damage);
+		object->TakeDamage(object, damage->damageInfo.damage);
 		notify.damageResult.objectId = object->GetId();
 		notify.damageResult.damage = object->GetHp();
 
@@ -208,16 +207,18 @@ void GameMap::HandleDamage(std::shared_ptr<Session> session, mmo::AddDamageReq d
 	}
 }
 
-void GameMap::HandleHitStatus(std::shared_ptr<Session> session, gen::mmo::HitStatus hit)
+void GameMap::HandleHitStatus(Session* session, std::shared_ptr<gen::mmo::HitStatus> hit)
 {
-	const auto& gameSession = std::static_pointer_cast<GameSession>(session);
+	if (!session) return;
+
+	const auto& gameSession = static_cast<GameSession*>(session);
 	const auto& player = gameSession->GetPlayer();
 	const auto& hitter = player->GetHitter();
 
 	if (!player || !hitter)
 		return;
 
-	switch (hit.state)
+	switch (hit->state)
 	{
 	case mmo::EPlayerState::Parrying:
 		break;
@@ -227,12 +228,14 @@ void GameMap::HandleHitStatus(std::shared_ptr<Session> session, gen::mmo::HitSta
 	}
 }
 
-void GameMap::HandleSkillActivate(std::shared_ptr<Session> session, gen::mmo::SkillActivate skill)
+void GameMap::HandleSkillActivate(Session* session, std::shared_ptr<gen::mmo::SkillActivate> skill)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (!session) return;
+
+	auto gameSession = static_cast<GameSession*>(session);
 	if (auto player = gameSession->GetPlayer())
 	{
-		switch (skill.type)
+		switch (skill->type)
 		{
 		case mmo::Airborne:
 			player->Airborne();
@@ -251,7 +254,7 @@ void GameMap::BeginPlay()
 
 void GameMap::Tick()
 {
-	Launch<GameTick>(&GameMap::Tick);
+	Run(GameTick, &GameMap::Tick);
 
 	// Execute NetObject's `Tick` logic
 	for (const auto& [_, object] : m_players)

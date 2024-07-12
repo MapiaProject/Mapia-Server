@@ -5,7 +5,7 @@ class Slime : public Monster
 {
 	USE_POOL(Slime)
 public:
-	Slime(uint64 id, std::shared_ptr<class GameMap> map);
+	Slime(uint64 id, class GameMap* map);
 private:
 	void BeginPlay() override;
 	void Tick() override;

@@ -6,7 +6,6 @@
 #include "format"
 
 #include "Manager/DataManager.hpp"
-#include "Manager/DBManager.hpp"
 
 Player::Player(uint64 id, uint32 level, uint32 exp) : GameObject(id, mmo::PLAYER), m_level(level), m_curExp(exp)
 {
@@ -52,7 +51,7 @@ void Player::OnDamaged(const std::shared_ptr<GameObject> hitter)
 	m_hitter = hitter;
 }
 
-void Player::SetSession(std::shared_ptr<GameSession> session)
+void Player::SetSession(GameSession* session)
 {
 	m_session = session;
 }
@@ -71,7 +70,7 @@ void Player::LeaveMap()
 {
 	if (auto map = m_map.lock())
 	{
-		map->Launch(&GameMap::Leave, shared_from_this());
+		map->Run(&GameMap::Leave, shared_from_this());
 		m_map.reset();
 	}
 }
@@ -92,8 +91,13 @@ void Player::ObtainItem(Vector<ItemData> items)
 void Player::AddExp(uint32 exp)
 {
 	m_curExp += exp;
-	
-	GManager->Database()->CallProcedure(TEXT("SP_AddExp"), m_nickname, exp);
+
+	auto pstmt = GDatabase->CallProcedure("SP_AddExp", ToAnsiString(m_nickname), exp);
+	pstmt->AsyncExecute();
+
+	const auto& requireExp = GManager->Data()->GetRequireExp(m_level + 1);
+
+	/*GManager->Database()->CallProcedure(TEXT("SP_AddExp"), m_nickname, exp);
 
 	const auto& requireExp = GManager->Data()->GetRequireExp(m_level + 1);
 	if (requireExp != 0 && m_curExp >= requireExp)
@@ -102,7 +106,7 @@ void Player::AddExp(uint32 exp)
 		m_level++;
 		UpdateStat();
 		GManager->Database()->CallProcedure(TEXT("SP_LevelUp"), m_nickname, m_curExp);
-	}
+	}*/
 }
 
 void Player::Airborne() const
@@ -140,9 +144,9 @@ void Player::SetNickname(StringView nickname)
 	m_nickname = nickname;
 }
 
-std::shared_ptr<GameSession> Player::GetSession()
+GameSession* Player::GetSession()
 {
-	return m_session.lock();
+	return m_session;
 }
 
 std::shared_ptr<GameMap> Player::GetMap() const

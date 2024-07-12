@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GeminiRobot.hpp"
 
-GeminiRobot::GeminiRobot(uint64 id, std::shared_ptr<GameMap> map)
+GeminiRobot::GeminiRobot(uint64 id, GameMap* map)
 	: Monster(id, mmo::GeminiRobot, map)
 {
 }

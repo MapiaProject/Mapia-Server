@@ -41,7 +41,7 @@ void GameSession::OnReceive(std::span<char> buffer, int32 len)
     }
     else
     {
-        gen::mmo::PacketHandler::HandlePacket(shared_from_this(), id, buffer);
+        gen::mmo::PacketHandler::HandlePacket(this, buffer);
     }
 }
 

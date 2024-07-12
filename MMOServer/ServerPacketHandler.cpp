@@ -11,40 +11,40 @@
 
 using namespace gen;
 
-bool mmo::PacketHandler::EnterGameReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterGameReq> packet)
+bool mmo::PacketHandler::EnterGameReqPacketHandler(Session* session, TSharedPtr<EnterGameReq> packet)
 {
-	GManager->Object()->Launch(&ObjectManager::HandleEnterGame, session, *packet);
+	GManager->Object()->Run(&ObjectManager::HandleEnterGame, session, packet);
 	return false;
 }
 
-bool mmo::PacketHandler::EnterMapReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<EnterMapReq> packet)
+bool mmo::PacketHandler::EnterMapReqPacketHandler(Session* session, TSharedPtr<EnterMapReq> packet)
 {
-	GManager->Map()->Launch(&MapManager::HandleEnter, session, *packet);
+	GManager->Map()->Run(&MapManager::HandleEnter, session, packet);
 	return false;
 }
 
-bool mmo::PacketHandler::MovePacketHandler(TSharedPtr<Session> session, TSharedPtr<Move> packet)
+bool mmo::PacketHandler::MovePacketHandler(Session* session, TSharedPtr<Move> packet)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	auto gameSession = static_cast<GameSession*>(session);
 	if (auto map = gameSession->GetPlayer()->GetMap())
-		map->Launch(&GameMap::HandleMove, session, *packet);
+		map->Run(&GameMap::HandleMove, session, packet);
 	return false;
 }
 
-bool gen::mmo::PacketHandler::ChatPacketHandler(TSharedPtr<Session> session, TSharedPtr<Chat> packet)
+bool gen::mmo::PacketHandler::ChatPacketHandler(Session* session, TSharedPtr<Chat> packet)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	auto gameSession = static_cast<GameSession*>(session);
 	switch (packet->type)
 	{
 	case gen::mmo::EChatType::Direct:
-		GManager->Object()->Launch(&ObjectManager::HandleDirectChat, session, *packet);
+		GManager->Object()->Run(&ObjectManager::HandleDirectChat, session, packet);
 		break;
 	case gen::mmo::EChatType::Local:
 		if (auto map = gameSession->GetPlayer()->GetMap())
-			map->Launch(&GameMap::HandleLocalChat, session, *packet);
+			map->Run(&GameMap::HandleLocalChat, session, packet);
 		break;
 	case gen::mmo::EChatType::All:
-		GManager->Object()->Launch(&ObjectManager::HandleAllChat, session, *packet);
+		GManager->Object()->Run(&ObjectManager::HandleAllChat, session, packet);
 		break;
 	default:
 		break;
@@ -52,26 +52,26 @@ bool gen::mmo::PacketHandler::ChatPacketHandler(TSharedPtr<Session> session, TSh
 	return false;
 }
 
-bool gen::mmo::PacketHandler::AddDamageReqPacketHandler(TSharedPtr<Session> session, TSharedPtr<AddDamageReq> packet)
+bool gen::mmo::PacketHandler::AddDamageReqPacketHandler(Session* session, TSharedPtr<AddDamageReq> packet)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	auto gameSession = static_cast<GameSession*>(session);
 	if (auto map = gameSession->GetPlayer()->GetMap())
-		map->Launch(&GameMap::HandleDamage, session, *packet);
+		map->Run(&GameMap::HandleDamage, session, packet);
 	return false;
 }
 
-bool gen::mmo::PacketHandler::HitStatusPacketHandler(TSharedPtr<Session> session, TSharedPtr<HitStatus> packet)
+bool gen::mmo::PacketHandler::HitStatusPacketHandler(Session* session, TSharedPtr<HitStatus> packet)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	auto gameSession = static_cast<GameSession*>(session);
 	if (auto map = gameSession->GetPlayer()->GetMap())
-		map->Launch(&GameMap::HandleHitStatus, session, *packet);
+		map->Run(&GameMap::HandleHitStatus, session, packet);
 	return false;
 }
 
-bool gen::mmo::PacketHandler::SkillActivatePacketHandler(TSharedPtr<Session> session, TSharedPtr<SkillActivate> packet)
+bool gen::mmo::PacketHandler::SkillActivatePacketHandler(Session* session, TSharedPtr<SkillActivate> packet)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
+	auto gameSession = static_cast<GameSession*>(session);
 	if (auto map = gameSession->GetPlayer()->GetMap())
-		map->Launch(&GameMap::HandleSkillActivate, session, *packet);
+		map->Run(&GameMap::HandleSkillActivate, session, packet);
 	return false;
 }

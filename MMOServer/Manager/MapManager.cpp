@@ -17,10 +17,12 @@ std::shared_ptr<GameMap> MapManager::GetMap(String name)
 	return m_mapData[name];
 }
 
-void MapManager::HandleEnter(std::shared_ptr<Session> session, gen::mmo::EnterMapReq packet)
+void MapManager::HandleEnter(class Session* session, std::shared_ptr<gen::mmo::EnterMapReq> packet)
 {
-	auto gameSession = std::static_pointer_cast<GameSession>(session);
-	const auto& gameMap = m_mapData[packet.mapName];
+	if (!session) return;
+
+	auto gameSession = static_cast<GameSession*>(session);
+	const auto& gameMap = m_mapData[packet->mapName];
 	auto myPlayer = gameSession->GetPlayer();
 
 	gen::mmo::EnterMapRes res;

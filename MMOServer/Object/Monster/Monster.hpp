@@ -18,7 +18,7 @@ class Monster : public GameObject
 		FAINT_TIME = 800
 	};
 public:
-	Monster(uint64 id, mmo::EObjectType type, std::shared_ptr<class GameMap> map);
+	Monster(uint64 id, mmo::EObjectType type, class GameMap* map);
 	virtual ~Monster() noexcept {}
 protected:
 	virtual void BeginPlay();
@@ -38,7 +38,7 @@ public:
 	void SetMoveTick(uint64);
 
 	/* Functional */
-	std::shared_ptr<class GameMap> GetMap() const;
+	class GameMap* GetMap() const;
 
 	/* Data */
 	void SetAttackRange(float range);
@@ -59,7 +59,7 @@ private:
 	uint64 m_attackTime;
 
 	/* functional */
-	std::weak_ptr<class GameMap> m_map;
+	GameMap* m_map;
 	bool m_enableAutomove;
 	State m_state;
 

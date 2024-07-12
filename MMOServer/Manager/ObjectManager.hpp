@@ -2,7 +2,7 @@
 #include "BaseManager.hpp"
 #include "generated/mmo/Protocol.gen.hpp"
 
-class ObjectManager : public BaseManager
+class ObjectManager : public BaseManager<ObjectManager>
 {
 public:
 	ObjectManager();
@@ -18,9 +18,9 @@ public:
 	void RemoveObject(uint64 id);
 	std::shared_ptr<class GameObject> GetObjectById(uint64 id);
 public:
-	void HandleEnterGame(std::shared_ptr<class Session> session, gen::mmo::EnterGameReq req);
-	void HandleDirectChat(std::shared_ptr<class Session> session, gen::mmo::Chat chat);
-	void HandleAllChat(std::shared_ptr<class Session> session, gen::mmo::Chat chat);
+	void HandleEnterGame(class Session* session, std::shared_ptr<gen::mmo::EnterGameReq> req);
+	void HandleDirectChat(class Session* session, std::shared_ptr<gen::mmo::Chat> chat);
+	void HandleAllChat(class Session* session, std::shared_ptr<gen::mmo::Chat> chat);
 private:
 	void BroadcastAll(Packet* packet, uint64 ignore = 0);
 private:

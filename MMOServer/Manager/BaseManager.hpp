@@ -1,9 +1,9 @@
 #pragma once
-#include "Thread/JobSerializer.hpp"
+#include "Functor.hpp"
 #include <memory>
 
-class BaseManager :
-	public JobSerializer
+template<class T>
+class BaseManager : public Runnable<T>
 {
 public:
 	virtual void Initialize() = 0;

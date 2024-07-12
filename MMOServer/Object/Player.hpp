@@ -26,9 +26,9 @@ public:
 	virtual void OnDamaged(const std::shared_ptr<GameObject>) override;
 public:
 	/* Get / Set */
-	void SetSession(std::shared_ptr<GameSession>);
+	void SetSession(GameSession* session);
 	void SetNickname(StringView nickname);
-	std::shared_ptr<GameSession> GetSession();
+	GameSession* GetSession();
 	std::shared_ptr<GameMap> GetMap() const;
 	String GetNickname() const;
 	std::shared_ptr<GameObject> GetHitter();
@@ -52,7 +52,7 @@ private:
 	uint16 m_level;
 	uint32 m_curExp;
 
-	std::weak_ptr<GameSession> m_session;
+	GameSession* m_session;
 	std::weak_ptr<GameMap> m_map;
 	std::weak_ptr<GameObject> m_hitter;
 	String m_nickname;

@@ -1,12 +1,14 @@
 #pragma once
-#include "Thread/JobSerializer.hpp"
+#include "Functor.hpp"
 #include "Storage/MapData.hpp"
 
 #include "generated/mmo/ServerPacketHandler.gen.hpp"
 
 class GameObject;
 
-class GameMap : public JobSerializer, public MapData
+class GameMap :
+	public Runnable<GameMap>,
+	public MapData
 {
 	enum
 	{
@@ -22,16 +24,15 @@ public:
 	void Enter(std::shared_ptr<GameObject> object);
 	void Leave(std::shared_ptr<GameObject> object);
 	void SpawnMonster();
-	std::shared_ptr<GameMap> SharedThis();
 public:
 	const HashMap<uint64, std::shared_ptr<class Player>>& GetPlayers() const;
 	const HashMap<uint64, std::shared_ptr<class Monster>>& GetMonsters() const;
 public:
-	void HandleMove(std::shared_ptr<Session> session, gen::mmo::Move move);
-	void HandleLocalChat(std::shared_ptr<Session> session, gen::mmo::Chat chat);
-	void HandleDamage(std::shared_ptr<Session> session, gen::mmo::AddDamageReq damage);
-	void HandleHitStatus(std::shared_ptr<Session> session, gen::mmo::HitStatus hit);
-	void HandleSkillActivate(std::shared_ptr<Session> session, gen::mmo::SkillActivate skill);
+	void HandleMove(Session* session, std::shared_ptr<gen::mmo::Move> move);
+	void HandleLocalChat(Session* session, std::shared_ptr<gen::mmo::Chat> chat);
+	void HandleDamage(Session* session, std::shared_ptr<gen::mmo::AddDamageReq> damage);
+	void HandleHitStatus(Session* session, std::shared_ptr<gen::mmo::HitStatus> hit);
+	void HandleSkillActivate(Session* session, std::shared_ptr<gen::mmo::SkillActivate> skill);
 public:
 	void BeginPlay();
 	void Tick();

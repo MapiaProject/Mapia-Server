@@ -2,7 +2,7 @@
 #include "Slime.hpp"
 #include "Storage/GameMap.hpp"
 
-Slime::Slime(uint64 id, std::shared_ptr<GameMap> map)
+Slime::Slime(uint64 id, GameMap* map)
 	: Monster(id, mmo::Slime, map)
 {
 }
