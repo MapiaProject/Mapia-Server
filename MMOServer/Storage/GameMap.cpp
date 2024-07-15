@@ -32,7 +32,7 @@ void GameMap::Broadcast(Packet* packet, uint64 ignore)
 	{
 		if (id == ignore) continue;
 		if (auto session = player->GetSession())
-			session->Send(packet, true);
+			session->Send(packet);
 	}
 }
 

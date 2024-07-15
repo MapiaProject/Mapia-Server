@@ -3,7 +3,11 @@
 
 int main()
 {
-	WOSServerInstance = new MMOServer;
-	WOSServerInstance->Run();
-	delete WOSServerInstance;
+	using namespace std::chrono_literals;
+	std::this_thread::sleep_for(500ms); // Wait for LogServer
+
+	NeonlightServerInstance = new MMOServer;
+	NeonlightServerInstance->Run();
+
+	delete NeonlightServerInstance;
 }

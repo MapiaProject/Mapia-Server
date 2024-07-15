@@ -21,13 +21,15 @@ void MapManager::HandleEnter(class Session* session, std::shared_ptr<gen::mmo::E
 {
 	if (!session) return;
 
+	Console::Debug(Category::Temp, TEXT("Handle `EnterGame`"));
+
 	auto gameSession = static_cast<GameSession*>(session);
 	const auto& gameMap = m_mapData[packet->mapName];
 	auto myPlayer = gameSession->GetPlayer();
 
 	gen::mmo::EnterMapRes res;
 	res.success = gameMap != nullptr && myPlayer->GetMap() != gameMap;
-	session->Send(&res, true);
+	session->Send(&res);
 	if (res.success)
 	{
 		// send my position
@@ -51,7 +53,9 @@ void MapManager::HandleEnter(class Session* session, std::shared_ptr<gen::mmo::E
 			info.objectId = myPlayer->GetId();
 			info.name = myPlayer->GetNickname();
 			spawn.object = info;
-			session->Send(&spawn, true);
+			session->Send(&spawn);
+
+			Console::Debug(Category::Temp, TEXT("Spawn"));
 		}
 
 		// send other player list
@@ -69,7 +73,7 @@ void MapManager::HandleEnter(class Session* session, std::shared_ptr<gen::mmo::E
 					spawn.objects.push_back(info);
 				}
 			}
-			session->Send(&spawn, true);
+			session->Send(&spawn);
 		}
 
 		// send monsters
@@ -85,7 +89,7 @@ void MapManager::HandleEnter(class Session* session, std::shared_ptr<gen::mmo::E
 				info.remainHp = monster->GetHp();
 				spawn.objects.push_back(info);
 			}
-			session->Send(&spawn, true);
+			session->Send(&spawn);
 		}
 
 		// notify to existing players

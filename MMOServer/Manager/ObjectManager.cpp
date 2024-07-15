@@ -27,7 +27,9 @@ std::shared_ptr<GameObject> ObjectManager::GetObjectById(uint64 id)
 
 void ObjectManager::HandleEnterGame(Session* session, std::shared_ptr<gen::mmo::EnterGameReq> req)
 {
-		if (!session) return;
+	if (!session) return;
+
+	Console::Debug(Category::Temp, TEXT("Handle `EnterGame`"));
 
 	auto gameSession = static_cast<GameSession*>(session);
 	const auto& nickname = req->name;
@@ -38,6 +40,8 @@ void ObjectManager::HandleEnterGame(Session* session, std::shared_ptr<gen::mmo::
 	{
 		auto pstmt = GDatabase->CallProcedure("SP_GetUserByName", ToAnsiString(req->name));
 		pstmt->AsyncQuery([=, request=*req](std::shared_ptr<sql::ResultSet> rs) {
+			Console::Debug(Category::Temp, TEXT("DB Completed(SP_GetUserByName)"));
+
 			rs->next();
 
 			gen::mmo::EnterGameRes res;

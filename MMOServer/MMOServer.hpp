@@ -10,4 +10,4 @@ struct MMOServer final : public GameInstance
 	void Run();
 };
 
-static MMOServer* WOSServerInstance;
+static MMOServer* NeonlightServerInstance;
