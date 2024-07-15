@@ -42,14 +42,16 @@ void ObjectManager::HandleEnterGame(Session* session, std::shared_ptr<gen::mmo::
 		pstmt->AsyncQuery([=, request=*req](std::shared_ptr<sql::ResultSet> rs) {
 			Console::Debug(Category::Temp, TEXT("DB Completed(SP_GetUserByName)"));
 
-			rs->next();
-
 			gen::mmo::EnterGameRes res;
 			res.success = success;
 
-			uint32 level = rs->getUInt(1);
-			uint32 exp = rs->getUInt(2);
-			if (level == 0)
+			uint32 level = 0, exp = 0;
+			if (rs->next())
+			{
+				level = rs->getUInt(1);
+				exp = rs->getUInt(2);
+			}
+			else
 			{
 				level = 1;
 				auto pstmt = GDatabase->CallProcedure("SP_CreateUser", ToAnsiString(request.name));
